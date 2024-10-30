@@ -2,7 +2,7 @@
 
 import { Fragment, useEffect, useState } from "react";
 import { cn } from "@/libs/utils";
-import { AnimatePresence, motion } from "framer-motion";
+import { AnimatePresence, motion, steps } from "framer-motion";
 import { Button, Progress } from "@nextui-org/react";
 import Icon from "@/components/ui/Icon";
 
@@ -15,6 +15,8 @@ interface Props {
   children: React.ReactNode[];
   clickeable?: boolean;
   defaultItem?: number;
+  actualValue?: (value: number) => void;
+  step?: number;
   type?: "steps" | "carousel";
   buttons?: {
     show: boolean;
@@ -28,6 +30,8 @@ const Steps = ({
   clickeable = false,
   type = "steps",
   defaultItem,
+  step,
+  actualValue,
   buttons,
   external,
 }: Props) => {
@@ -49,40 +53,63 @@ const Steps = ({
   const prevStepFn = () => {
     setDirection("left");
 
-    setStepsArray((prevSteps) => {
-      const updatedSteps = prevSteps.map((item) => {
-        if (item.index === selectedStep - 1) {
-          return { ...item, value: 0 };
-        }
-        return item;
-      });
-      return updatedSteps;
-    });
+    setStepsArray((prevSteps) =>
+      prevSteps.map((item) =>
+        item.index === selectedStep ? { ...item, value: 0 } : item,
+      ),
+    );
 
-    setValueStep((prevValue) => prevValue - 100 / (children.length - 1));
-    setSelectedStep((prevSelected) => prevSelected - 1);
+    setSelectedStep((prevSelected) => {
+      const newSelected = prevSelected - 1;
+      if (newSelected > 0) {
+        setValueStep((prevValue) => prevValue - 100 / (children.length - 1));
+        return newSelected;
+      }
+      return prevSelected;
+    });
   };
 
   const nextStepFn = () => {
     setDirection("right");
 
-    setStepsArray((prevSteps) => {
-      const updatedSteps = prevSteps.map((item) => {
-        if (item.index === selectedStep) {
-          return { ...item, value: 100 };
-        }
-        return item;
-      });
-      return updatedSteps;
-    });
+    setStepsArray((prevSteps) =>
+      prevSteps.map((item) =>
+        item.index === selectedStep ? { ...item, value: 100 } : item,
+      ),
+    );
 
-    setValueStep((prevValue) => prevValue + 100 / (children.length - 1));
-    setSelectedStep((prevSelected) => prevSelected + 1);
+    setSelectedStep((prevSelected) => {
+      const newSelected = prevSelected + 1;
+      if (newSelected <= children.length) {
+        setValueStep((prevValue) => prevValue + 100 / (children.length - 1));
+        return newSelected;
+      }
+      return prevSelected;
+    });
   };
 
   useEffect(() => {
     createSteps(children.length);
   }, [children]);
+
+  useEffect(() => {
+    if (step && step > 0 && step <= children.length) {
+      if (step < selectedStep) {
+        setDirection("left");
+      } else {
+        setDirection("right");
+      }
+      setSelectedStep(step);
+    }
+  }, [step]);
+
+  useEffect(() => {
+    if (actualValue) {
+      actualValue(selectedStep);
+    }
+  }, [selectedStep]);
+
+  console.log(stepsArray);
 
   return (
     <>
@@ -96,7 +123,12 @@ const Steps = ({
         )}
       >
         {/* HEAD */}
-        <div className="flex justify-between w-auto mx-auto items-center z-50 gap-2">
+        <div
+          className={cn(
+            "flex justify-between w-auto mx-auto items-center z-50 gap-2",
+            { "w-full": children.length > 5 },
+          )}
+        >
           {stepsArray &&
             stepsArray.map((step, i) => (
               <Fragment key={i}>
@@ -115,25 +147,50 @@ const Steps = ({
                         type == "carousel",
                     },
                     {
+                      "text-default-400": step.index < selectedStep,
+                    },
+                    {
                       "bg-primary text-default-white":
                         selectedStep === step.index && type == "carousel",
                     },
                     {
-                      "cursor-pointer hover:opacity-75":
-                        clickeable && selectedStep !== step.index,
+                      "cursor-pointer hover:text-default-foreground hover:opacity-70":
+                        (clickeable &&
+                          selectedStep !== step.index &&
+                          step.index == selectedStep + 1) ||
+                        step.index == selectedStep - 1 ||
+                        (clickeable && type !== "steps"),
                     },
                   )}
                   onClick={() => {
-                    if (clickeable) {
-                      const updatedSteps = stepsArray.map((item) => {
-                        if (item.index === step.index - 1) {
-                          return { ...item, value: 100 };
-                        }
-                        return item;
-                      });
-
-                      setStepsArray(updatedSteps);
-                      setSelectedStep(step.index);
+                    if (
+                      (clickeable &&
+                        selectedStep !== step.index &&
+                        step.index == selectedStep + 1) ||
+                      step.index == selectedStep - 1 ||
+                      (clickeable && type !== "steps")
+                    ) {
+                      if (selectedStep < step.index) {
+                        setDirection("right");
+                        const updatedSteps = stepsArray.map((item) => {
+                          if (item.index === step.index - 1) {
+                            return { ...item, value: 100 };
+                          }
+                          return item;
+                        });
+                        setStepsArray(updatedSteps);
+                        setSelectedStep(step.index);
+                      } else {
+                        setDirection("left");
+                        const updatedSteps = stepsArray.map((item) => {
+                          if (item.index === step.index) {
+                            return { ...item, value: 0 };
+                          }
+                          return item;
+                        });
+                        setStepsArray(updatedSteps);
+                        setSelectedStep(step.index);
+                      }
                     }
                   }}
                 >
@@ -166,10 +223,6 @@ const Steps = ({
                 className="w-full"
                 classNames={{
                   labelWrapper: "font-semibold",
-                  // labelWrapper: cn("text-center text-primary font-semibold", {
-                  //   "text-green": valueStep == 100,
-                  //   "text-warning": valueStep >= 50 && valueStep < 100,
-                  // }),
                 }}
                 showValueLabel={type == "steps" && children.length > 5}
               />
@@ -200,7 +253,7 @@ const Steps = ({
                   initial={{
                     x: direction === "left" ? -2000 : 2000,
                   }}
-                  transition={{ duration: 0.5 }}
+                  transition={{ duration: 0.3 }}
                   animate={{ x: 0 }}
                   exit={{
                     position: "absolute",
@@ -215,67 +268,65 @@ const Steps = ({
       </div>
 
       {/* BUTTONS */}
-      {buttons && (
-        <>
-          {buttons.position && (
-            <div
-              className={cn({
-                "flex gap-4 mx-auto items-center justify-center":
-                  buttons.position == "bottom",
-                "flex justify-center": buttons.position == "side",
+      {buttons?.show && (
+        <div>
+          <div
+            className={cn("", {
+              "flex gap-4 mx-auto items-center justify-center":
+                buttons.position == "bottom",
+              "flex justify-center ": buttons.position == "side",
+            })}
+          >
+            <Button
+              color="primary"
+              className={cn("rounded-full", {
+                "absolute top-[50%] bottom-[50%] self-center items-center justify-center left-4 rounded-full":
+                  buttons.position == "side",
+                hidden: selectedStep == 1,
               })}
-            >
-              <Button
-                color="primary"
-                className={cn("rounded-full", {
-                  "absolute top-[50%] bottom-[50%] self-center items-center justify-center left-4 rounded-full":
-                    buttons.position == "side",
-                  hidden: selectedStep == 1,
-                })}
-                isIconOnly={!external}
-                isDisabled={!external && selectedStep < 2}
-                onClick={() => {
-                  if (selectedStep < 2 && external) {
-                    external.back();
-                    return;
-                  }
-                  prevStepFn();
-                }}
-                startContent={
-                  selectedStep < 2 && external ? (
-                    <p>Volver</p>
-                  ) : (
-                    <Icon icon="caret-left-fill" className="text-lg" />
-                  )
+              isIconOnly={!external}
+              isDisabled={!external && selectedStep < 2}
+              onClick={() => {
+                if (selectedStep < 2 && external) {
+                  external.back();
+                  return;
                 }
-              />
-              <Button
-                color="primary"
-                className={cn("rounded-full", {
-                  "absolute top-[50%] bottom-[50%] self-center items-center justify-center right-4 rounded-full":
-                    buttons.position === "side",
-                  hidden: selectedStep == children.length,
-                })}
-                isIconOnly={!external}
-                isDisabled={!external && children.length <= selectedStep}
-                onClick={() => {
-                  if (children.length <= selectedStep && external) {
-                    external.next();
-                    return;
-                  }
-                  nextStepFn();
-                }}
-                startContent={
-                  children.length <= selectedStep && external ? (
-                    <p>Continuar</p>
-                  ) : (
-                    <Icon icon="caret-right-fill" className="text-lg" />
-                  )
+                prevStepFn();
+              }}
+              startContent={
+                selectedStep < 2 && external ? (
+                  <p>Volver</p>
+                ) : (
+                  <Icon icon="caret-left-fill" className="text-lg" />
+                )
+              }
+            />
+            <Button
+              color="primary"
+              className={cn("rounded-full", {
+                "absolute top-[50%] bottom-[50%] self-center items-center justify-center right-4 rounded-full":
+                  buttons.position === "side",
+                hidden: selectedStep == children.length,
+              })}
+              isIconOnly={!external}
+              isDisabled={!external && children.length <= selectedStep}
+              onClick={() => {
+                if (children.length <= selectedStep && external) {
+                  external.next();
+                  return;
                 }
-              />
-            </div>
-          )}
-        </>
+                nextStepFn();
+              }}
+              startContent={
+                children.length <= selectedStep && external ? (
+                  <p>Continuar</p>
+                ) : (
+                  <Icon icon="caret-right-fill" className="text-lg" />
+                )
+              }
+            />
+          </div>
+        </div>
       )}
     </>
   );

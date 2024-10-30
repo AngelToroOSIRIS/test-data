@@ -1,6 +1,12 @@
 import Steps from "@/components/ui/Steps";
+import { useState } from "react";
+import { Button } from "@nextui-org/react";
 
 const Main = () => {
+  const [count, setCount] = useState(0);
+
+  const data = [1, 2, 3, 4, 5];
+
   const classDiv =
     "bg-default w-full text-center flex flex-col gap-4 justify-center items-center text-2xl font-semibold h-[450px] rounded-large";
 
@@ -9,7 +15,12 @@ const Main = () => {
       <Steps
         type="steps"
         clickeable={true}
-        buttons={{ show: false, position: "side" }}
+        step={count}
+        defaultItem={1}
+        actualValue={(value) => {
+          setCount(value);
+        }}
+        buttons={{ show: true, position: "side" }}
         // external={{
         //   back: () => {
         //     alert("Volviendo...");
@@ -19,56 +30,22 @@ const Main = () => {
         //   },
         // }}
       >
-        <div className={classDiv}>
-          <p>Paso 1</p>
-          <div className="flex gap-4"></div>
-        </div>
-        <div className={classDiv}>
-          <p>Paso 2</p>
-          <div className="flex gap-4"></div>
-        </div>
-        <div className={classDiv}>
-          <p>Paso 3</p>
-          <div className="flex gap-4"></div>
-        </div>
-        <div className={classDiv}>
-          <p>Paso 4</p>
-          <div className="flex gap-4"></div>
-        </div>
-        <div className={classDiv}>
-          <p>Paso 5</p>
-          <div className="flex gap-4"></div>
-        </div>
-        {/*<div className="bg-default w-full text-center flex justify-center items-center text-4xl font-semibold h-[450px] rounded-large">*/}
-        {/*  Paso 6*/}
-        {/*</div>*/}
-        {/*<div className="bg-default w-full text-center flex justify-center items-center text-4xl font-semibold h-[450px] rounded-large">*/}
-        {/*  Paso 7*/}
-        {/*</div>*/}
-        {/*<div className="bg-default w-full text-center flex justify-center items-center text-4xl font-semibold h-[450px] rounded-large">*/}
-        {/*  Paso 8*/}
-        {/*</div>*/}
-        {/*<div className="bg-default w-full text-center flex justify-center items-center text-4xl font-semibold h-[450px] rounded-large">*/}
-        {/*  Paso 9*/}
-        {/*</div>*/}
-        {/*<div className="bg-default w-full text-center flex justify-center items-center text-4xl font-semibold h-[450px] rounded-large">*/}
-        {/*  Paso 10*/}
-        {/*</div>*/}
-        {/*<div className="bg-default w-full text-center flex justify-center items-center text-4xl font-semibold h-[450px] rounded-large">*/}
-        {/*  Paso 11*/}
-        {/*</div>*/}
-        {/*<div className="bg-default w-full text-center flex justify-center items-center text-4xl font-semibold h-[450px] rounded-large">*/}
-        {/*  Paso 12*/}
-        {/*</div>*/}
-        {/*<div className="bg-default w-full text-center flex justify-center items-center text-4xl font-semibold h-[450px] rounded-large">*/}
-        {/*  Paso 13*/}
-        {/*</div>*/}
-        {/*<div className="bg-default w-full text-center flex justify-center items-center text-4xl font-semibold h-[450px] rounded-large">*/}
-        {/*  Paso 14*/}
-        {/*</div>*/}
-        {/*<div className="bg-default w-full text-center flex justify-center items-center text-4xl font-semibold h-[450px] rounded-large">*/}
-        {/*  Paso 15*/}
-        {/*</div>*/}
+        {data.map((item, i) => (
+          <div key={i} className={classDiv}>
+            <p>Paso</p>
+            <div className="flex gap-4">
+              <div className="flex justify-between mx-auto text-xl gap-4">
+                <Button color="success" onClick={() => setCount(count - 1)}>
+                  Anterior
+                </Button>
+                <p className="text-center text-4xl font-semibold">{item}</p>
+                <Button color="primary" onClick={() => setCount(count + 1)}>
+                  Siguiente
+                </Button>
+              </div>
+            </div>
+          </div>
+        ))}
       </Steps>
     </main>
   );

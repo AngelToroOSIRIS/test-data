@@ -25,7 +25,7 @@ const Main = () => {
   ];
 
   return (
-    <main className="mt-[50px] relative flex flex-col gap-4 w-[95%] mx-auto">
+    <main className="mt-[50px] relative flex flex-col gap-4 w-[95%] max-w-[1000px] mx-auto">
       {select !== "all" && (
         <Icon
           icon="arrow-left"
@@ -57,7 +57,7 @@ const Main = () => {
       {select === "tooltip" && <MainTooltip />}
       {select === "modal" && <MainModal />}
       {select === "steps" && <MainSteps />}
-      {select === "sideMenu" && <MainSideMenu />}
+      {select === "sidemenu" && <MainSideMenu />}
     </main>
   );
 };

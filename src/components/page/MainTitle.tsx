@@ -44,11 +44,11 @@ const MainTitle = () => {
         <InputForm
           name="text"
           type="text"
+          placeholder="Ingrese texto"
+          label={{ value: "Text", required: false }}
           onChange={({ value }) =>
             value ? setText(String(value)) : setText("Title component")
           }
-          placeholder="Ingrese texto"
-          label={{ value: "Text", required: false }}
         />
         <div className="flex justify-between">
           <Switch

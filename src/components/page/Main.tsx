@@ -23,11 +23,11 @@ const Main = () => {
   ];
 
   return (
-    <main className="mt-[50px] flex flex-col gap-4 w-[95%] mx-auto">
+    <main className="mt-[50px] relative flex flex-col gap-4 w-[95%] mx-auto">
       {select !== "all" && (
         <Icon
           icon="arrow-left"
-          className="text-default-400 text-2xl p-2 w-8 h-8 hover:bg-divider hover:text-default-foreground flex items-center justify-center cursor-pointer transition-all rounded-full"
+          className="text-default-400 absolute top-4 left-2 text-2xl p-2 w-8 h-8 hover:bg-divider hover:text-default-foreground flex items-center justify-center cursor-pointer transition-all rounded-full"
           onClick={() => setSelect("all")}
         />
       )}

@@ -3,8 +3,7 @@
 import { useState } from "react";
 import Title from "@/components/ui/Title";
 import InputForm from "@/components/forms/InputForm";
-import { Divider, SliderValue, Switch, Tooltip } from "@nextui-org/react";
-import { motion } from "framer-motion";
+import { Divider, SliderValue, Switch } from "@nextui-org/react";
 import { Slider } from "@nextui-org/slider";
 import { Code } from "@nextui-org/code";
 
@@ -16,21 +15,20 @@ const MainTitle = () => {
   const [value, setValue] = useState<SliderValue>(0);
 
   return (
-    <div className="flex justify-between w-full max-w-[1000px] mx-auto gap-2">
-      <div className="flex flex-col gap-3 w-full ">
-        <Title text="Title.tsx" className="text-3xl" center={true} />
+    <div className="flex flex-col md:flex-row md:justify-between w-full max-w-[1000px] mx-auto gap-2">
+      <div className="flex flex-col gap-3 bg-background rounded-large p-4 w-full max-w-[900px] ">
+        <Title text="Demo Title.tsx" className="text-3xl" center />
         <Divider className="w-[95%] bg-divider mx-auto" />
-        <p>Demo: </p>
         <Title
           text={text}
           center={center}
           primary={primary}
-          className="mt-10"
+          className="my-5"
           background={background}
           size={value !== 0 ? (value == 0.5 ? "medium" : "title") : "subtitle"}
         />
       </div>
-      <div className="flex flex-col gap-4 bg-background w-[500px] rounded-large p-4">
+      <div className="flex flex-col gap-4 bg-background w-full md:w-[85%] max-w-[800px] rounded-large p-4">
         <Title text="Propiedades" size="medium" />
         <Code className="flex flex-col w-full mx-auto">
           <p>{"text?: string;"}</p>
@@ -42,7 +40,7 @@ const MainTitle = () => {
           <p>{"size?: title | medium | subtitle;"}</p>
         </Code>
         <Divider className="w-[95%] bg-divider mx-auto" />
-        <Title text="Test:" center={false} primary />
+        <Title text="Test" size="medium" primary />
         <InputForm
           name="text"
           type="text"
@@ -65,7 +63,14 @@ const MainTitle = () => {
             onValueChange={setPrimary}
             classNames={{ thumb: "bg-default-white", wrapper: "bg-default" }}
           >
-            Primary color
+            Primary
+          </Switch>
+          <Switch
+            isSelected={background}
+            onValueChange={setBackground}
+            classNames={{ thumb: "bg-default-white", wrapper: "bg-default" }}
+          >
+            Background
           </Switch>
         </div>
         <Slider
@@ -93,13 +98,6 @@ const MainTitle = () => {
             filler: "bg-primary",
           }}
         />
-        <Switch
-          isSelected={background}
-          onValueChange={setBackground}
-          classNames={{ thumb: "bg-default-white", wrapper: "bg-default" }}
-        >
-          Background text
-        </Switch>
       </div>
     </div>
   );

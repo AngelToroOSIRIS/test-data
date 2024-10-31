@@ -10,6 +10,7 @@ import MainTooltip from "@/components/page/MainTooltip";
 import MainModal from "@/components/page/MainModal";
 import MainSteps from "@/components/page/MainSteps";
 import MainIcon from "@/components/page/MainIcon";
+import MainSideMenu from "@/components/page/MainSideMenu";
 
 const Main = () => {
   const [select, setSelect] = useState<string>("all");
@@ -18,6 +19,7 @@ const Main = () => {
     { name: "Title", state: "Terminado" },
     { name: "Icon", state: "Terminado" },
     { name: "Tooltip", state: "Terminado" },
+    { name: "SideMenu", state: "Terminado" },
     { name: "Modal", state: "Terminado" },
     { name: "Steps", state: "En proceso" },
   ];
@@ -55,6 +57,7 @@ const Main = () => {
       {select === "tooltip" && <MainTooltip />}
       {select === "modal" && <MainModal />}
       {select === "steps" && <MainSteps />}
+      {select === "sideMenu" && <MainSideMenu />}
     </main>
   );
 };

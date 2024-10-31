@@ -9,6 +9,8 @@ const MainSideMenu = () => {
   const [showMenu, setShowMenu] = useState(false);
   const [isRight, setIsRight] = useState(false);
   const [closeDisabled, setCloseDisabled] = useState(false);
+  const [backdrop, setBackdrop] = useState(false);
+  const [background, setBackground] = useState(false);
 
   return (
     <div className="flex flex-col md:flex-row md:justify-between w-full max-w-[1000px] mx-auto gap-2">
@@ -29,10 +31,12 @@ const MainSideMenu = () => {
         <AnimatePresence>
           {showMenu && (
             <SideMenu
-              className="max-w-[400px] flex flex-col gap-4 items-center"
+              backdrop={backdrop}
+              background={background}
               setShowAside={setShowMenu}
               disabledClosed={closeDisabled}
               position={isRight ? "right" : "left"}
+              className="max-w-[400px] flex flex-col gap-4 items-center"
             >
               <Title text="SideMenu" size="title" center={false} />
               <p>
@@ -100,6 +104,22 @@ const MainSideMenu = () => {
           classNames={{ thumb: "bg-default-white", wrapper: "bg-default" }}
         >
           Close disabled
+        </Switch>
+        <Switch
+          className="mx-auto"
+          isSelected={backdrop}
+          onValueChange={setBackdrop}
+          classNames={{ thumb: "bg-default-white", wrapper: "bg-default" }}
+        >
+          Backdrop
+        </Switch>
+        <Switch
+          className="mx-auto"
+          isSelected={background}
+          onValueChange={setBackground}
+          classNames={{ thumb: "bg-default-white", wrapper: "bg-default" }}
+        >
+          Background
         </Switch>
       </div>
     </div>

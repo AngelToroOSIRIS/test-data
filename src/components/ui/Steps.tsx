@@ -45,7 +45,7 @@ const Steps = ({
   const createSteps = (steps: number) => {
     const newStepsArray = Array.from({ length: steps }, (_, i) => ({
       index: i + 1,
-      value: 0,
+      value: defaultItem && defaultItem > i + 1 ? 100 : 0,
     }));
     setStepsArray(newStepsArray);
   };
@@ -53,39 +53,36 @@ const Steps = ({
   const prevStepFn = () => {
     setDirection("left");
 
-    setStepsArray((prevSteps) =>
-      prevSteps.map((item) =>
-        item.index === selectedStep ? { ...item, value: 0 } : item,
-      ),
-    );
-
-    setSelectedStep((prevSelected) => {
-      const newSelected = prevSelected - 1;
-      if (newSelected > 0) {
-        setValueStep((prevValue) => prevValue - 100 / (children.length - 1));
-        return newSelected;
-      }
-      return prevSelected;
+    setStepsArray((prevSteps) => {
+      const updatedSteps = prevSteps.map((item) => {
+        if (item.index === selectedStep - 1) {
+          return { ...item, value: 0 };
+        }
+        console.log(item);
+        return item;
+      });
+      return updatedSteps;
     });
+
+    setValueStep((prevValue) => prevValue - 100 / (children.length - 1));
+    setSelectedStep((prevSelected) => prevSelected - 1);
   };
 
   const nextStepFn = () => {
     setDirection("right");
 
-    setStepsArray((prevSteps) =>
-      prevSteps.map((item) =>
-        item.index === selectedStep ? { ...item, value: 100 } : item,
-      ),
-    );
-
-    setSelectedStep((prevSelected) => {
-      const newSelected = prevSelected + 1;
-      if (newSelected <= children.length) {
-        setValueStep((prevValue) => prevValue + 100 / (children.length - 1));
-        return newSelected;
-      }
-      return prevSelected;
+    setStepsArray((prevSteps) => {
+      const updatedSteps = prevSteps.map((item) => {
+        if (item.index === selectedStep) {
+          return { ...item, value: 100 };
+        }
+        return item;
+      });
+      return updatedSteps;
     });
+
+    setSelectedStep((prevSelected) => prevSelected + 1);
+    setValueStep((prevValue) => prevValue + 100 / (children.length - 1));
   };
 
   useEffect(() => {
@@ -108,8 +105,6 @@ const Steps = ({
       actualValue(selectedStep);
     }
   }, [selectedStep]);
-
-  console.log(stepsArray);
 
   return (
     <>
@@ -235,7 +230,7 @@ const Steps = ({
       <div className="relative overflow-hidden mx-auto w-full">
         {children.length > 0 &&
           children.map((item, i) => (
-            <AnimatePresence key={i}>
+            <AnimatePresence key={i} mode="wait">
               {selectedStep === i + 1 && (
                 <motion.div
                   drag="x"

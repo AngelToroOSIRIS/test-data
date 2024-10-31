@@ -1,0 +1,108 @@
+"use client";
+
+import { useState } from "react";
+import Title from "@/components/ui/Title";
+import InputForm from "@/components/forms/InputForm";
+import { Divider, SliderValue, Switch, Tooltip } from "@nextui-org/react";
+import { motion } from "framer-motion";
+import { Slider } from "@nextui-org/slider";
+import { Code } from "@nextui-org/code";
+
+const MainTitle = () => {
+  const [text, setText] = useState<string>("Title component");
+  const [center, setCenter] = useState(false);
+  const [primary, setPrimary] = useState(false);
+  const [background, setBackground] = useState(false);
+  const [value, setValue] = useState<SliderValue>(0);
+
+  return (
+    <div className="flex justify-between w-full max-w-[1000px] mx-auto gap-2">
+      <div className="flex flex-col gap-3 w-full ">
+        <Title text="Title.tsx" className="text-3xl" center={true} />
+        <Divider className="w-[95%] bg-divider mx-auto" />
+        <p>Demo: </p>
+        <Title
+          text={text}
+          center={center}
+          primary={primary}
+          className="mt-10"
+          background={background}
+          size={value !== 0 ? (value == 0.5 ? "medium" : "title") : "subtitle"}
+        />
+      </div>
+      <div className="flex flex-col gap-4 bg-background w-[500px] rounded-large p-4">
+        <Title text="Propiedades" size="medium" />
+        <Code className="flex flex-col w-full mx-auto">
+          <p>{"text?: string;"}</p>
+          <p>{"center? : boolean;"}</p>
+          <p>{"primary? : boolean;"}</p>
+          <p>{"className?: string;"}</p>
+          <p>{"background? : boolean;"}</p>
+          <p>{"onClick? : () => void;"}</p>
+          <p>{"size?: title | medium | subtitle;"}</p>
+        </Code>
+        <Divider className="w-[95%] bg-divider mx-auto" />
+        <Title text="Test:" center={false} primary />
+        <InputForm
+          name="text"
+          type="text"
+          onChange={({ value }) =>
+            value ? setText(String(value)) : setText("Title component")
+          }
+          placeholder="Ingrese texto"
+          label={{ value: "Text", required: false }}
+        />
+        <div className="flex justify-between">
+          <Switch
+            isSelected={center}
+            onValueChange={setCenter}
+            classNames={{ thumb: "bg-default-white", wrapper: "bg-default" }}
+          >
+            Center
+          </Switch>
+          <Switch
+            isSelected={primary}
+            onValueChange={setPrimary}
+            classNames={{ thumb: "bg-default-white", wrapper: "bg-default" }}
+          >
+            Primary color
+          </Switch>
+        </div>
+        <Slider
+          step={0.5}
+          showSteps
+          value={value}
+          onChange={setValue}
+          label="Size"
+          renderValue={({ children, ...props }) => (
+            <p>
+              {children != 0
+                ? children == 0.5
+                  ? "Medium"
+                  : "Title"
+                : "Subtitle"}
+            </p>
+          )}
+          maxValue={1}
+          minValue={0}
+          color="primary"
+          classNames={{
+            thumb: "bg-default-white",
+            step: "bg-default",
+            track: "bg-default",
+            filler: "bg-primary",
+          }}
+        />
+        <Switch
+          isSelected={background}
+          onValueChange={setBackground}
+          classNames={{ thumb: "bg-default-white", wrapper: "bg-default" }}
+        >
+          Background text
+        </Switch>
+      </div>
+    </div>
+  );
+};
+
+export default MainTitle;

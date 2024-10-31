@@ -1,52 +1,60 @@
-import Steps from "@/components/ui/Steps";
+"use client";
+
 import { useState } from "react";
-import { Button } from "@nextui-org/react";
+import CardComponent from "@/components/ui/CardComponent";
+import { StatesComponents } from "@/types/d";
+import Title from "@/components/ui/Title";
+import MainTitle from "@/components/page/MainTitle";
+import Icon from "@/components/ui/Icon";
+import MainTooltip from "@/components/page/MainTooltip";
+import MainModal from "@/components/page/MainModal";
+import MainSteps from "@/components/page/MainSteps";
+import MainIcon from "@/components/page/MainIcon";
 
 const Main = () => {
-  const [count, setCount] = useState(0);
+  const [select, setSelect] = useState<string>("all");
 
-  const data = [1, 2, 3, 4, 5];
-
-  const classDiv =
-    "bg-default w-full text-center flex flex-col gap-4 justify-center items-center text-2xl font-semibold h-[450px] rounded-large";
+  const components: { name: string; state: StatesComponents }[] = [
+    { name: "Title", state: "Terminado" },
+    { name: "Icon", state: "Terminado" },
+    { name: "Tooltip", state: "Terminado" },
+    { name: "Modal", state: "Terminado" },
+    { name: "Steps", state: "En proceso" },
+  ];
 
   return (
-    <main className="flex flex-col gap-3 w-[95%] max-w-[850px] p-2 rounded-large mx-auto relative my-20">
-      <Steps
-        type="steps"
-        clickeable={true}
-        step={count}
-        defaultItem={1}
-        actualValue={(value) => {
-          setCount(value);
-        }}
-        buttons={{ show: true, position: "side" }}
-        // external={{
-        //   back: () => {
-        //     alert("Volviendo...");
-        //   },
-        //   next: () => {
-        //     alert("Redirigiendo...");
-        //   },
-        // }}
-      >
-        {data.map((item, i) => (
-          <div key={i} className={classDiv}>
-            <p>Paso</p>
-            <div className="flex gap-4">
-              <div className="flex justify-between mx-auto text-xl gap-4">
-                <Button color="success" onClick={() => setCount(count - 1)}>
-                  Anterior
-                </Button>
-                <p className="text-center text-4xl font-semibold">{item}</p>
-                <Button color="primary" onClick={() => setCount(count + 1)}>
-                  Siguiente
-                </Button>
-              </div>
-            </div>
+    <main className="mt-[50px] flex flex-col gap-4 w-[95%] mx-auto">
+      {select !== "all" && (
+        <Icon
+          icon="arrow-left"
+          className="text-default-400 text-2xl p-2 w-8 h-8 hover:bg-divider hover:text-default-foreground flex items-center justify-center cursor-pointer transition-all rounded-full"
+          onClick={() => setSelect("all")}
+        />
+      )}
+      {select == "all" && (
+        <div className="max-w-[1000px] mx-auto flex flex-col gap-4">
+          <Title
+            primary={false}
+            text="Componentes"
+            className="text-4xl text-center font-semibold"
+          />
+          <div className="flex flex-wrap w-full justify-center items-center gap-5">
+            {components.map((component, i) => (
+              <CardComponent
+                key={i}
+                name={component.name}
+                state={component.state}
+                setSelected={setSelect}
+              />
+            ))}
           </div>
-        ))}
-      </Steps>
+        </div>
+      )}
+      {select === "title" && <MainTitle />}
+      {select === "icon" && <MainIcon />}
+      {select === "tooltip" && <MainTooltip />}
+      {select === "modal" && <MainModal />}
+      {select === "steps" && <MainSteps />}
     </main>
   );
 };

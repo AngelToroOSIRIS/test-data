@@ -6,6 +6,7 @@ import InputForm from "@/components/forms/InputForm";
 import { Divider, SliderValue, Switch } from "@nextui-org/react";
 import { Slider } from "@nextui-org/slider";
 import { Code } from "@nextui-org/code";
+import { motion } from "framer-motion";
 
 const MainTitle = () => {
   const [text, setText] = useState<string>("Title component");
@@ -15,7 +16,12 @@ const MainTitle = () => {
   const [value, setValue] = useState<SliderValue>(0);
 
   return (
-    <div className="flex flex-col md:flex-row md:justify-between w-full max-w-[1000px] mx-auto gap-2">
+    <motion.div
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
+      exit={{ opacity: 0 }}
+      className="flex flex-col md:flex-row md:justify-between w-full max-w-[1000px] mx-auto gap-2"
+    >
       <div className="flex flex-col gap-3 bg-background rounded-large p-4 w-full max-w-[900px] ">
         <Title text="Demo Title.tsx" className="text-3xl" center />
         <Divider className="w-[95%] bg-divider mx-auto" />
@@ -99,7 +105,7 @@ const MainTitle = () => {
           }}
         />
       </div>
-    </div>
+    </motion.div>
   );
 };
 

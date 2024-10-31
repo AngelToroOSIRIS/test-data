@@ -4,13 +4,19 @@ import { Code } from "@nextui-org/code";
 import Icon from "@/components/ui/Icon";
 import { useState } from "react";
 import InputForm from "@/components/forms/InputForm";
+import { motion } from "framer-motion";
 
 const MainIcon = () => {
   const [icon, setIcon] = useState<string>("emoji-laughing");
   const [title, setTitle] = useState<string>("Icon");
 
   return (
-    <div className="flex flex-col md:flex-row md:justify-between w-full max-w-[1000px] mx-auto gap-2">
+    <motion.div
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
+      exit={{ opacity: 0 }}
+      className="flex flex-col md:flex-row md:justify-between w-full max-w-[1000px] mx-auto gap-2"
+    >
       <div className="flex flex-col gap-3 bg-background rounded-large p-4 w-full max-w-[900px] ">
         <Title text="Demo Icon.tsx" size="title" className="text-3xl" center />
         <Divider className="w-[95%] bg-divider mx-auto" />
@@ -29,23 +35,23 @@ const MainIcon = () => {
         <InputForm
           name="icon"
           type="text"
+          placeholder="Ingrese icon"
+          label={{ value: "Icon", required: false }}
           onChange={({ value }) =>
             value ? setIcon(String(value)) : setIcon("emoji-laughing")
           }
-          placeholder="Ingrese icon"
-          label={{ value: "Icon", required: false }}
         />
         <InputForm
-          name="title"
           type="text"
+          name="title"
+          placeholder="Ingrese icon"
+          label={{ value: "Title", required: false }}
           onChange={({ value }) =>
             value ? setTitle(String(value)) : setTitle("icon")
           }
-          placeholder="Ingrese icon"
-          label={{ value: "Title", required: false }}
         />
       </div>
-    </div>
+    </motion.div>
   );
 };
 

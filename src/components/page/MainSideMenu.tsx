@@ -4,6 +4,7 @@ import { Code } from "@nextui-org/code";
 import SideMenu from "@/components/ui/SideMenu";
 import { useState } from "react";
 import { AnimatePresence } from "framer-motion";
+import { motion } from "framer-motion";
 
 const MainSideMenu = () => {
   const [showMenu, setShowMenu] = useState(false);
@@ -13,7 +14,12 @@ const MainSideMenu = () => {
   const [background, setBackground] = useState(false);
 
   return (
-    <div className="flex flex-col md:flex-row md:justify-between w-full max-w-[1000px] mx-auto gap-2">
+    <motion.div
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
+      exit={{ opacity: 0 }}
+      className="flex flex-col md:flex-row md:justify-between w-full max-w-[1000px] mx-auto gap-2"
+    >
       <div className="flex flex-col gap-3 bg-background rounded-large p-4 w-full max-w-[900px] ">
         <Title
           text="Demo SideMenu.tsx"
@@ -122,7 +128,7 @@ const MainSideMenu = () => {
           Background
         </Switch>
       </div>
-    </div>
+    </motion.div>
   );
 };
 

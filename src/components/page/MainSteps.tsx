@@ -3,6 +3,7 @@ import { useState } from "react";
 import { Button, Divider, Switch } from "@nextui-org/react";
 import Title from "@/components/ui/Title";
 import { Code } from "@nextui-org/code";
+import { motion } from "framer-motion";
 
 const MainSteps = () => {
   const [count, setCount] = useState(0);
@@ -13,7 +14,12 @@ const MainSteps = () => {
     "bg-default w-full text-center flex flex-col gap-4 justify-center items-center text-2xl font-semibold h-[450px] rounded-large";
 
   return (
-    <div className="flex flex-col md:flex-row md:justify-between w-full mx-auto gap-2">
+    <motion.div
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
+      exit={{ opacity: 0 }}
+      className="flex flex-col md:flex-row md:justify-between w-full mx-auto gap-2"
+    >
       <div className="flex flex-col gap-3 bg-background rounded-large p-4 w-full max-w-[900px] ">
         <Title text="Demo Steps.tsx" size="title" className="text-3xl" center />
         <Divider className="w-[95%] bg-divider mx-auto" />
@@ -58,7 +64,7 @@ const MainSteps = () => {
         <Divider className="w-[95%] bg-divider mx-auto" />
         <Title text="Test" size="medium" primary />
       </div>
-    </div>
+    </motion.div>
   );
 };
 

@@ -11,6 +11,8 @@ import MainModal from "@/components/page/MainModal";
 import MainSteps from "@/components/page/MainSteps";
 import MainIcon from "@/components/page/MainIcon";
 import MainSideMenu from "@/components/page/MainSideMenu";
+import MainAnimateText from "@/components/page/MainAnimateText";
+import { AnimatePresence } from "framer-motion";
 
 const Main = () => {
   const [select, setSelect] = useState<string>("all");
@@ -19,6 +21,7 @@ const Main = () => {
     { name: "Title", state: "Terminado" },
     { name: "Icon", state: "Terminado" },
     { name: "Tooltip", state: "Terminado" },
+    { name: "AnimateText", state: "Terminado" },
     { name: "SideMenu", state: "Terminado" },
     { name: "Modal", state: "Terminado" },
     { name: "Steps", state: "En proceso" },
@@ -52,12 +55,21 @@ const Main = () => {
           </div>
         </div>
       )}
-      {select === "title" && <MainTitle />}
-      {select === "icon" && <MainIcon />}
-      {select === "tooltip" && <MainTooltip />}
-      {select === "modal" && <MainModal />}
-      {select === "steps" && <MainSteps />}
-      {select === "sidemenu" && <MainSideMenu />}
+      <AnimatePresence mode="wait">
+        {select === "title" && <MainTitle />}
+      </AnimatePresence>
+      <AnimatePresence>{select === "icon" && <MainIcon />}</AnimatePresence>
+      <AnimatePresence>
+        {select === "tooltip" && <MainTooltip />}
+      </AnimatePresence>
+      <AnimatePresence>{select === "modal" && <MainModal />}</AnimatePresence>
+      <AnimatePresence>{select === "steps" && <MainSteps />}</AnimatePresence>
+      <AnimatePresence>
+        {select === "sidemenu" && <MainSideMenu />}
+      </AnimatePresence>
+      <AnimatePresence>
+        {select === "animatetext" && <MainAnimateText />}
+      </AnimatePresence>
     </main>
   );
 };

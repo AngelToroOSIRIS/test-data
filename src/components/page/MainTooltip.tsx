@@ -6,6 +6,7 @@ import { useState } from "react";
 import InputForm from "@/components/forms/InputForm";
 import Icon from "@/components/ui/Icon";
 import { Radio, RadioGroup } from "@nextui-org/radio";
+import { motion } from "framer-motion";
 
 const MainTooltip = () => {
   const [content, setContent] = useState<string>("Tooltip content");
@@ -16,7 +17,12 @@ const MainTooltip = () => {
   );
 
   return (
-    <div className="flex flex-col md:flex-row md:justify-between w-full max-w-[1000px] mx-auto gap-2">
+    <motion.div
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
+      exit={{ opacity: 0 }}
+      className="flex flex-col md:flex-row md:justify-between w-full max-w-[1000px] mx-auto gap-2"
+    >
       <div className="flex flex-col gap-3 bg-background rounded-large p-4 w-full max-w-[900px] ">
         <Title
           text="Demo Tooltip.tsx"
@@ -36,7 +42,16 @@ const MainTooltip = () => {
             {showContent == "text" && (
               <p className="text-lg text-center">{text}</p>
             )}
-            {showContent == "node" && <Button>Hover me</Button>}
+            {showContent == "node" && (
+              <>
+                <div className="bg-default rounded-large p-2 hidden md:block">
+                  Hover me
+                </div>
+                <div className="bg-default rounded-large p-2 block md:hidden ">
+                  Click me
+                </div>
+              </>
+            )}
           </Tooltip>
         </div>
       </div>
@@ -98,7 +113,7 @@ const MainTooltip = () => {
           />
         )}
       </div>
-    </div>
+    </motion.div>
   );
 };
 

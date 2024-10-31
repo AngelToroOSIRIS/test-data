@@ -14,9 +14,12 @@ interface Props {
 const CardComponent = ({ name, state, setSelected }: Props) => {
   return (
     <motion.div
+      whileTap={{ scale: 0.95 }}
       whileHover={{ scale: 1.05 }}
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
       onClick={() => setSelected(name.toLowerCase())}
-      className="flex items-center justify-center bg-background relative select-none w-[300px] rounded-large h-[150px] p-4 hover:cursor-pointer hover:text-primary transition-all"
+      className="flex items-center justify-center bg-background shadow-sm relative select-none w-[300px] rounded-large h-[150px] p-4 hover:cursor-pointer"
     >
       <p className="text-center text-2xl font-semibold">{name}.tsx</p>
       <Chip

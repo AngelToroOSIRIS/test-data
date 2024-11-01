@@ -51,7 +51,7 @@ const Main = ({
   return (
     <>
       {!loading && (
-        <main className="my-[50px] relative flex flex-col gap-4 w-[98%] max-w-[1200px] mx-auto">
+        <main className="my-[50px] relative flex flex-col gap-4 w-[95%] max-w-[1200px] mx-auto">
           {select !== "all" && select !== "datepicker" && (
             <Icon
               icon="arrow-left"

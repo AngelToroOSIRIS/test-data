@@ -15,6 +15,7 @@ import MainAnimateText from "@/components/page/MainAnimateText";
 import { AnimatePresence } from "framer-motion";
 import { useRouter } from "next/navigation";
 import { SimpleLoading } from "@/components/ui/SimpleLoading";
+import MainButton from "@/components/page/MainButton";
 
 const Main = ({
   params,
@@ -33,7 +34,9 @@ const Main = ({
     { name: "AnimateText", state: "Terminado" },
     { name: "SideMenu", state: "Terminado" },
     { name: "Modal", state: "Terminado" },
+    { name: "Button", state: "Terminado" },
     { name: "Steps", state: "En proceso" },
+    { name: "DatePicker", state: "Sin iniciar" },
   ];
 
   useEffect(() => {
@@ -47,11 +50,11 @@ const Main = ({
   return (
     <>
       {!loading && (
-        <main className="mt-[50px] relative flex flex-col gap-4 w-[95%] max-w-[1000px] mx-auto">
+        <main className="my-[50px] relative flex flex-col gap-4 w-[95%] max-w-[1200px] mx-auto">
           {select !== "all" && (
             <Icon
               icon="arrow-left"
-              className="text-default-400 absolute top-4 left-2 text-2xl p-2 w-8 h-8 hover:bg-divider hover:text-default-foreground flex items-center justify-center cursor-pointer transition-all rounded-full"
+              className="text-default-400 absolute top-4 z-30 left-2 text-2xl p-2 w-8 h-8 hover:bg-divider hover:text-default-foreground flex items-center justify-center cursor-pointer transition-all rounded-full"
               onClick={() => {
                 setSelect("all");
                 router.push("/");
@@ -77,25 +80,14 @@ const Main = ({
               </div>
             </div>
           )}
-          <AnimatePresence mode="wait">
-            {select === "title" && <MainTitle />}
-          </AnimatePresence>
-          <AnimatePresence>{select === "icon" && <MainIcon />}</AnimatePresence>
-          <AnimatePresence>
-            {select === "tooltip" && <MainTooltip />}
-          </AnimatePresence>
-          <AnimatePresence>
-            {select === "modal" && <MainModal />}
-          </AnimatePresence>
-          <AnimatePresence>
-            {select === "steps" && <MainSteps />}
-          </AnimatePresence>
-          <AnimatePresence>
-            {select === "sidemenu" && <MainSideMenu />}
-          </AnimatePresence>
-          <AnimatePresence>
-            {select === "animatetext" && <MainAnimateText />}
-          </AnimatePresence>
+          {select === "title" && <MainTitle />}
+          {select === "icon" && <MainIcon />}
+          {select === "tooltip" && <MainTooltip />}
+          {select === "modal" && <MainModal />}
+          {select === "steps" && <MainSteps />}
+          {select === "sidemenu" && <MainSideMenu />}
+          {select === "animatetext" && <MainAnimateText />}
+          {select === "button" && <MainButton />}
         </main>
       )}
       {loading && (

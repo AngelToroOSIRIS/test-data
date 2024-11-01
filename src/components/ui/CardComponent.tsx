@@ -29,14 +29,14 @@ const CardComponent = ({ name, state, setSelected }: Props) => {
         {name}.tsx
       </p>
       <Chip
+        variant="flat"
         color={
           state !== "Sin iniciar"
             ? state === "En proceso"
               ? "warning"
               : "success"
-            : "default"
+            : "danger"
         }
-        variant="flat"
         className="absolute bottom-2 right-2"
       >
         {state}

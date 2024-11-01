@@ -16,6 +16,7 @@ import { AnimatePresence } from "framer-motion";
 import { useRouter } from "next/navigation";
 import { SimpleLoading } from "@/components/ui/SimpleLoading";
 import MainButton from "@/components/page/MainButton";
+import Button from "@/components/ui/Button";
 
 const Main = ({
   params,
@@ -51,7 +52,7 @@ const Main = ({
     <>
       {!loading && (
         <main className="my-[50px] relative flex flex-col gap-4 w-[95%] max-w-[1200px] mx-auto">
-          {select !== "all" && (
+          {select !== "all" && select !== "datepicker" && (
             <Icon
               icon="arrow-left"
               className="text-default-400 absolute top-4 z-30 left-2 text-2xl p-2 w-8 h-8 hover:bg-divider hover:text-default-foreground flex items-center justify-center cursor-pointer transition-all rounded-full"
@@ -88,6 +89,22 @@ const Main = ({
           {select === "sidemenu" && <MainSideMenu />}
           {select === "animatetext" && <MainAnimateText />}
           {select === "button" && <MainButton />}
+          {select === "datepicker" && (
+            <div className="flex flex-col my-8 gap-4 justify-center items-center">
+              <p className="text-center text-default-400 text-2xl select-none font-semibold">
+                Estamos trabajando en este componente...
+              </p>
+              <Button
+                text="Volver"
+                color="primary"
+                icon="arrow-left"
+                className="w-auto mx-auto"
+                onClick={() => {
+                  setSelect("all");
+                }}
+              />
+            </div>
+          )}
         </main>
       )}
       {loading && (

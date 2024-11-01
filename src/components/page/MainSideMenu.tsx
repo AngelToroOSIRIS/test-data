@@ -81,7 +81,7 @@ const MainSideMenu = () => {
       </div>
       <div className="flex flex-col gap-4 bg-background w-full md:w-[85%] max-w-[800px] rounded-large p-4">
         <Title text="Propiedades" size="medium" />
-        <Code className="flex flex-col w-full mx-auto">
+        <Code className="flex flex-col w-full overflow-x-hidden mx-auto">
           <p>{"children: React.ReactNode;"}</p>
           <p>{'position?: "left" | "right";'}</p>
           <p>{"setShowAside: (value: SetStateAction<boolean>) => void;"}</p>

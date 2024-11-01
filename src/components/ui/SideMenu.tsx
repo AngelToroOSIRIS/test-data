@@ -103,7 +103,7 @@ const SideMenu = ({
         )}
         {children}
       </motion.div>
-      {background && (
+      {backdrop && (
         <motion.div
           initial={{ opacity: 0 }}
           animate={{ opacity: backdrop ? 1 : 0 }}
@@ -111,7 +111,7 @@ const SideMenu = ({
           transition={{ duration: 0.5 }}
           className={cn(
             "fixed bg-custom-black bg-opacity-70 top-0 right-0 z-40 w-full h-screen",
-            { "bg-opacity-0": !backdrop },
+            { "bg-opacity-0": !background },
           )}
           onClick={() => {
             if (!disabledClosed) {

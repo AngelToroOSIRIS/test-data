@@ -1,6 +1,6 @@
 import Steps from "@/components/ui/Steps";
 import { useState } from "react";
-import { Button, Divider, Switch } from "@nextui-org/react";
+import { Button, Divider } from "@nextui-org/react";
 import Title from "@/components/ui/Title";
 import { Code } from "@nextui-org/code";
 import { motion } from "framer-motion";
@@ -11,7 +11,7 @@ const MainSteps = () => {
   const data = [1, 2, 3, 4, 5];
 
   const classDiv =
-    "bg-default w-full text-center flex flex-col gap-4 justify-center items-center text-2xl font-semibold h-[450px] rounded-large";
+    "bg-default w-full text-center flex flex-col gap-4 justify-center items-center text-2xl font-semibold h-[400px] rounded-large";
 
   return (
     <motion.div
@@ -19,7 +19,7 @@ const MainSteps = () => {
       animate={{ opacity: 1 }}
       className="flex flex-col md:flex-row md:justify-between w-full mx-auto gap-2"
     >
-      <div className="flex flex-col gap-3 bg-background rounded-large p-4 w-full max-w-[900px] ">
+      <div className="flex flex-col gap-3 bg-background rounded-large relative p-4 w-full max-w-[900px]">
         <Title text="Demo Steps.tsx" size="title" className="text-3xl" center />
         <Divider className="w-[95%] bg-divider mx-auto" />
         <Steps
@@ -37,7 +37,12 @@ const MainSteps = () => {
               <p>Paso</p>
               <div className="flex gap-4">
                 <div className="flex justify-between mx-auto text-xl gap-4">
-                  <Button color="success" onClick={() => setCount(count - 1)}>
+                  <Button
+                    color="success"
+                    onClick={() =>
+                      count > 0 ? setCount(count - 1) : undefined
+                    }
+                  >
                     Anterior
                   </Button>
                   <p className="text-center text-4xl font-semibold">{item}</p>

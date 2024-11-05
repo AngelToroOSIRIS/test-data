@@ -269,13 +269,13 @@ const Steps = ({
             className={cn("", {
               "flex gap-4 mx-auto items-center justify-center":
                 buttons.position == "bottom",
-              "flex justify-center ": buttons.position == "side",
+              "flex justify-center": buttons.position == "side",
             })}
           >
             <Button
               color="primary"
               className={cn("rounded-full", {
-                "absolute top-[50%] bottom-[50%] self-center items-center justify-center left-4 rounded-full":
+                "absolute top-[50%] bottom-[50%] self-center mt-[80px] items-center justify-center left-8 rounded-full":
                   buttons.position == "side",
                 hidden: selectedStep == 1,
               })}
@@ -299,7 +299,7 @@ const Steps = ({
             <Button
               color="primary"
               className={cn("rounded-full", {
-                "absolute top-[50%] bottom-[50%] self-center items-center justify-center right-4 rounded-full":
+                "absolute top-[50%] bottom-[50%] self-center mt-[80px] items-center justify-center right-8 rounded-full":
                   buttons.position === "side",
                 hidden: selectedStep == children.length,
               })}

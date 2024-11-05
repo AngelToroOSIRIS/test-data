@@ -19,6 +19,7 @@ const MainTitle = () => {
     <motion.div
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
+      exit={{ opacity: 0, position: "absolute" }}
       className="flex flex-col md:flex-row md:justify-between w-full mx-auto gap-2"
     >
       <div className="flex flex-col gap-3 bg-background rounded-large p-4 w-full ">

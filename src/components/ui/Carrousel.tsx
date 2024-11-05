@@ -1,6 +1,6 @@
 "use client";
 
-import { Fragment, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { cn } from "@/libs/utils";
 import { AnimatePresence, motion } from "framer-motion";
 import { Button } from "@nextui-org/react";
@@ -14,6 +14,7 @@ interface Step {
 interface Props {
   drag?: boolean;
   clickeable?: boolean;
+  animate?: { show: boolean; time?: number };
   defaultItem?: number;
   images: string[];
   buttons?: {
@@ -26,25 +27,38 @@ const Carrousel = ({
   images,
   clickeable = true,
   drag = true,
+  animate,
   defaultItem,
   buttons,
 }: Props) => {
   const [direction, setDirection] = useState<"right" | "left">("right");
+  const [isInteracting, setIsInteracting] = useState(false);
   const [selectedItem, setSelectedItem] = useState(
     defaultItem && defaultItem <= images.length ? defaultItem : 0,
   );
 
   const prevStepFn = (numItem: number) => {
     setDirection("left");
-
     setSelectedItem(numItem);
   };
 
   const nextStepFn = (numItem: number) => {
     setDirection("right");
-
     setSelectedItem(numItem);
   };
+
+  useEffect(() => {
+    if (animate?.show) {
+      const interval = setInterval(() => {
+        if (!isInteracting) {
+          const nextItem = (selectedItem + 1) % images.length;
+          nextStepFn(nextItem);
+        }
+      }, animate.time ?? 4000);
+
+      return () => clearInterval(interval);
+    }
+  }, [selectedItem, images.length, isInteracting, animate?.show]);
 
   return (
     <section className="relative">
@@ -70,9 +84,6 @@ const Carrousel = ({
                   },
                   {
                     "text-default-400": i < selectedItem,
-                  },
-                  {
-                    "bg-primary text-default-white": selectedItem === i,
                   },
                   { hidden: buttons && buttons.position === "bottom" },
                   {
@@ -110,7 +121,10 @@ const Carrousel = ({
                 <motion.img
                   drag={drag ? "x" : false}
                   dragConstraints={{ right: 0, left: 0 }}
+                  onDragStart={() => setIsInteracting(true)}
                   onDragEnd={(event, info) => {
+                    setIsInteracting(false);
+
                     if (info.offset.x > 100 && selectedItem > 0) {
                       prevStepFn(i - 1);
                     } else if (

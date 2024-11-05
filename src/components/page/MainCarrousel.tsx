@@ -9,6 +9,7 @@ export const MainCarrousel = ({}: Props) => {
   return (
     <MainTemplate name="Carrousel" properties={["Hola"]}>
       <Carrousel
+        animate={{ show: true }}
         buttons={{ position: "side", show: true }}
         images={[
           "/a(1).png",

@@ -16,6 +16,8 @@ import MainButton from "@/components/page/MainButton";
 import Button from "@/components/ui/Button";
 import MainPassword from "@/components/page/MainPassword";
 import { MainCarrousel } from "@/components/page/MainCarrousel";
+import { motion } from "framer-motion";
+import MenuMain from "@/components/ui/MenuMain";
 
 const Main = () => {
   const [select, setSelect] = useState<string>("all");
@@ -35,7 +37,7 @@ const Main = () => {
   ];
 
   return (
-    <main className="my-[50px] relative flex flex-col gap-4 w-[95%] max-w-[1200px] mx-auto">
+    <main className="mb-[50px] mt-2 relative flex flex-col gap-4 w-[95%] max-w-[1200px] mx-auto">
       {select !== "all" && select !== "datepicker" && (
         <Icon
           icon="arrow-left"
@@ -90,6 +92,8 @@ const Main = () => {
           />
         </div>
       )}
+
+      <MenuMain />
     </main>
   );
 };

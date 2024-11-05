@@ -12,22 +12,24 @@ interface Step {
 }
 
 interface Props {
-  children: React.ReactNode[];
+  step?: number;
+  drag?: boolean;
   clickeable?: boolean;
   defaultItem?: number;
-  actualValue?: (value: number) => void;
-  step?: number;
+  children: React.ReactNode[];
   type?: "steps" | "carousel";
+  actualValue?: (value: number) => void;
+  external?: { back: () => void; next: () => void };
   buttons?: {
     show: boolean;
     position?: "bottom" | "side";
   };
-  external?: { back: () => void; next: () => void };
 }
 
 const Steps = ({
   children,
   clickeable = false,
+  drag = true,
   type = "steps",
   defaultItem,
   step,
@@ -50,53 +52,45 @@ const Steps = ({
     setStepsArray(newStepsArray);
   };
 
-  const prevStepFn = () => {
+  const prevStepFn = (currentSelected: number) => {
     setDirection("left");
 
-    setStepsArray((prevSteps) => {
-      const updatedSteps = prevSteps.map((item) => {
-        if (item.index === selectedStep - 1) {
-          return { ...item, value: 0 };
-        }
-        console.log(item);
-        return item;
-      });
-      return updatedSteps;
+    const updatedSteps = stepsArray.map((item) => {
+      if (item.index === currentSelected - 1) {
+        return { ...item, value: 0 };
+      }
+      return item;
     });
+    setStepsArray(updatedSteps);
 
-    setValueStep((prevValue) => prevValue - 100 / (children.length - 1));
-    setSelectedStep((prevSelected) => prevSelected - 1);
+    setSelectedStep(currentSelected - 1);
   };
 
-  const nextStepFn = () => {
+  const nextStepFn = (currentSelected: number) => {
     setDirection("right");
 
-    setStepsArray((prevSteps) => {
-      const updatedSteps = prevSteps.map((item) => {
-        if (item.index === selectedStep) {
-          return { ...item, value: 100 };
-        }
-        return item;
-      });
-      return updatedSteps;
+    const updatedSteps = stepsArray.map((item) => {
+      if (item.index === currentSelected) {
+        return { ...item, value: 100 };
+      }
+      return item;
     });
+    setStepsArray(updatedSteps);
 
-    setSelectedStep((prevSelected) => prevSelected + 1);
-    setValueStep((prevValue) => prevValue + 100 / (children.length - 1));
+    setSelectedStep(currentSelected + 1);
   };
 
   useEffect(() => {
     createSteps(children.length);
-  }, [children]);
+  }, [children.length]);
 
   useEffect(() => {
     if (step && step > 0 && step <= children.length) {
       if (step < selectedStep) {
-        setDirection("left");
+        prevStepFn(step + 1);
       } else {
-        setDirection("right");
+        nextStepFn(step - 1);
       }
-      setSelectedStep(step);
     }
   }, [step]);
 
@@ -104,6 +98,7 @@ const Steps = ({
     if (actualValue) {
       actualValue(selectedStep);
     }
+    setValueStep((100 / (children.length - 1)) * (selectedStep - 1));
   }, [selectedStep]);
 
   return (
@@ -150,14 +145,16 @@ const Steps = ({
                     },
                     {
                       "cursor-pointer hover:text-default-foreground hover:opacity-70":
-                        (clickeable &&
-                          selectedStep !== step.index &&
+                        clickeable &&
+                        ((selectedStep !== step.index &&
                           step.index == selectedStep + 1) ||
-                        step.index == selectedStep - 1 ||
-                        (clickeable && type !== "steps"),
+                          step.index == selectedStep - 1 ||
+                          type !== "steps"),
                     },
                   )}
                   onClick={() => {
+                    if (!clickeable) return;
+
                     if (
                       (clickeable &&
                         selectedStep !== step.index &&
@@ -166,25 +163,9 @@ const Steps = ({
                       (clickeable && type !== "steps")
                     ) {
                       if (selectedStep < step.index) {
-                        setDirection("right");
-                        const updatedSteps = stepsArray.map((item) => {
-                          if (item.index === step.index - 1) {
-                            return { ...item, value: 100 };
-                          }
-                          return item;
-                        });
-                        setStepsArray(updatedSteps);
-                        setSelectedStep(step.index);
+                        nextStepFn(selectedStep);
                       } else {
-                        setDirection("left");
-                        const updatedSteps = stepsArray.map((item) => {
-                          if (item.index === step.index) {
-                            return { ...item, value: 0 };
-                          }
-                          return item;
-                        });
-                        setStepsArray(updatedSteps);
-                        setSelectedStep(step.index);
+                        prevStepFn(selectedStep);
                       }
                     }
                   }}
@@ -233,16 +214,16 @@ const Steps = ({
             <AnimatePresence key={i} mode="wait">
               {selectedStep === i + 1 && (
                 <motion.div
-                  drag="x"
+                  drag={drag ? "x" : false}
                   dragConstraints={{ right: 0, left: 0 }}
                   onDragEnd={(event, info) => {
                     if (info.offset.x > 100 && selectedStep > 1) {
-                      prevStepFn();
+                      prevStepFn(selectedStep);
                     } else if (
                       info.offset.x < -100 &&
                       selectedStep < children.length
                     ) {
-                      nextStepFn();
+                      nextStepFn(selectedStep);
                     }
                   }}
                   initial={{
@@ -286,7 +267,7 @@ const Steps = ({
                   external.back();
                   return;
                 }
-                prevStepFn();
+                prevStepFn(selectedStep);
               }}
               startContent={
                 selectedStep < 2 && external ? (
@@ -310,7 +291,7 @@ const Steps = ({
                   external.next();
                   return;
                 }
-                nextStepFn();
+                nextStepFn(selectedStep);
               }}
               startContent={
                 children.length <= selectedStep && external ? (

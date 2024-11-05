@@ -15,6 +15,7 @@ import MainAnimateText from "@/components/page/MainAnimateText";
 import MainButton from "@/components/page/MainButton";
 import Button from "@/components/ui/Button";
 import MainPassword from "@/components/page/MainPassword";
+import { MainCarrousel } from "@/components/page/MainCarrousel";
 
 const Main = () => {
   const [select, setSelect] = useState<string>("all");
@@ -29,6 +30,7 @@ const Main = () => {
     { name: "Modal", state: "Terminado" },
     { name: "Button", state: "Terminado" },
     { name: "Steps", state: "En proceso" },
+    { name: "Carrousel", state: "En proceso" },
     { name: "DatePicker", state: "Sin iniciar" },
   ];
 
@@ -67,6 +69,7 @@ const Main = () => {
       {select === "tooltip" && <MainTooltip />}
       {select === "modal" && <MainModal />}
       {select === "steps" && <MainSteps />}
+      {select === "carrousel" && <MainCarrousel />}
       {select === "sidemenu" && <MainSideMenu />}
       {select === "animatetext" && <MainAnimateText />}
       {select === "button" && <MainButton />}

@@ -1,12 +1,19 @@
 import Steps from "@/components/ui/Steps";
 import { useState } from "react";
-import { Button, Divider } from "@nextui-org/react";
+import { Button, Divider, SelectItem, Switch } from "@nextui-org/react";
 import Title from "@/components/ui/Title";
 import { Code } from "@nextui-org/code";
 import { motion } from "framer-motion";
+import SelectForm from "@/components/forms/SelectForm";
 
 const MainSteps = () => {
   const [count, setCount] = useState(0);
+  const [drag, setDrag] = useState<boolean>(true);
+  const [defaultItem, setDefaultItem] = useState(0);
+  const [showButton, setShowButton] = useState<boolean>(true);
+  const [clickeable, setClickeable] = useState<boolean>(true);
+  const [type, setType] = useState<"steps" | "carousel">("steps");
+  const [buttons, setButtons] = useState<"side" | "bottom">("side");
 
   const data = [1, 2, 3, 4, 5];
 
@@ -23,14 +30,11 @@ const MainSteps = () => {
         <Title text="Demo Steps.tsx" size="title" className="text-3xl" center />
         <Divider className="w-[95%] bg-divider mx-auto" />
         <Steps
-          step={count}
-          type="steps"
-          defaultItem={4}
-          clickeable={true}
-          buttons={{ show: true, position: "side" }}
-          actualValue={(value) => {
-            setCount(value);
-          }}
+          type={type}
+          drag={drag}
+          defaultItem={defaultItem}
+          clickeable={clickeable}
+          buttons={{ show: showButton, position: buttons }}
         >
           {data.map((item, i) => (
             <div key={i} className={classDiv}>
@@ -58,15 +62,87 @@ const MainSteps = () => {
       <div className="flex flex-col gap-4 bg-background w-full md:w-[85%] max-w-[800px] rounded-large p-4">
         <Title text="Propiedades" size="medium" />
         <Code className="flex flex-col w-full mx-auto">
-          <p>{"isOpen: boolean;"}</p>
-          <p>{"closeButton?: boolean;"}</p>
-          <p>{"classContainer?: string;"}</p>
-          <p>{"closeDisabled?: boolean;"}</p>
-          <p>{"children?: React.ReactNode;"}</p>
-          <p>{"setIsOpen: (value: SetStateAction<boolean>) => void;"}</p>
+          <p>{"step?: number;"}</p>
+          <p>{"drag?: boolean;"}</p>
+          <p>{"clickeable?: boolean;"}</p>
+          <p>{"defaultItem?: number;"}</p>
+          <p>{"children: React.ReactNode[];"}</p>
+          <p>{'type?: "steps" | "carousel";'}</p>
+          <p>{"actualValue?: (value: number) => void;"}</p>
+          <p>{"external?: { back: () => void; next: () => void };"}</p>
+          <p>
+            {"buttons?: {\n" +
+              "    show: boolean;\n" +
+              '    position?: "bottom" | "side";\n' +
+              "  };"}
+          </p>
         </Code>
         <Divider className="w-[95%] bg-divider mx-auto" />
         <Title text="Test" size="medium" primary />
+        <SelectForm
+          name="type"
+          // @ts-ignore
+          onChange={({ value }) => (value ? setType(value) : "steps")}
+        >
+          <SelectItem
+            key="steps"
+            textValue="Steps"
+            className="text-default-foreground"
+          >
+            Steps
+          </SelectItem>
+          <SelectItem
+            key="carousel"
+            textValue="Carousel"
+            className="text-default-foreground"
+          >
+            Carousel
+          </SelectItem>
+        </SelectForm>
+        <div className="flex justify-between">
+          <Switch
+            isSelected={drag}
+            onValueChange={setDrag}
+            classNames={{ thumb: "bg-default-white", wrapper: "bg-default" }}
+          >
+            Drag
+          </Switch>
+          <Switch
+            isSelected={clickeable}
+            onValueChange={setClickeable}
+            classNames={{ thumb: "bg-default-white", wrapper: "bg-default" }}
+          >
+            Clickeable
+          </Switch>
+        </div>
+        <Divider className="w-[95%] bg-divider mx-auto" />
+        <Switch
+          isSelected={showButton}
+          onValueChange={setShowButton}
+          classNames={{ thumb: "bg-default-white", wrapper: "bg-default" }}
+        >
+          Show buttons
+        </Switch>
+        <SelectForm
+          name="button"
+          // @ts-ignore
+          onChange={({ value }) => (value ? setButtons(value) : "side")}
+        >
+          <SelectItem
+            key="side"
+            textValue="Side"
+            className="text-default-foreground"
+          >
+            Side
+          </SelectItem>
+          <SelectItem
+            key="bottom"
+            textValue="Bottom"
+            className="text-default-foreground"
+          >
+            Bottom
+          </SelectItem>
+        </SelectForm>
       </div>
     </motion.div>
   );

@@ -16,7 +16,6 @@ import MainButton from "@/components/page/MainButton";
 import Button from "@/components/ui/Button";
 import MainPassword from "@/components/page/MainPassword";
 import { MainCarrousel } from "@/components/page/MainCarrousel";
-import { motion } from "framer-motion";
 import MenuMain from "@/components/ui/MenuMain";
 
 const Main = () => {

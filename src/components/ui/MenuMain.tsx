@@ -38,7 +38,8 @@ const MenuMain = () => {
         "rounded-full bg-green overflow-hidden cursor-pointer text-default-white w-12 h-12 p-2",
       download: "components",
       width: 170,
-      title: "Descargar componentes",
+      // TODO: Actualizar fechas
+      title: "Descargar componentes 04/11/2024",
       onClick: () => {},
     },
     {

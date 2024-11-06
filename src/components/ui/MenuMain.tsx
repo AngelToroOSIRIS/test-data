@@ -26,7 +26,7 @@ const MenuMain = () => {
 
   const router = useRouter();
 
-  const Items: itemsType[] = [
+  const items: itemsType[] = [
     {
       name: "Componentes",
       icon: "download",
@@ -76,16 +76,18 @@ const MenuMain = () => {
 
   return (
     <>
-      <Modal
-        isOpen={isOpen}
-        setIsOpen={setIsOpen}
-        classContainer="max-w-[500px]"
-      >
-        <p>Next UI</p>
-        <p>Framer Motion</p>
-      </Modal>
+      {/*<Modal*/}
+      {/*  isOpen={isOpen}*/}
+      {/*  setIsOpen={setIsOpen}*/}
+      {/*  classContainer="max-w-[500px]"*/}
+      {/*>*/}
+      {/*  <div>*/}
+      {/*    <p>Next UI</p>*/}
+      {/*    <p>Framer Motion</p>*/}
+      {/*  </div>*/}
+      {/*</Modal>*/}
       <motion.div className="fixed flex bottom-6 left-6 gap-3 flex-col-reverse">
-        {Items.map((item, i) => (
+        {items.map((item, i) => (
           <motion.a
             key={i}
             href={item.href}

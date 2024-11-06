@@ -3,9 +3,7 @@
 import Carrousel from "@/components/ui/Carrousel";
 import MainTemplate from "@/components/page/MainTemplate";
 
-interface Props {}
-
-export const MainCarrousel = ({}: Props) => {
+const MainCarrousel = () => {
   return (
     <MainTemplate name="Carrousel" properties={["Hola"]}>
       <Carrousel
@@ -28,3 +26,4 @@ export const MainCarrousel = ({}: Props) => {
     </MainTemplate>
   );
 };
+export default MainCarrousel;

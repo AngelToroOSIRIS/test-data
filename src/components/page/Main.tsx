@@ -37,7 +37,7 @@ const Main = () => {
   ];
 
   return (
-    <main className="mb-[50px] mt-8 relative flex flex-col gap-4 w-[95%] max-w-[1200px] mx-auto">
+    <main className="mb-[50px] mt-8 relative flex flex-col gap-4 w-[95%] max-w-[1400px] mx-auto">
       {select !== "all" && select !== "datepicker" && (
         <Icon
           icon="arrow-left"

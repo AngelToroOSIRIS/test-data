@@ -2,13 +2,16 @@
 
 import Carrousel from "@/components/ui/Carrousel";
 import MainTemplate from "@/components/page/MainTemplate";
-import { Switch } from "@nextui-org/react";
+import { SelectItem, Switch } from "@nextui-org/react";
 import { useState } from "react";
 import InputForm from "@/components/forms/InputForm";
+import SelectForm from "@/components/forms/SelectForm";
 
 const MainCarrousel = () => {
   const [animate, setAnimate] = useState(true);
   const [clickeable, setClickeable] = useState(true);
+  const [showButton, setShowButton] = useState<boolean>(true);
+  const [buttons, setButtons] = useState<"side" | "bottom">("side");
   const [time, setTime] = useState(4);
   const [defaultItem, setDefaultItem] = useState(0);
 
@@ -28,10 +31,12 @@ const MainCarrousel = () => {
       ]}
     >
       <Carrousel
+        height="standard"
+        showImages={{ show: true, position: "right" }}
         clickeable={clickeable}
         defaultItem={defaultItem}
         animate={{ show: animate, time: time }}
-        buttons={{ position: "side", show: true }}
+        buttons={{ position: buttons, show: showButton }}
         images={[
           "/a(1).png",
           "/a(2).png",
@@ -43,6 +48,7 @@ const MainCarrousel = () => {
           "/a(8).png",
           "/a(9).png",
           "/a(10).png",
+          "/a(10)asdasd.png",
         ]}
       />
       <div className="flex flex-col gap-4">
@@ -70,6 +76,13 @@ const MainCarrousel = () => {
             classNames={{ thumb: "bg-default-white", wrapper: "bg-default" }}
           >
             Clickeable
+          </Switch>
+          <Switch
+            isSelected={showButton}
+            onValueChange={setShowButton}
+            classNames={{ thumb: "bg-default-white", wrapper: "bg-default" }}
+          >
+            Show buttons
           </Switch>
         </div>
       </div>

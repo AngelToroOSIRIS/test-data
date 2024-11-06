@@ -16,7 +16,7 @@ const MainTemplate = ({ name, children, properties }: Props) => {
       animate={{ opacity: 1 }}
       className="flex flex-col md:flex-row md:justify-between w-full mx-auto gap-2"
     >
-      <div className="flex flex-col gap-3 bg-background rounded-large p-4 w-full max-w-[900px] ">
+      <div className="flex flex-col gap-3 bg-background rounded-large p-4 w-full max-w-[900px]">
         <Title
           center
           size="title"

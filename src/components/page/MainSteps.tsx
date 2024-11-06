@@ -12,7 +12,6 @@ const MainSteps = () => {
   const [defaultItem, setDefaultItem] = useState(0);
   const [showButton, setShowButton] = useState<boolean>(true);
   const [clickeable, setClickeable] = useState<boolean>(true);
-  const [type, setType] = useState<"steps" | "carousel">("steps");
   const [buttons, setButtons] = useState<"side" | "bottom">("side");
 
   const data = [1, 2, 3, 4, 5];
@@ -30,7 +29,6 @@ const MainSteps = () => {
         <Title text="Demo Steps.tsx" size="title" className="text-3xl" center />
         <Divider className="w-[95%] bg-divider mx-auto" />
         <Steps
-          type={type}
           drag={drag}
           defaultItem={defaultItem}
           clickeable={clickeable}
@@ -67,7 +65,6 @@ const MainSteps = () => {
           <p>{"clickeable?: boolean;"}</p>
           <p>{"defaultItem?: number;"}</p>
           <p>{"children: React.ReactNode[];"}</p>
-          <p>{'type?: "steps" | "carousel";'}</p>
           <p>{"actualValue?: (value: number) => void;"}</p>
           <p>{"external?: { back: () => void; next: () => void };"}</p>
           <p>
@@ -79,26 +76,6 @@ const MainSteps = () => {
         </Code>
         <Divider className="w-[95%] bg-divider mx-auto" />
         <Title text="Test" size="medium" primary />
-        <SelectForm
-          name="type"
-          // @ts-ignore
-          onChange={({ value }) => (value ? setType(value) : "steps")}
-        >
-          <SelectItem
-            key="steps"
-            textValue="Steps"
-            className="text-default-foreground"
-          >
-            Steps
-          </SelectItem>
-          <SelectItem
-            key="carousel"
-            textValue="Carousel"
-            className="text-default-foreground"
-          >
-            Carousel
-          </SelectItem>
-        </SelectForm>
         <div className="flex justify-between">
           <Switch
             isSelected={drag}
@@ -106,6 +83,13 @@ const MainSteps = () => {
             classNames={{ thumb: "bg-default-white", wrapper: "bg-default" }}
           >
             Drag
+          </Switch>
+          <Switch
+            isSelected={showButton}
+            onValueChange={setShowButton}
+            classNames={{ thumb: "bg-default-white", wrapper: "bg-default" }}
+          >
+            Show buttons
           </Switch>
           <Switch
             isSelected={clickeable}
@@ -116,15 +100,11 @@ const MainSteps = () => {
           </Switch>
         </div>
         <Divider className="w-[95%] bg-divider mx-auto" />
-        <Switch
-          isSelected={showButton}
-          onValueChange={setShowButton}
-          classNames={{ thumb: "bg-default-white", wrapper: "bg-default" }}
-        >
-          Show buttons
-        </Switch>
         <SelectForm
-          name="button"
+          description={
+            !showButton ? 'Debe habilitar la opción "Show buttons" ' : undefined
+          }
+          name="tipo de botón"
           // @ts-ignore
           onChange={({ value }) => (value ? setButtons(value) : "side")}
         >

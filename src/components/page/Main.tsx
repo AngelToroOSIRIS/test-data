@@ -30,7 +30,7 @@ const Main = () => {
     { name: "SideMenu", state: "Terminado" },
     { name: "Modal", state: "Terminado" },
     { name: "Button", state: "Terminado" },
-    { name: "Steps", state: "En proceso" },
+    { name: "Steps", state: "Terminado" },
     { name: "Carrousel", state: "En proceso" },
     { name: "DatePicker", state: "Sin iniciar" },
     { name: "ModalPlayGround", state: "Sin iniciar" },

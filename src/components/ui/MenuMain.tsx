@@ -17,6 +17,7 @@ interface itemsType {
   download?: string;
   href?: string;
   width: number;
+  repeat?: number;
   title: string;
   onClick: () => void;
 }
@@ -31,6 +32,7 @@ const MenuMain = () => {
       name: "Componentes",
       icon: "download",
       rotate: false,
+      repeat: 4,
       href: "/components.zip",
       bounce: true,
       animate: [0, 5, 0, 0, 5, 0, 0, 5, 0, 0, 0, 0, 0, 0],
@@ -47,6 +49,7 @@ const MenuMain = () => {
       icon: "github",
       rotate: true,
       bounce: false,
+      repeat: 0,
       target: true,
       width: 125,
       animate: [0, 360],
@@ -62,6 +65,7 @@ const MenuMain = () => {
       icon: "journals",
       rotate: true,
       bounce: false,
+      repeat: 0,
       target: true,
       width: 135,
       animate: [0, 360],
@@ -107,7 +111,7 @@ const MenuMain = () => {
                 animate={
                   item.bounce ? { y: item.animate } : { rotate: item.animate }
                 }
-                transition={{ repeat: 5, duration: 2 }}
+                transition={{ repeat: item.repeat, duration: 2 }}
               >
                 <Icon
                   icon={item.icon}

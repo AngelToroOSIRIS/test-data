@@ -25,11 +25,11 @@ interface Props {
 
 const Carrousel = ({
   images,
-  clickeable = true,
-  drag = true,
   animate,
-  defaultItem,
   buttons,
+  drag = true,
+  defaultItem,
+  clickeable = true,
 }: Props) => {
   const [direction, setDirection] = useState<"right" | "left">("right");
   const [isInteracting, setIsInteracting] = useState(false);
@@ -49,12 +49,15 @@ const Carrousel = ({
 
   useEffect(() => {
     if (animate?.show) {
-      const interval = setInterval(() => {
-        if (!isInteracting) {
-          const nextItem = (selectedItem + 1) % images.length;
-          nextStepFn(nextItem);
-        }
-      }, animate.time ?? 4000);
+      const interval = setInterval(
+        () => {
+          if (!isInteracting) {
+            const nextItem = (selectedItem + 1) % images.length;
+            nextStepFn(nextItem);
+          }
+        },
+        animate.time ? animate.time * 1000 : 4000,
+      );
 
       return () => clearInterval(interval);
     }

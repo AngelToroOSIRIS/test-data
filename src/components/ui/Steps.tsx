@@ -17,7 +17,6 @@ interface Props {
   clickeable?: boolean;
   defaultItem?: number;
   children: React.ReactNode[];
-  type?: "steps" | "carousel";
   actualValue?: (value: number) => void;
   external?: { back: () => void; next: () => void };
   buttons?: {
@@ -30,7 +29,6 @@ const Steps = ({
   children,
   clickeable = false,
   drag = true,
-  type = "steps",
   defaultItem,
   step,
   actualValue,
@@ -106,10 +104,6 @@ const Steps = ({
       <div
         className={cn(
           "flex justify-between w-full p-1 overflow-auto items-center gap-2",
-          {
-            "absolute left-[50%] overflow-visible self-center items-center bottom-4 justify-center right-[50%] w-auto z-50":
-              type == "carousel",
-          },
         )}
       >
         {/* HEAD */}
@@ -130,26 +124,17 @@ const Steps = ({
                         selectedStep === step.index,
                     },
                     {
-                      hidden: stepsArray.length > 5 && type === "steps",
-                    },
-                    {
-                      "bg-divider w-1 h-1 p-2 hover:scale-110":
-                        type == "carousel",
+                      hidden: stepsArray.length > 5,
                     },
                     {
                       "text-default-400": step.index < selectedStep,
-                    },
-                    {
-                      "bg-primary text-default-white":
-                        selectedStep === step.index && type == "carousel",
                     },
                     {
                       "cursor-pointer hover:text-default-foreground hover:opacity-70":
                         clickeable &&
                         ((selectedStep !== step.index &&
                           step.index == selectedStep + 1) ||
-                          step.index == selectedStep - 1 ||
-                          type !== "steps"),
+                          step.index == selectedStep - 1),
                     },
                   )}
                   onClick={() => {
@@ -159,8 +144,7 @@ const Steps = ({
                       (clickeable &&
                         selectedStep !== step.index &&
                         step.index == selectedStep + 1) ||
-                      step.index == selectedStep - 1 ||
-                      (clickeable && type !== "steps")
+                      step.index == selectedStep - 1
                     ) {
                       if (selectedStep < step.index) {
                         nextStepFn(selectedStep);
@@ -170,37 +154,31 @@ const Steps = ({
                     }
                   }}
                 >
-                  <p className={type === "carousel" ? "hidden" : "block"}>
-                    {step.index}
-                  </p>
+                  <p>{step.index}</p>
                 </div>
-                {type == "steps" && (
-                  <Progress
-                    value={step.value}
-                    size="sm"
-                    color={step.value != 0 ? "primary" : "default"}
-                    className={cn(
-                      "last:hidden w-[50px] md:min-w-[100px] md:w-[100px]",
-                      {
-                        hidden: stepsArray.length > 5 && type === "steps",
-                      },
-                    )}
-                  />
-                )}
+                <Progress
+                  value={step.value}
+                  size="sm"
+                  color={step.value != 0 ? "primary" : "default"}
+                  className={cn(
+                    "last:hidden w-[50px] md:min-w-[100px] md:w-[100px]",
+                    {
+                      hidden: stepsArray.length > 5,
+                    },
+                  )}
+                />
               </Fragment>
             ))}
-          {stepsArray.length > 5 && type == "steps" && (
+          {stepsArray.length > 5 && (
             <div className="w-full">
               <Progress
                 size="md"
                 color="primary"
                 value={valueStep}
-                label={"Completado"}
                 className="w-full"
                 classNames={{
                   labelWrapper: "font-semibold",
                 }}
-                showValueLabel={type == "steps" && children.length > 5}
               />
             </div>
           )}
@@ -258,7 +236,7 @@ const Steps = ({
               className={cn("rounded-full", {
                 "absolute top-[50%] bottom-[50%] self-center mt-[80px] items-center justify-center left-8 rounded-full":
                   buttons.position == "side",
-                hidden: selectedStep == 1,
+                hidden: selectedStep == 1 && buttons.position == "side",
               })}
               isIconOnly={!external}
               isDisabled={!external && selectedStep < 2}
@@ -282,7 +260,8 @@ const Steps = ({
               className={cn("rounded-full", {
                 "absolute top-[50%] bottom-[50%] self-center mt-[80px] items-center justify-center right-8 rounded-full":
                   buttons.position === "side",
-                hidden: selectedStep == children.length,
+                hidden:
+                  selectedStep == children.length && buttons.position == "side",
               })}
               isIconOnly={!external}
               isDisabled={!external && children.length <= selectedStep}

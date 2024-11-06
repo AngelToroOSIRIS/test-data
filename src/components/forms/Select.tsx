@@ -11,6 +11,7 @@ interface Props {
   required?: boolean;
   disallowEmptySelection?: boolean;
   value?: string;
+  description?: string;
   variant?: "flat" | "bordered" | "faded" | "underlined";
   defaultValue?: string;
   defaultValues?: string[];
@@ -28,6 +29,7 @@ const Select = ({
   name,
   icon,
   placeholder,
+  description,
   required,
   disallowEmptySelection,
   className,
@@ -46,6 +48,7 @@ const Select = ({
     <SelectNextUi
       aria-label={name}
       radius="lg"
+      description={description}
       size="md"
       startContent={
         icon && (

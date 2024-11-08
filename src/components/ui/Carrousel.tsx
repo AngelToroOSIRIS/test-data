@@ -5,6 +5,7 @@ import { cn } from "@/libs/utils";
 import { AnimatePresence, motion } from "framer-motion";
 import { Button, ScrollShadow } from "@nextui-org/react";
 import Icon from "@/components/ui/Icon";
+import { log } from "node:util";
 
 interface Props {
   drag?: boolean;
@@ -36,6 +37,16 @@ const Carrousel = ({
     defaultItem && defaultItem <= images.length ? defaultItem : 0,
   );
 
+  // Estado para imágenes que fallan
+  const [imageErrors, setImageErrors] = useState<boolean[]>(
+    new Array(images.length).fill(false),
+  );
+
+  // Estado para saber si las imágenes están cargando
+  const [imageLoading, setImageLoading] = useState<boolean[]>(
+    new Array(images.length).fill(true),
+  );
+
   const prevStepFn = (numItem: number) => {
     setDirection("left");
     setSelectedItem(numItem);
@@ -44,6 +55,27 @@ const Carrousel = ({
   const nextStepFn = (numItem: number) => {
     setDirection("right");
     setSelectedItem(numItem);
+  };
+
+  const handleImageError = (index: number) => {
+    setImageErrors((prev) => {
+      const newErrors = [...prev];
+      newErrors[index] = true;
+      return newErrors;
+    });
+    setImageLoading((prev) => {
+      const newLoading = [...prev];
+      newLoading[index] = false;
+      return newLoading;
+    });
+  };
+
+  const handleImageLoad = (index: number) => {
+    setImageLoading((prev) => {
+      const newLoading = [...prev];
+      newLoading[index] = false;
+      return newLoading;
+    });
   };
 
   useEffect(() => {
@@ -80,19 +112,29 @@ const Carrousel = ({
         >
           {images.length > 0 &&
             images.map((img, i) => (
-              <img
-                key={i}
-                src={img}
-                onClick={() => {
-                  if (clickeable) {
-                    setSelectedItem(i);
-                  }
-                }}
-                className={cn(
-                  "min-w-[150px] w-[150px] max-h-[100px] h-[100px] min-h-[100px] rounded-md object-cover transition-all",
-                  { "cursor-pointer hover:opacity-hover": clickeable },
+              <div key={i} className="relative">
+                <img
+                  src={img}
+                  onError={() => handleImageError(i)}
+                  onLoad={() => handleImageLoad(i)}
+                  onClick={() => {
+                    if (clickeable) {
+                      setSelectedItem(i);
+                    }
+                  }}
+                  className={cn(
+                    "min-w-[150px] w-[150px] max-h-[100px] h-[100px] min-h-[100px] rounded-md object-cover transition-all",
+                    { "cursor-pointer hover:opacity-hover": clickeable },
+                    { "animate-pulse": imageLoading[i] },
+                  )}
+                />
+                {imageErrors[i] && (
+                  <div className="absolute inset-0 flex flex-col items-center cursor-not-allowed w-full h-full bg-default justify-center bg-gray-200 text-center text-sm text-default-500 rounded-md">
+                    <Icon icon="ban" className="text-lg" />
+                    <span>Imagen no disponible</span>
+                  </div>
                 )}
-              />
+              </div>
             ))}
         </ScrollShadow>
       )}
@@ -167,35 +209,74 @@ const Carrousel = ({
             images.map((item, i) => (
               <AnimatePresence key={i} mode="wait">
                 {selectedItem === i && (
-                  <motion.img
-                    drag={drag ? "x" : false}
-                    dragConstraints={{ right: 0, left: 0 }}
-                    onDragStart={() => setIsInteracting(true)}
-                    onDragEnd={(event, info) => {
-                      setIsInteracting(false);
+                  <>
+                    {imageErrors[i] ? (
+                      <motion.div
+                        drag={drag ? "x" : false}
+                        dragConstraints={{ right: 0, left: 0 }}
+                        onDragStart={() => setIsInteracting(true)}
+                        onDragEnd={(event, info) => {
+                          setIsInteracting(false);
 
-                      if (info.offset.x > 100 && selectedItem > 0) {
-                        prevStepFn(i - 1);
-                      } else if (
-                        info.offset.x < -100 &&
-                        selectedItem < images.length - 1
-                      ) {
-                        nextStepFn(i + 1);
-                      }
-                    }}
-                    title={"Imagen " + i}
-                    initial={{
-                      x: direction === "left" ? -2000 : 2000,
-                    }}
-                    transition={{ duration: 0.3 }}
-                    animate={{ x: 0 }}
-                    exit={{
-                      position: "absolute",
-                      x: direction === "left" ? 2000 : -2000,
-                    }}
-                    src={item}
-                    className="object-cover object-center w-full h-full"
-                  />
+                          if (info.offset.x > 100 && selectedItem > 0) {
+                            prevStepFn(i - 1);
+                          } else if (
+                            info.offset.x < -100 &&
+                            selectedItem < images.length - 1
+                          ) {
+                            nextStepFn(i + 1);
+                          }
+                        }}
+                        initial={{
+                          x: direction === "left" ? -2000 : 2000,
+                        }}
+                        transition={{ duration: 0.3 }}
+                        animate={{ x: 0 }}
+                        exit={{
+                          position: "absolute",
+                          x: direction === "left" ? 2000 : -2000,
+                        }}
+                        className="absolute inset-0 flex flex-col items-center w-full h-full bg-default justify-center bg-gray-200 text-center text-lg text-default-500 rounded-md"
+                      >
+                        <Icon icon="ban" className="text-lg" />
+                        <span>Imagen no disponible</span>
+                      </motion.div>
+                    ) : (
+                      <motion.img
+                        drag={drag ? "x" : false}
+                        dragConstraints={{ right: 0, left: 0 }}
+                        onDragStart={() => setIsInteracting(true)}
+                        onLoad={() => handleImageLoad(i)}
+                        onDragEnd={(event, info) => {
+                          setIsInteracting(false);
+
+                          if (info.offset.x > 100 && selectedItem > 0) {
+                            prevStepFn(i - 1);
+                          } else if (
+                            info.offset.x < -100 &&
+                            selectedItem < images.length - 1
+                          ) {
+                            nextStepFn(i + 1);
+                          }
+                        }}
+                        title={"Imagen " + i}
+                        initial={{
+                          x: direction === "left" ? -2000 : 2000,
+                        }}
+                        transition={{ duration: 0.3 }}
+                        animate={{ x: 0 }}
+                        exit={{
+                          position: "absolute",
+                          x: direction === "left" ? 2000 : -2000,
+                        }}
+                        src={item}
+                        className={cn(
+                          "object-cover object-center w-full h-full",
+                          { "animate-pulse": imageLoading[i] },
+                        )}
+                      />
+                    )}
+                  </>
                 )}
               </AnimatePresence>
             ))}

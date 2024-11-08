@@ -2,10 +2,9 @@
 
 import Carrousel from "@/components/ui/Carrousel";
 import MainTemplate from "@/components/page/MainTemplate";
-import { SelectItem, Switch } from "@nextui-org/react";
+import { Switch } from "@nextui-org/react";
 import { useState } from "react";
 import InputForm from "@/components/forms/InputForm";
-import SelectForm from "@/components/forms/SelectForm";
 
 const MainCarrousel = () => {
   const [animate, setAnimate] = useState(true);
@@ -38,17 +37,15 @@ const MainCarrousel = () => {
         animate={{ show: animate, time: time }}
         buttons={{ position: buttons, show: showButton }}
         images={[
+          "https://th.bing.com/th/id/OIP.I-qC7OzdAMhriVu9gOOySwHaEK?rs=1&pid=ImgDetMain",
+          "https://th.bing.com/th/id/OIP.GPC1We7x0twBJJqKegNo-AHaHa?rs=1&pid=ImgDetMain",
+          "https://th.bing.com/th/id/OIP.0Z16g9ZbrgMOtQ4Av79WngHaDe?rs=1&pid=ImgDetMain",
+          "https://www.pixelstalk.net/wp-content/uploads/2016/04/Google-Wallpaper-Images-HD-download.jpg",
+          "https://www.pixelstalk.net/wp-content/uploads/2016/04/Google-images-free-download.jpg",
           "/a(1).png",
-          "/a(2).png",
           "/a(3).png",
           "/a(4).png",
-          "/a(5).png",
-          "/a(6).png",
-          "/a(7).png",
-          "/a(8).png",
-          "/a(9).png",
-          "/a(10).png",
-          "/a(10)asdasd.png",
+          "/a(4)asd.png",
         ]}
       />
       <div className="flex flex-col gap-4">

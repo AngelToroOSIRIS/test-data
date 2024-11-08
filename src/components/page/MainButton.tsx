@@ -161,7 +161,11 @@ const MainButton = () => {
           }
         >
           {colors.map((color) => (
-            <SelectItem key={color} textValue={color}>
+            <SelectItem
+              key={color}
+              className="text-default-foreground"
+              textValue={color}
+            >
               {color.charAt(0).toUpperCase() + color.slice(1)}
             </SelectItem>
           ))}

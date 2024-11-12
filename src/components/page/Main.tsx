@@ -17,6 +17,7 @@ import Button from "@/components/ui/Button";
 import MainPassword from "@/components/page/MainPassword";
 import MainCarrousel from "@/components/page/MainCarrousel";
 import MenuMain from "@/components/ui/MenuMain";
+import MainModalPlayGround from "@/components/page/MainModalPlayGround";
 
 const Main = () => {
   const [select, setSelect] = useState<string>("all");
@@ -31,7 +32,7 @@ const Main = () => {
     { name: "Modal", state: "Terminado" },
     { name: "Button", state: "Terminado" },
     { name: "Steps", state: "Terminado" },
-    { name: "Carrousel", state: "En proceso" },
+    { name: "Carrousel", state: "Terminado" },
     { name: "DatePicker", state: "Sin iniciar" },
     { name: "ModalPlayGround", state: "Sin iniciar" },
   ];
@@ -76,6 +77,7 @@ const Main = () => {
       {select === "animatetext" && <MainAnimateText />}
       {select === "button" && <MainButton />}
       {select === "password" && <MainPassword />}
+      {select === "modalplayground" && <MainModalPlayGround />}
       {select === "datepicker" && (
         <div className="flex flex-col my-8 gap-4 justify-center items-center">
           <p className="text-center text-default-400 text-2xl select-none font-semibold">

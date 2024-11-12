@@ -3,8 +3,6 @@
 import { motion } from "framer-motion";
 import Icon from "@/components/ui/Icon";
 import { useRouter } from "next/navigation";
-import { useState } from "react";
-import Modal from "@/components/ui/Modal";
 
 interface itemsType {
   name: string;
@@ -19,12 +17,9 @@ interface itemsType {
   width: number;
   repeat?: number;
   title: string;
-  onClick: () => void;
 }
 
 const MenuMain = () => {
-  const [isOpen, setIsOpen] = useState(false);
-
   const router = useRouter();
 
   const items: itemsType[] = [
@@ -41,8 +36,7 @@ const MenuMain = () => {
       download: "components",
       width: 170,
       // TODO: Actualizar fechas
-      title: "Descargar componentes 04/11/2024",
-      onClick: () => {},
+      title: "Descargar componentes 08/11/2024",
     },
     {
       name: "GitHub",
@@ -56,40 +50,11 @@ const MenuMain = () => {
       className:
         "rounded-full bg-custom-black dark:bg-background overflow-hidden cursor-pointer text-default-white w-12 h-12 p-2",
       title: "Repositorio",
-      onClick: () => {
-        router.push("https://github.com/AngelToroOSIRIS/test-ui.git");
-      },
-    },
-    {
-      name: "Librerias",
-      icon: "journals",
-      rotate: true,
-      bounce: false,
-      repeat: 0,
-      target: true,
-      width: 135,
-      animate: [0, 360],
-      className:
-        "rounded-full bg-primary overflow-hidden cursor-pointer text-default-white w-12 h-12 p-2",
-      title: "Repositorio",
-      onClick: () => {
-        setIsOpen(true);
-      },
     },
   ];
 
   return (
     <>
-      {/*<Modal*/}
-      {/*  isOpen={isOpen}*/}
-      {/*  setIsOpen={setIsOpen}*/}
-      {/*  classContainer="max-w-[500px]"*/}
-      {/*>*/}
-      {/*  <div>*/}
-      {/*    <p>Next UI</p>*/}
-      {/*    <p>Framer Motion</p>*/}
-      {/*  </div>*/}
-      {/*</Modal>*/}
       <motion.div className="fixed flex bottom-6 left-6 gap-3 flex-col-reverse">
         {items.map((item, i) => (
           <motion.a
@@ -98,7 +63,11 @@ const MenuMain = () => {
             whileTap={{ scale: 0.9 }}
             className={item.className}
             transition={{ duration: 0.3 }}
-            onClick={item.onClick ?? undefined}
+            onClick={() => {
+              if (item.name == "GitHub") {
+                router.push("https://github.com/AngelToroOSIRIS/test-ui.git");
+              }
+            }}
             animate={{ opacity: 1, scale: 1, rotate: 0 }}
             initial={{ opacity: 0, scale: 0, rotate: -360 }}
             whileHover={{ scale: 1.1, width: item.width, opacity: 1 }}

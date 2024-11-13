@@ -164,16 +164,16 @@ const Modal = ({
               )}
             >
               {!closeDisabled && (
-                <div className="absolute w-auto flex items-center justify-between gap-1">
+                <div className="absolute right-3 top-2 w-auto flex items-center justify-between gap-1">
                   <div
-                    className="h-[30px] w-[30px] flex items-center justify-center hover:cursor-grab text-default-400 hover:text-default-foreground active:text-default-foreground transition-all active:cursor-grabbing"
+                    className="h-8 w-8 flex items-center justify-center hover:cursor-grab text-default-400 hover:text-default-foreground active:text-default-foreground transition-all active:cursor-grabbing"
                     onPointerDownCapture={startDrag}
                     style={{ touchAction: "none" }}
                   >
                     <Icon icon="arrows-move" className="text-xl" />
                   </div>
                   <i
-                    className="bi bi-x text-borders hover:text-primary absolute top-1 right-3 text-3xl text-default-400 transition-all cursor-pointer"
+                    className="bi bi-x text-borders hover:text-primary text-3xl text-default-400 transition-all cursor-pointer"
                     onClick={() => {
                       setIsOpen(false);
                     }}

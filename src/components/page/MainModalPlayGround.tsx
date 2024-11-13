@@ -21,6 +21,7 @@ const MainModalPlayGround = () => {
       <DragContainerModal ref={ref}>
         {showModal && (
           <Modal
+            drag
             ref={ref}
             isOpen={showModal}
             classContainer="max-h-[480px] max-w-[400px]"
@@ -38,9 +39,9 @@ const MainModalPlayGround = () => {
         )}
         {showModal2 && (
           <Modal
-            isOpen={showModal2}
             drag
             ref={ref}
+            isOpen={showModal2}
             classContainer="max-h-[440px] max-w-[390px]"
             setIsOpen={setShowModal2}
           >

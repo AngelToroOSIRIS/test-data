@@ -19,6 +19,52 @@ const MainModalPlayGround = () => {
 
   return (
     <>
+      <MainTemplate name="DragContainerModal">
+        <div className="flex flex-col gap-4">
+          <div className="flex gap-2 w-[300px] mx-auto justify-center">
+            <Button
+              text="Abrir formulario"
+              className="mx-auto w-auto"
+              onClick={() => {
+                setShowModal(true);
+              }}
+            />
+            <Button
+              text="Ver datos"
+              className="mx-auto w-auto"
+              onClick={() => {
+                setShowModal2(true);
+              }}
+            />
+          </div>
+          <Divider className="w-[95%] bg-divider mx-auto" />
+          <div className="flex flex-col gap-2">
+            <p>
+              - Se debe usar un componente <b>DragContainerModal.tsx</b> de
+              contenedor para todos los <b>Modal.tsx</b>
+            </p>
+            <p>
+              {`- Se debe usar la prop \"ref\" de `}
+              <b>Modal.tsx</b>
+            </p>
+            <p>
+              {`- Se debe usar la prop \"drag\" de `}
+              <b>Modal.tsx</b>
+            </p>
+          </div>
+        </div>
+        <Code className="flex flex-col w-full overflow-x-hidden mx-auto">
+          <p>{"drag?: boolean;"}</p>
+          <p>{"isOpen: boolean;"}</p>
+          <p>{"closeButton?: boolean;"}</p>
+          <p>{"classContainer?: string;"}</p>
+          <p>{"closeDisabled?: boolean;"}</p>
+          <p>{"disabledFocus?: boolean;"}</p>
+          <p>{"ref?: MutableRefObject<null>;"}</p>
+          <p>{"children?: React.ReactNode;"}</p>
+          <p>{"setIsOpen: (value: SetStateAction<boolean>) => void;"}</p>
+        </Code>
+      </MainTemplate>
       <DragContainerModal ref={ref}>
         {showModal && (
           <Modal
@@ -72,52 +118,6 @@ const MainModalPlayGround = () => {
           </Modal>
         )}
       </DragContainerModal>
-      <MainTemplate name="DragContainerModal">
-        <div className="flex flex-col gap-4">
-          <div className="flex gap-2 w-[300px] mx-auto justify-center">
-            <Button
-              text="Abrir formulario"
-              className="mx-auto w-auto"
-              onClick={() => {
-                setShowModal(true);
-              }}
-            />
-            <Button
-              text="Ver datos"
-              className="mx-auto w-auto"
-              onClick={() => {
-                setShowModal2(true);
-              }}
-            />
-          </div>
-          <Divider className="w-[95%] bg-divider mx-auto" />
-          <div className="flex flex-col gap-2">
-            <p>
-              - Se debe usar un componente <b>DragContainerModal.tsx</b> de
-              contenedor para todos los <b>Modal.tsx</b>
-            </p>
-            <p>
-              {`- Se debe usar la prop \"ref\" de `}
-              <b>Modal.tsx</b>
-            </p>
-            <p>
-              {`- Se debe usar la prop \"drag\" de `}
-              <b>Modal.tsx</b>
-            </p>
-          </div>
-        </div>
-        <Code className="flex flex-col w-full overflow-x-hidden mx-auto">
-          <p>{"drag?: boolean;"}</p>
-          <p>{"isOpen: boolean;"}</p>
-          <p>{"closeButton?: boolean;"}</p>
-          <p>{"classContainer?: string;"}</p>
-          <p>{"closeDisabled?: boolean;"}</p>
-          <p>{"disabledFocus?: boolean;"}</p>
-          <p>{"ref?: MutableRefObject<null>;"}</p>
-          <p>{"children?: React.ReactNode;"}</p>
-          <p>{"setIsOpen: (value: SetStateAction<boolean>) => void;"}</p>
-        </Code>
-      </MainTemplate>
     </>
   );
 };

@@ -33,13 +33,12 @@ const Main = () => {
     { name: "Button", state: "Terminado" },
     { name: "Steps", state: "Terminado" },
     { name: "Carrousel", state: "Terminado" },
-    { name: "DatePicker", state: "Sin iniciar" },
     { name: "DragContainerModal", state: "En proceso" },
   ];
 
   return (
     <main className="mb-[50px] mt-8 relative flex flex-col gap-4 w-[95%] max-w-[1400px] mx-auto">
-      {select !== "all" && select !== "datepicker" && (
+      {select !== "all" && (
         <Button
           color="primary"
           // icon="arrow-left"
@@ -81,7 +80,7 @@ const Main = () => {
       {select === "button" && <MainButton />}
       {select === "password" && <MainPassword />}
       {select === "dragcontainermodal" && <MainModalPlayGround />}
-      {select === "datepicker" && (
+      {components.find((i) => i.name == select) && (
         <div className="flex flex-col my-8 gap-4 justify-center items-center">
           <p className="text-center text-default-400 text-2xl select-none font-semibold">
             Estamos trabajando en este componente...

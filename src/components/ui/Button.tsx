@@ -76,7 +76,7 @@ const Button = ({
         <motion.div
           initial="hidden"
           animate="visible"
-          className="mx-auto"
+          className="mx-auto !z-0"
           variants={!disabled ? enableButton : undefined}
         >
           <ButtonNextUI
@@ -113,17 +113,17 @@ const Button = ({
             disabled={disabled}
             title={title}
             form={form}
-            className={cn(
-              "w-full text-base font-medium",
-              {
-                "bg-gray cursor-not-allowed brightness-75": disabled,
-                "bg-green": color === "green" && !disabled,
-                "bg-blue": color === "blue" && !disabled,
-                "bg-red": color === "red" && !disabled,
-                "bg-gray": color === "gray" && !disabled,
-              },
-              className,
-            )}
+            // className={cn(
+            //   "w-full text-base font-medium !z-0",
+            //   {
+            //     "bg-gray cursor-not-allowed brightness-75": disabled,
+            //     "bg-green": color === "green" && !disabled,
+            //     "bg-blue": color === "blue" && !disabled,
+            //     "bg-red": color === "red" && !disabled,
+            //     "bg-gray": color === "gray" && !disabled,
+            //   },
+            //   className,
+            // )}
             onClick={onClick ? onClick : handleClick}
             onDoubleClick={onDoubleClick}
             isLoading={loading}
@@ -164,17 +164,17 @@ const Button = ({
           disabled={disabled}
           title={title}
           form={form}
-          className={cn(
-            "w-full text-base font-medium",
-            {
-              "bg-gray cursor-not-allowed brightness-75": disabled,
-              "bg-green": color === "green" && !disabled,
-              "bg-blue": color === "blue" && !disabled,
-              "bg-red": color === "red" && !disabled,
-              "bg-gray": color === "gray" && !disabled,
-            },
-            className,
-          )}
+          // className={cn(
+          //   "w-full text-base font-medium !z-0",
+          //   {
+          //     "bg-gray cursor-not-allowed brightness-75": disabled,
+          //     "bg-green": color === "green" && !disabled,
+          //     "bg-blue": color === "blue" && !disabled,
+          //     "bg-red": color === "red" && !disabled,
+          //     "bg-gray": color === "gray" && !disabled,
+          //   },
+          //   className,
+          // )}
           onClick={onClick ? onClick : handleClick}
           onDoubleClick={onDoubleClick}
           isLoading={loading}

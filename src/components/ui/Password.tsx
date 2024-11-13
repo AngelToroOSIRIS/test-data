@@ -33,7 +33,6 @@ const Password = ({
   requirements = {},
 }: Props) => {
   const [level, setlevel] = useState<number>(0);
-  const [loading, setLoading] = useState<boolean>(false);
 
   const passwordForm = useValidateForm<{
     newPassword: string | number | null;
@@ -55,6 +54,7 @@ const Password = ({
 
   function passwordSecurity(
     contrasena: string | number,
+    invalidTexts: string[] | undefined,
     requisitos: {
       minLength?: boolean;
       upperCase?: boolean;
@@ -81,6 +81,14 @@ const Password = ({
       }
     }
 
+    if (invalidTexts && invalidTexts.length > 0) {
+      for (const text of invalidTexts) {
+        if (contrasena.toString().toLowerCase().includes(text.toLowerCase())) {
+          return 1;
+        }
+      }
+    }
+
     if (contrasena == null) return 0;
 
     puntajeSeguridad = Math.min(puntajeSeguridad, nivelesSeguridad);
@@ -91,7 +99,11 @@ const Password = ({
     callback(passwordForm.data, passwordForm.validData && level == 4);
     setlevel(
       passwordForm.data.newPassword
-        ? passwordSecurity(passwordForm.data.newPassword, requirements)
+        ? passwordSecurity(
+            passwordForm.data.newPassword,
+            invalidTexts,
+            requirements,
+          )
         : 0,
     );
   }, [passwordForm.data.newPassword, requirements]);
@@ -115,6 +127,9 @@ const Password = ({
                 {requirements.lowerCase && <p>- Debe tener minúsculas</p>}
                 {requirements.chartSpecials && (
                   <p>- Debe tener caracteres especiales</p>
+                )}
+                {invalidTexts && invalidTexts.length > 0 && (
+                  <p>- Algunas palabras no están permitidas</p>
                 )}
               </div>
             ),
@@ -174,6 +189,19 @@ const Password = ({
             })}
           </span>
         </p>
+        {invalidTexts &&
+          passwordForm.data.newPassword &&
+          invalidTexts.length > 0 &&
+          invalidTexts.find((text) =>
+            passwordForm.data.newPassword
+              ?.toString()
+              .toLowerCase()
+              .includes(text.toLowerCase()),
+          ) && (
+            <p className="text-sm font-medium text-primary">
+              Contraseña no disponible
+            </p>
+          )}
         <InputForm
           name="newPasswordOther"
           onChange={passwordForm.setField}

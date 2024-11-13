@@ -2,11 +2,18 @@
 
 import MainTemplate from "@/components/page/MainTemplate";
 import Password from "@/components/ui/Password";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import SelectForm from "@/components/forms/SelectForm";
-import { Checkbox, CheckboxGroup, SelectItem } from "@nextui-org/react";
+import {
+  Checkbox,
+  CheckboxGroup,
+  Divider,
+  ScrollShadow,
+  SelectItem,
+} from "@nextui-org/react";
 import InputForm from "@/components/forms/InputForm";
 import Button from "@/components/ui/Button";
+import Icon from "@/components/ui/Icon";
 
 const MainPassword = () => {
   const [mode, setMode] = useState<"create" | "update">("create");
@@ -14,6 +21,27 @@ const MainPassword = () => {
   const [texts, setTexts] = useState<string[]>([]);
   const [length, setLength] = useState<number>(8);
   const [selected, setSelected] = useState([""]);
+  const [changeText, setChangeText] = useState(false);
+
+  const filterTexts = (text: string) => {
+    const newText = texts.filter((t) => t != text);
+    setTexts(newText);
+  };
+
+  const addText = () => {
+    if (text) {
+      setTexts([...texts, text]);
+      setText(undefined);
+    }
+  };
+
+  const refreshComponent = () => {
+    setChangeText(true);
+    setTimeout(() => {
+      setChangeText(false);
+      addText();
+    }, 1);
+  };
 
   return (
     <MainTemplate
@@ -27,7 +55,7 @@ const MainPassword = () => {
       <Password
         mode={mode}
         length={length}
-        // invalidTexts={}
+        invalidTexts={texts}
         callback={() => {}}
         requirements={{
           minLength: selected.includes("longitud"),
@@ -67,27 +95,46 @@ const MainPassword = () => {
           }
         />
         <div className="flex items-end justify-between gap-4">
-          <InputForm
-            name="textos invalidos"
-            label={{ required: false }}
-            onChange={({ value }) =>
-              value ? setText(String(value)) : setText(undefined)
-            }
-          />
-          <Button
-            icon="plus-lg"
-            disabled={!text}
-            className="w-auto mb-1"
-            onClick={() => {}}
-          />
+          {!changeText && (
+            <>
+              <InputForm
+                name="textos invalidos"
+                label={{ required: false }}
+                onChange={({ value }) =>
+                  value ? setText(String(value)) : setText(undefined)
+                }
+              />
+              <Button
+                icon="plus-lg"
+                disabled={!text}
+                className="w-auto mb-1"
+                onClick={refreshComponent}
+              />
+            </>
+          )}
         </div>
-        {texts && texts.length > 0 && (
-          <>
-            {texts.map((text, i) => (
-              <p key={i}>{text}</p>
-            ))}
-          </>
-        )}
+        <ScrollShadow className="flex flex-col max-h-[150px] gap-2">
+          {texts && texts.length > 0 && (
+            <>
+              {texts.map((text, i) => (
+                <p
+                  className="flex w-full justify-between p-3 bg-default rounded-xl border-2 border-divider"
+                  key={i}
+                >
+                  {text}
+                  <Icon
+                    icon="x-lg"
+                    onClick={() => {
+                      filterTexts(text);
+                    }}
+                    className="bg-soft-red p-1 flex justify-center cursor-pointer items-center bg-opacity-50 hover:bg-opacity-100 rounded-md hover:text-primary transition-all w-6 h-6"
+                  />
+                </p>
+              ))}
+            </>
+          )}
+        </ScrollShadow>
+        <Divider className="bg-divider mx-auto w-[95%]" />
         <div>
           <CheckboxGroup
             value={selected}

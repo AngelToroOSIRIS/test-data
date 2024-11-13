@@ -6,6 +6,7 @@ import { Code } from "@nextui-org/code";
 import Modal from "@/components/ui/Modal";
 import { useState } from "react";
 import { motion } from "framer-motion";
+import { log } from "node:util";
 
 const MainModal = () => {
   const [isOpen, setIsOpen] = useState(false);
@@ -54,10 +55,13 @@ const MainModal = () => {
       <div className="flex flex-col gap-4 bg-background w-full md:w-[85%] max-w-[800px] rounded-large p-4">
         <Title text="Propiedades" size="medium" />
         <Code className="flex flex-col w-full overflow-x-hidden mx-auto">
+          <p>{"drag?: boolean;"}</p>
           <p>{"isOpen: boolean;"}</p>
           <p>{"closeButton?: boolean;"}</p>
           <p>{"classContainer?: string;"}</p>
           <p>{"closeDisabled?: boolean;"}</p>
+          <p>{"disabledFocus?: boolean;"}</p>
+          <p>{"ref?: MutableRefObject<null>;"}</p>
           <p>{"children?: React.ReactNode;"}</p>
           <p>{"setIsOpen: (value: SetStateAction<boolean>) => void;"}</p>
         </Code>

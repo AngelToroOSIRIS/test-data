@@ -19,7 +19,7 @@ const CardComponent = ({ name, state, setSelected }: Props) => {
       onClick={() => {
         setSelected(name.toLowerCase());
       }}
-      className="flex items-center justify-center bg-background shadow-sm relative select-none w-[220px] md:w-[300px] rounded-large h-[150px] p-4 hover:cursor-pointer"
+      className="flex items-center justify-center bg-background shadow-sm relative select-none w-[250px] max-w-[330px] md:w-[300px] rounded-large h-[150px] p-4 hover:cursor-pointer"
     >
       <p className="text-center text-xl md:text-2xl font-semibold">
         {name}.tsx

@@ -13,11 +13,11 @@ import MainIcon from "@/components/page/MainIcon";
 import MainSideMenu from "@/components/page/MainSideMenu";
 import MainAnimateText from "@/components/page/MainAnimateText";
 import MainButton from "@/components/page/MainButton";
-import Button from "@/components/ui/Button";
 import MainPassword from "@/components/page/MainPassword";
 import MainCarrousel from "@/components/page/MainCarrousel";
 import MenuMain from "@/components/ui/MenuMain";
 import MainModalPlayGround from "@/components/page/MainModalPlayGround";
+import { Button } from "@nextui-org/react";
 
 const Main = () => {
   const [select, setSelect] = useState<string>("all");
@@ -40,13 +40,16 @@ const Main = () => {
   return (
     <main className="mb-[50px] mt-8 relative flex flex-col gap-4 w-[95%] max-w-[1400px] mx-auto">
       {select !== "all" && select !== "datepicker" && (
-        <Icon
-          icon="arrow-left"
-          className="text-default-400 absolute top-4 z-30 left-2 text-2xl p-2 w-8 h-8 hover:bg-divider hover:text-default-foreground flex items-center justify-center cursor-pointer transition-all rounded-full"
+        <Button
+          color="primary"
+          // icon="arrow-left"
+          className="w-auto mx-auto"
           onClick={() => {
             setSelect("all");
           }}
-        />
+        >
+          Volver
+        </Button>
       )}
       {select == "all" && (
         <div className="max-w-[1000px] mx-auto flex flex-col gap-4">
@@ -84,14 +87,15 @@ const Main = () => {
             Estamos trabajando en este componente...
           </p>
           <Button
-            text="Volver"
             color="primary"
-            icon="arrow-left"
+            // icon="arrow-left"
             className="w-auto mx-auto"
             onClick={() => {
               setSelect("all");
             }}
-          />
+          >
+            Volver
+          </Button>
         </div>
       )}
 

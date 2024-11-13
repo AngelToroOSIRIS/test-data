@@ -5,7 +5,6 @@ import CardComponent from "@/components/ui/CardComponent";
 import { StatesComponents } from "@/types/d";
 import Title from "@/components/ui/Title";
 import MainTitle from "@/components/page/MainTitle";
-import Icon from "@/components/ui/Icon";
 import MainTooltip from "@/components/page/MainTooltip";
 import MainModal from "@/components/page/MainModal";
 import MainSteps from "@/components/page/MainSteps";
@@ -33,7 +32,7 @@ const Main = () => {
     { name: "Button", state: "Terminado" },
     { name: "Steps", state: "Terminado" },
     { name: "Carrousel", state: "Terminado" },
-    { name: "DragContainerModal", state: "En proceso" },
+    { name: "DragContainerModal", state: "Terminado" },
   ];
 
   return (

@@ -13,7 +13,7 @@ const DragContainerModal = ({ children, ref, closeDisabled }: Props) => {
     return (
       <div
         ref={ref}
-        className="fixed top-0 left-0 w-full pointer-events-none h-screen z-0"
+        className="fixed top-0 left-0 w-full pointer-events-none h-screen z-30"
       >
         {children}
       </div>

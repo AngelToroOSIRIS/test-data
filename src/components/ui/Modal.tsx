@@ -194,7 +194,7 @@ const Modal = ({
             ref={!disabledFocus ? divRef : null}
             tabIndex={!disabledFocus ? 0 : undefined}
             className={cn(
-              "fixed modal-selected inset-0 overflow-y-auto pointer-events-auto bg-background text-default-foreground w-[98%] h-[98%] my-4 rounded-large shadow-lg mx-auto p-4 z-40",
+              "fixed modal-selected inset-0 overflow-y-auto pointer-events-auto bg-background text-default-foreground w-[98%] h-[98%] my-4 rounded-large shadow-2xl mx-auto p-4 z-40",
               classContainer,
               { "z-50": isFocused },
             )}

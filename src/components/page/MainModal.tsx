@@ -61,8 +61,8 @@ const MainModal = () => {
           <p>{"classContainer?: string;"}</p>
           <p>{"closeDisabled?: boolean;"}</p>
           <p>{"disabledFocus?: boolean;"}</p>
-          <p>{"ref?: MutableRefObject<null>;"}</p>
           <p>{"children?: React.ReactNode;"}</p>
+          <p>{"ref?: MutableRefObject<null>;"}</p>
           <p>{"setIsOpen: (value: SetStateAction<boolean>) => void;"}</p>
         </Code>
         <Divider className="w-[95%] bg-divider mx-auto" />

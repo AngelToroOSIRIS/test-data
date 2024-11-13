@@ -34,7 +34,7 @@ const Main = () => {
     { name: "Steps", state: "Terminado" },
     { name: "Carrousel", state: "Terminado" },
     { name: "DatePicker", state: "Sin iniciar" },
-    { name: "ModalPlayGround", state: "Sin iniciar" },
+    { name: "DragContainerModal", state: "En proceso" },
   ];
 
   return (
@@ -77,7 +77,7 @@ const Main = () => {
       {select === "animatetext" && <MainAnimateText />}
       {select === "button" && <MainButton />}
       {select === "password" && <MainPassword />}
-      {select === "modalplayground" && <MainModalPlayGround />}
+      {select === "dragcontainermodal" && <MainModalPlayGround />}
       {select === "datepicker" && (
         <div className="flex flex-col my-8 gap-4 justify-center items-center">
           <p className="text-center text-default-400 text-2xl select-none font-semibold">

@@ -129,7 +129,7 @@ const Carrousel = ({
                   )}
                 />
                 {imageErrors[i] && (
-                  <div className="absolute inset-0 flex flex-col items-center cursor-not-allowed w-full h-full bg-default justify-center bg-gray-200 text-center text-sm text-default-500 rounded-md">
+                  <div className="absolute inset-0 flex select-none flex-col items-center w-full h-full bg-default justify-center bg-gray-200 text-center text-sm text-default-500 rounded-md">
                     <Icon icon="ban" className="text-lg" />
                     <span>Imagen no disponible</span>
                   </div>
@@ -236,7 +236,7 @@ const Carrousel = ({
                           position: "absolute",
                           x: direction === "left" ? 2000 : -2000,
                         }}
-                        className="absolute inset-0 flex flex-col items-center w-full h-full bg-default justify-center bg-gray-200 text-center text-lg text-default-500 rounded-md"
+                        className="absolute inset-0 flex flex-col select-none items-center w-full h-full bg-default justify-center bg-gray-200 text-center text-lg text-default-500 rounded-md"
                       >
                         <Icon icon="ban" className="text-lg" />
                         <span>Imagen no disponible</span>

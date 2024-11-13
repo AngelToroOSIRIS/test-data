@@ -1,14 +1,20 @@
 "use client";
 
-import { Dialog, Transition } from "@headlessui/react";
-import { Divider } from "@nextui-org/react";
-import { motion, useDragControls } from "framer-motion";
-import { Fragment, SetStateAction, useEffect, useState } from "react";
-import Icon from "./Icon";
+import React, {
+  MutableRefObject,
+  SetStateAction,
+  useEffect,
+  useState,
+} from "react";
+import { AnimatePresence, motion, useDragControls } from "framer-motion";
 import { cn } from "@/libs/utils";
+import { Divider } from "@nextui-org/react";
+import Icon from "@/components/ui/Icon";
 
 interface Props {
   isOpen: boolean;
+  drag?: boolean;
+  ref?: MutableRefObject<null>;
   setIsOpen: (value: SetStateAction<boolean>) => void;
   classContainer?: string;
   children?: React.ReactNode;
@@ -20,19 +26,33 @@ const Modal = ({
   isOpen,
   setIsOpen,
   closeDisabled,
+  ref,
+  drag = false,
+  classContainer,
   closeButton = !closeDisabled,
-  classContainer = "",
   children,
 }: Props) => {
+  const [isMediumScreen, setIsMediumScreen] = useState(
+    window.innerWidth < 1024,
+  );
+
   const dragControls = useDragControls();
 
   function startDrag(event: any) {
     dragControls.start(event);
   }
 
-  const [isMediumScreen, setIsMediumScreen] = useState(
-    window.innerWidth < 1024,
-  );
+  useEffect(() => {
+    if (isOpen) {
+      document.body.style.overflow = "hidden";
+    } else {
+      document.body.style.overflow = "auto";
+    }
+
+    return () => {
+      document.body.style.overflow = "auto";
+    };
+  }, [isOpen]);
 
   useEffect(() => {
     const handleResize = () => {
@@ -45,107 +65,127 @@ const Modal = ({
     };
   }, []);
 
-  return (
-    <Transition appear show={isOpen} as={Fragment}>
-      <Dialog
-        as="section"
-        className="relative z-50"
-        onClose={() => {
-          closeDisabled ? undefined : setIsOpen(false);
-        }}
-      >
-        <Transition.Child
-          as={Fragment}
-          enter={!isMediumScreen ? "ease-out duration-100" : undefined}
-          enterFrom={!isMediumScreen ? "opacity-0" : undefined}
-          enterTo={!isMediumScreen ? "opacity-100" : undefined}
-          leave={"ease-in duration-100"}
-          leaveFrom={"opacity-100"}
-          leaveTo={"opacity-0"}
-        >
-          <div className="fixed inset-0 bg-custom-black bg-opacity-50" />
-        </Transition.Child>
+  useEffect(() => {
+    const handleKeyDown = (event: KeyboardEvent) => {
+      if (event.key === "Escape" && !closeDisabled) {
+        setIsOpen(false);
+      }
+    };
+    window.addEventListener("keydown", handleKeyDown);
+    return () => {
+      window.removeEventListener("keydown", handleKeyDown);
+    };
+  }, [closeDisabled, setIsOpen]);
 
-        <div className="fixed inset-0 md:overflow-y-auto">
-          <motion.div
-            drag="y"
-            dragMomentum={false}
-            dragElastic={0}
-            dragControls={dragControls}
-            dragListener={false}
-            onDrag={(event, info) => {
-              if (info.offset.y > 100) {
-                setIsOpen(false);
-              }
-            }}
-            dragConstraints={{ top: 0, bottom: 0 }}
-            className="flex min-h-full items-end md:items-start space-y-reverse justify-center p-4 text-center"
-          >
-            <Transition.Child
-              as={Fragment}
-              enter={
-                !isMediumScreen
-                  ? "ease-out duration-100"
-                  : "ease-out duration-800"
-              }
-              enterFrom={
-                !isMediumScreen ? "opacity-0 scale-95" : "translate-y-full"
-              }
-              enterTo={
-                !isMediumScreen ? "opacity-100 scale-100" : "translate-y-0"
-              }
-              leave={
-                !isMediumScreen
-                  ? "ease-in duration-100"
-                  : "ease-out duration-800"
-              }
-              leaveFrom={
-                !isMediumScreen ? "opacity-100 scale-100" : "translate-y-0"
-              }
-              leaveTo={
-                !isMediumScreen ? "opacity-0 scale-95" : "translate-y-full"
-              }
+  return (
+    <AnimatePresence mode="wait">
+      {isOpen && (
+        <>
+          {!drag && (
+            <motion.section
+              key="modal-overlay"
+              onClick={() => {
+                if (!closeDisabled) {
+                  setIsOpen(false);
+                }
+              }}
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              className="fixed top-0 left-0 w-full h-full bg-custom-black overflow-y-auto bg-opacity-50 z-40"
             >
-              <Dialog.Panel
+              <motion.div
+                drag="y"
+                dragElastic={0}
+                key="modal-content"
+                dragListener={false}
+                dragMomentum={false}
+                dragControls={dragControls}
+                transition={{ duration: 0.3 }}
+                dragConstraints={{ top: 0, bottom: 0 }}
+                animate={isMediumScreen ? { y: 0 } : { opacity: 1 }}
+                exit={isMediumScreen ? { y: 1000 } : { opacity: 0 }}
+                initial={isMediumScreen ? { y: 1000 } : { opacity: 0 }}
+                onClick={(e) => e.stopPropagation()}
+                onDrag={(event, info) => {
+                  if (info.offset.y > 100) {
+                    setIsOpen(false);
+                  }
+                }}
                 className={cn(
-                  "md:my-8 md:top-0 transform bottom-0 select-none md:select-auto md:bottom-auto fixed md:static rounded-t-2xl md:rounded-2xl bg-background text-left align-middle text-default-foreground shadow-standard transition-all w-full md:w-[98%] max-h-full overflow-y-auto md:overflow-hidden ",
+                  "md:my-8 mx-auto transform bottom-0 md:bottom-auto p-4 fixed md:relative rounded-t-2xl md:rounded-2xl bg-background text-left align-middle text-default-foreground shadow-standard transition-all w-full md:w-[98%] max-h-full overflow-y-auto md:overflow-hidden",
                   classContainer,
                 )}
               >
                 {!closeDisabled && (
                   <>
-                    <i
-                      className="bi bi-x hidden md:block absolute text-borders top-1 right-3 hover:text-primary text-3xl transition-all cursor-pointer z-50"
-                      onClick={() => {
-                        setIsOpen(false);
-                      }}
-                    ></i>
+                    {/* DESKTOP */}
+                    <Icon
+                      icon="x"
+                      className="hidden md:block absolute text-default-500 top-1 right-3 hover:text-primary text-3xl transition-all cursor-pointer z-50"
+                      onClick={() => setIsOpen(false)}
+                    />
+                    {/*MOBILE*/}
                     <div
-                      className="flex md:hidden items-center justify-center w-full h-[40px]"
+                      className="flex fixed left-0 md:hidden items-start justify-center w-full h-8"
                       onPointerDownCapture={startDrag}
                       style={{ touchAction: "none" }}
                     >
-                      <Divider className="w-[40%] h-[8px] mt-2 mb-2 rounded-lg" />
+                      <Divider className="w-[40%] h-[8px] rounded-lg" />
+
+                      {closeButton && (
+                        <Icon
+                          icon="x-lg"
+                          onClick={() => setIsOpen(false)}
+                          className="absolute top-0 right-4 rounded-full flex items-center justify-center p-2 bg-divider hover:text-primary transition-all cursor-pointer md:hidden w-8 h-8 hover:bg-divider z-50"
+                        />
+                      )}
                     </div>
-                    {closeButton && (
-                      <Icon
-                        icon="x-lg"
-                        onClick={() => setIsOpen(false)}
-                        className="fixed top-3 right-3 rounded-full flex items-center justify-center p-2 bg-divider hover:text-primary transition-all cursor-pointer md:hidden w-8 h-8 hover:bg-divider z-50"
-                      />
-                    )}
                   </>
                 )}
-                <div className="px-4 pt-1 pb-6 md:py-4 max-h-full overflow-y-auto">
-                  {children}
+                <div className="pt-4 md:pt-0">{children}</div>
+              </motion.div>
+            </motion.section>
+          )}
+          {drag && (
+            <motion.section
+              drag
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              dragElastic={0}
+              dragMomentum={false}
+              dragListener={false}
+              dragConstraints={ref}
+              dragControls={dragControls}
+              className={cn(
+                "fixed inset-0 overflow-y-auto bg-background text-default-foreground w-[98%] h-[98%] my-4 rounded-large shadow-lg mx-auto p-4",
+                classContainer,
+              )}
+            >
+              {!closeDisabled && (
+                <div className="absolute w-auto flex items-center justify-between gap-1">
+                  <div
+                    className="h-[30px] w-[30px] flex items-center justify-center hover:cursor-grab text-default-400 hover:text-default-foreground active:text-default-foreground transition-all active:cursor-grabbing"
+                    onPointerDownCapture={startDrag}
+                    style={{ touchAction: "none" }}
+                  >
+                    <Icon icon="arrows-move" className="text-xl" />
+                  </div>
+                  <i
+                    className="bi bi-x text-borders hover:text-primary absolute top-1 right-3 text-3xl text-default-400 transition-all cursor-pointer"
+                    onClick={() => {
+                      setIsOpen(false);
+                    }}
+                  ></i>
                 </div>
-              </Dialog.Panel>
-            </Transition.Child>
-          </motion.div>
-        </div>
-      </Dialog>
-    </Transition>
+              )}
+              {children}
+            </motion.section>
+          )}
+        </>
+      )}
+    </AnimatePresence>
   );
 };
-
 export default Modal;

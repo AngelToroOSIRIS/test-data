@@ -77,7 +77,7 @@ const Main = () => {
 
   return (
     <>
-      <main className="mb-[100px] mt-8 flex flex-col gap-4 w-[85%] max-w-[1000px] mx-auto">
+      <main className="mb-[100px] mt-8 flex flex-col gap-4 w-[95%] max-w-[1000px] mx-auto">
         {select !== "all" && (
           <Button
             color="primary"

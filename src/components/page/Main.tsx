@@ -84,6 +84,7 @@ const Main = () => {
             className="w-auto mx-auto"
             onClick={() => {
               setSelect("all");
+              setSearchComponent(null);
             }}
           >
             Volver

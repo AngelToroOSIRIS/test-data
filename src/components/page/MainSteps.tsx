@@ -74,7 +74,7 @@ const MainSteps = () => {
       </div>
       <div className="flex flex-col gap-4 bg-background w-full md:w-[85%] max-w-[800px] rounded-large p-4">
         <Title text="Propiedades" size="medium" />
-        <Code className="flex flex-col w-full mx-auto">
+        <Code className="flex flex-col overflow-hidden w-full mx-auto">
           <p>{"step?: number;"}</p>
           <p>{"drag?: boolean;"}</p>
           <p>{"clickeable?: boolean;"}</p>

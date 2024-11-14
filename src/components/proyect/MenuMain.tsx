@@ -21,10 +21,17 @@ interface itemsType {
 
 interface Props {
   action: boolean;
+  actionModal: boolean;
   callbackClick: (action: boolean) => void;
+  callbackModal: (action: boolean) => void;
 }
 
-const MenuMain = ({ callbackClick, action }: Props) => {
+const MenuMain = ({
+  callbackClick,
+  action,
+  callbackModal,
+  actionModal,
+}: Props) => {
   const router = useRouter();
 
   const items: itemsType[] = [
@@ -57,6 +64,19 @@ const MenuMain = ({ callbackClick, action }: Props) => {
       title: "Repositorio",
     },
     {
+      name: "Librerias",
+      icon: "journals",
+      rotate: true,
+      bounce: false,
+      repeat: 0,
+      target: true,
+      width: 135,
+      animate: [0, 360],
+      className:
+        "rounded-full bg-primary overflow-hidden cursor-pointer text-default-white w-12 h-12 p-2",
+      title: "Buscar componentes",
+    },
+    {
       name: !action ? "Buscar" : "Cerrar",
       icon: "search",
       rotate: true,
@@ -72,7 +92,7 @@ const MenuMain = ({ callbackClick, action }: Props) => {
   ];
 
   return (
-    <motion.div className="fixed flex bottom-6 left-6 gap-3 z-30 flex-col-reverse">
+    <motion.div className="fixed flex bottom-3 left-3 gap-3 z-30 flex-col-reverse">
       {items.map((item, i) => (
         <motion.a
           key={i}
@@ -83,8 +103,11 @@ const MenuMain = ({ callbackClick, action }: Props) => {
           onClick={() => {
             if (item.name == "GitHub") {
               router.push("https://github.com/AngelToroOSIRIS/test-ui.git");
-            } else if (item.name == "Buscar" || item.name == "Cerrar") {
+            } else if (item.icon == "search") {
+              window.scrollTo(0, 0);
               callbackClick(!action);
+            } else if (item.icon == "journals") {
+              callbackModal(!actionModal);
             }
           }}
           animate={{ opacity: 1, scale: 1, rotate: 0 }}

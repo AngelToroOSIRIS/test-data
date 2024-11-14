@@ -22,7 +22,7 @@ const CardComponent = ({ name, state, setSelected }: Props) => {
       onClick={() => {
         setSelected(name.toLowerCase());
       }}
-      className="flex items-center justify-center bg-background shadow-sm relative select-none w-[200px] max-w-[330px] md:w-[300px] rounded-large h-[150px] p-4 hover:cursor-pointer"
+      className="flex items-center justify-center bg-background shadow-sm relative select-none w-[200px] md:w-[300px] max-w-[350px] rounded-large h-[150px] p-4 hover:cursor-pointer"
     >
       <p className="text-center font-semibold">{name}.tsx</p>
       <Chip

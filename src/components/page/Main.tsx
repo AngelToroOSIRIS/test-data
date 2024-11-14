@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import CardComponent from "@/components/ui/CardComponent";
+import CardComponent from "@/components/proyect/CardComponent";
 import { StatesComponents } from "@/types/d";
 import Title from "@/components/ui/Title";
 import MainTitle from "@/components/page/MainTitle";
@@ -14,13 +14,14 @@ import MainAnimateText from "@/components/page/MainAnimateText";
 import MainButton from "@/components/page/MainButton";
 import MainPassword from "@/components/page/MainPassword";
 import MainCarrousel from "@/components/page/MainCarrousel";
-import MenuMain from "@/components/ui/MenuMain";
+import MenuMain from "@/components/proyect/MenuMain";
 import MainModalPlayGround from "@/components/page/MainModalPlayGround";
 import { Button, Kbd } from "@nextui-org/react";
 import Modal from "@/components/ui/Modal";
 import { Code } from "@nextui-org/code";
 import InputForm from "@/components/forms/InputForm";
 import { AnimatePresence, motion } from "framer-motion";
+import ModalIndex from "@/components/page/ModalIndex";
 
 const Main = () => {
   const [select, setSelect] = useState<string>("all");
@@ -76,33 +77,8 @@ const Main = () => {
     };
   }, [showInput, isOpen]);
 
-  console.log(searchComponent);
-
   return (
     <>
-      <Modal
-        isOpen={isOpen}
-        setIsOpen={setIsOpen}
-        classContainer="max-w-[500px]"
-      >
-        <div className="flex flex-col gap-3">
-          <Title text="Librerias" size="medium" />
-          <div className="flex flex-col font-semibold gap-3">
-            <div className="flex justify-between items-center gap-2">
-              <p>- Next UI V2.4.8</p>
-              <Code color="success">npm install @nextui-org/react</Code>
-            </div>
-            <div className="flex justify-between items-center gap-2">
-              <p>- Framer Motion V11.11.11</p>
-              <Code color="success">npm install framer-motion</Code>
-            </div>
-            <div className="flex justify-between items-center gap-2">
-              <p>- Next Theme V0.4.3</p>
-              <Code color="success">npm install next-themes</Code>
-            </div>
-          </div>
-        </div>
-      </Modal>
       <main className="mb-[100px] mt-8 relative flex flex-col gap-4 w-[95%] max-w-[1400px] mx-auto">
         {select !== "all" && (
           <Button
@@ -185,21 +161,13 @@ const Main = () => {
         {select === "button" && <MainButton />}
         {select === "password" && <MainPassword />}
         {select === "dragcontainermodal" && <MainModalPlayGround />}
-        {components.find((i) => i.name == select) && (
+        {components.find(
+          (i) => i.name.toLowerCase() == select.toLowerCase(),
+        ) && (
           <div className="flex flex-col my-8 gap-4 justify-center items-center">
             <p className="text-center text-default-400 text-2xl select-none font-semibold">
               Estamos trabajando en este componente...
             </p>
-            <Button
-              color="primary"
-              // icon="arrow-left"
-              className="w-auto mx-auto"
-              onClick={() => {
-                setSelect("all");
-              }}
-            >
-              Volver
-            </Button>
           </div>
         )}
 
@@ -225,6 +193,7 @@ const Main = () => {
           callbackClick={(action) => setShowInput(action)}
         />
       </main>
+      {isOpen && <ModalIndex />}
     </>
   );
 };

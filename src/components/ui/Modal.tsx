@@ -137,7 +137,7 @@ const Modal = ({
               initial={isMediumScreen ? { y: 1000 } : { opacity: 0 }}
               onClick={(e) => e.stopPropagation()}
               onDrag={(event, info) => {
-                if (info.offset.y > 100) {
+                if (info.offset.y > 80) {
                   setIsOpen(false);
                 }
               }}
@@ -199,15 +199,15 @@ const Modal = ({
               { "z-50": isFocused },
             )}
           >
-            {!closeDisabled && (
-              <div className="absolute right-3 top-2 w-auto flex items-center justify-between gap-1">
-                <div
-                  className="h-8 flex items-center justify-center hover:cursor-grab text-default-400 hover:text-default-foreground active:text-default-foreground transition-all active:cursor-grabbing"
-                  onPointerDownCapture={startDrag}
-                  style={{ touchAction: "none" }}
-                >
-                  <Icon icon="arrows-move" className="text-xl" />
-                </div>
+            <div className="absolute right-3 top-2 w-auto flex items-center justify-between gap-1">
+              <div
+                className="h-8 flex items-center justify-center hover:cursor-grab text-default-400 hover:text-default-foreground active:text-default-foreground transition-all active:cursor-grabbing"
+                onPointerDownCapture={startDrag}
+                style={{ touchAction: "none" }}
+              >
+                <Icon icon="arrows-move" className="text-xl" />
+              </div>
+              {!closeDisabled && (
                 <Icon
                   icon="x"
                   onClick={() => {
@@ -215,8 +215,8 @@ const Modal = ({
                   }}
                   className="text-borders hover:text-primary text-3xl flex items-center justify-center text-default-400 transition-all cursor-pointer"
                 />
-              </div>
-            )}
+              )}
+            </div>
             {children}
           </motion.section>
         )}

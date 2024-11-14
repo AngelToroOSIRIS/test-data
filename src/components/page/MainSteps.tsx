@@ -5,19 +5,30 @@ import Title from "@/components/ui/Title";
 import { Code } from "@nextui-org/code";
 import { motion } from "framer-motion";
 import SelectForm from "@/components/forms/SelectForm";
+import InputForm from "@/components/forms/InputForm";
+import { SimpleLoading } from "@/components/ui/SimpleLoading";
 
 const MainSteps = () => {
   const [count, setCount] = useState(0);
   const [drag, setDrag] = useState<boolean>(true);
-  const [defaultItem, setDefaultItem] = useState(0);
+  const [defaultItem, setDefaultItem] = useState(1);
   const [showButton, setShowButton] = useState<boolean>(true);
   const [clickeable, setClickeable] = useState<boolean>(true);
   const [buttons, setButtons] = useState<"side" | "bottom">("side");
+  const [lengthSteps, setLengthSteps] = useState<number>(5);
+  const [changeSteps, setChangeSteps] = useState(false);
 
-  const data = [1, 2, 3, 4, 5];
+  const data = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
 
   const classDiv =
     "bg-default w-full text-center flex flex-col gap-4 justify-center items-center text-2xl font-semibold h-[400px] rounded-large";
+
+  const refreshComponent = () => {
+    setChangeSteps(true);
+    setTimeout(() => {
+      setChangeSteps(false);
+    }, 1);
+  };
 
   return (
     <motion.div
@@ -28,34 +39,38 @@ const MainSteps = () => {
       <div className="flex flex-col gap-3 bg-background rounded-large relative p-4 w-full max-w-[900px]">
         <Title text="Demo Steps.tsx" size="title" className="text-3xl" center />
         <Divider className="w-[95%] bg-divider mx-auto" />
-        <Steps
-          drag={drag}
-          defaultItem={defaultItem}
-          clickeable={clickeable}
-          buttons={{ show: showButton, position: buttons }}
-        >
-          {data.map((item, i) => (
-            <div key={i} className={classDiv}>
-              <p>Paso</p>
-              <div className="flex gap-4">
-                <div className="flex justify-between mx-auto text-xl gap-4">
-                  <Button
-                    color="success"
-                    onClick={() =>
-                      count > 0 ? setCount(count - 1) : undefined
-                    }
-                  >
-                    Anterior
-                  </Button>
-                  <p className="text-center text-4xl font-semibold">{item}</p>
-                  <Button color="primary" onClick={() => setCount(count + 1)}>
-                    Siguiente
-                  </Button>
+        {changeSteps && <SimpleLoading />}
+        {!changeSteps && (
+          <Steps
+            drag={drag}
+            step={count}
+            defaultItem={defaultItem}
+            clickeable={clickeable}
+            buttons={{ show: showButton, position: buttons }}
+          >
+            {data.slice(0, lengthSteps).map((item, i) => (
+              <div key={i} className={classDiv}>
+                <p>Paso</p>
+                <div className="flex gap-4">
+                  <div className="flex justify-between mx-auto text-xl gap-4">
+                    <Button
+                      color="success"
+                      onClick={() =>
+                        count > 0 ? setCount(count - 1) : undefined
+                      }
+                    >
+                      Anterior
+                    </Button>
+                    <p className="text-center text-4xl font-semibold">{item}</p>
+                    <Button color="primary" onClick={() => setCount(count + 1)}>
+                      Siguiente
+                    </Button>
+                  </div>
                 </div>
               </div>
-            </div>
-          ))}
-        </Steps>
+            ))}
+          </Steps>
+        )}
       </div>
       <div className="flex flex-col gap-4 bg-background w-full md:w-[85%] max-w-[800px] rounded-large p-4">
         <Title text="Propiedades" size="medium" />
@@ -100,6 +115,28 @@ const MainSteps = () => {
           </Switch>
         </div>
         <Divider className="w-[95%] bg-divider mx-auto" />
+        <InputForm
+          name="cantidad"
+          label={{ value: "Cantidad de pasos" }}
+          type="number"
+          onChange={({ value }) => {
+            value && Number(value) <= data.length && Number(value) > 0
+              ? setLengthSteps(Number(value))
+              : setLengthSteps(5);
+            refreshComponent();
+          }}
+        />
+        <InputForm
+          name="default"
+          label={{ value: "Default item" }}
+          type="number"
+          onChange={({ value }) => {
+            value && Number(value) <= data.length && Number(value) > 0
+              ? setDefaultItem(Number(value))
+              : setDefaultItem(1);
+            refreshComponent();
+          }}
+        />
         <SelectForm
           description={
             !showButton ? 'Debe habilitar la opción "Show buttons" ' : undefined

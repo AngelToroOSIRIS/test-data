@@ -29,7 +29,7 @@ const MainModal = () => {
           closeButton={closeButton}
           classContainer="max-w-[500px]"
         >
-          <div className="flex flex-col items-center gap-4">
+          <div className="flex flex-col h-[170px] items-center gap-4">
             <Title text="Modal" size="title" className="text-3xl" center />
             <Divider className="w-[95%] bg-divider mx-auto" />
             <Switch

@@ -14,16 +14,17 @@ interface Props {
 const CardComponent = ({ name, state, setSelected }: Props) => {
   return (
     <motion.div
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
+      exit={{ opacity: 0 }}
       whileTap={{ scale: 0.95 }}
       whileHover={{ scale: 1.05 }}
       onClick={() => {
         setSelected(name.toLowerCase());
       }}
-      className="flex items-center justify-center bg-background shadow-sm relative select-none w-[250px] max-w-[330px] md:w-[300px] rounded-large h-[150px] p-4 hover:cursor-pointer"
+      className="flex items-center justify-center bg-background shadow-sm relative select-none w-[200px] max-w-[330px] md:w-[300px] rounded-large h-[150px] p-4 hover:cursor-pointer"
     >
-      <p className="text-center text-xl md:text-2xl font-semibold">
-        {name}.tsx
-      </p>
+      <p className="text-center font-semibold">{name}.tsx</p>
       <Chip
         variant="flat"
         color={

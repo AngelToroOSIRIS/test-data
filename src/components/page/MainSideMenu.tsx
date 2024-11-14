@@ -11,7 +11,6 @@ const MainSideMenu = () => {
   const [isRight, setIsRight] = useState(false);
   const [closeDisabled, setCloseDisabled] = useState(false);
   const [backdrop, setBackdrop] = useState(false);
-  const [background, setBackground] = useState(false);
 
   return (
     <motion.div
@@ -33,11 +32,17 @@ const MainSideMenu = () => {
         >
           Abrir SideMenu
         </Button>
+        <Divider className="w-[95%] bg-divider mx-auto" />
+        <div className="flex flex-col gap-2">
+          <p>
+            - Se debe encerrar en la etiqueta <b>AnimatePresence</b> de
+            <b> Framer motion </b> para animación de salida.
+          </p>
+        </div>
         <AnimatePresence>
           {showMenu && (
             <SideMenu
               backdrop={backdrop}
-              background={background}
               setShowAside={setShowMenu}
               disabledClosed={closeDisabled}
               position={isRight ? "right" : "left"}
@@ -87,7 +92,6 @@ const MainSideMenu = () => {
           <p>{"setShowAside: (value: SetStateAction<boolean>) => void;"}</p>
           <p>{"className?: string;"}</p>
           <p>{"disabledClosed?: boolean;"}</p>
-          <p>{"background?: boolean;"}</p>
           <p>{"backdrop?: boolean;"}</p>
         </Code>
         <Divider className="w-[95%] bg-divider mx-auto" />
@@ -117,14 +121,6 @@ const MainSideMenu = () => {
           classNames={{ thumb: "bg-default-white", wrapper: "bg-default" }}
         >
           Backdrop
-        </Switch>
-        <Switch
-          className="mx-auto"
-          isSelected={background}
-          onValueChange={setBackground}
-          classNames={{ thumb: "bg-default-white", wrapper: "bg-default" }}
-        >
-          Background
         </Switch>
       </div>
     </motion.div>

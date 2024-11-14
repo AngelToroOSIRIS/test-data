@@ -10,7 +10,6 @@ interface Props {
   setShowAside: (value: SetStateAction<boolean>) => void;
   className?: string;
   disabledClosed?: boolean;
-  background?: boolean;
   backdrop?: boolean;
 }
 
@@ -21,7 +20,6 @@ const SideMenu = ({
   setShowAside,
   className = "",
   backdrop = true,
-  background = true,
 }: Props) => {
   const [touchStartX, setTouchStartX] = useState<number | null>(null);
 
@@ -111,7 +109,6 @@ const SideMenu = ({
           transition={{ duration: 0.5 }}
           className={cn(
             "fixed bg-custom-black bg-opacity-70 top-0 right-0 z-40 w-full h-screen",
-            { "bg-opacity-0": !background },
           )}
           onClick={() => {
             if (!disabledClosed) {

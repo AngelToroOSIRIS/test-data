@@ -7,13 +7,15 @@ import DragContainerModal from "@/components/ui/DragContainerModal";
 import Title from "@/components/ui/Title";
 import InputForm from "@/components/forms/InputForm";
 import Icon from "@/components/ui/Icon";
-import { Divider } from "@nextui-org/react";
+import { Divider, Switch } from "@nextui-org/react";
 import Modal from "@/components/ui/Modal";
 import { Code } from "@nextui-org/code";
 
 const MainModalPlayGround = () => {
   const [showModal, setShowModal] = useState(false);
   const [showModal2, setShowModal2] = useState(false);
+  const [closeDisabled, setCloseDisabled] = useState(false);
+  const [disabledFocus, setDisabledFocus] = useState(false);
 
   const ref = useRef(null);
 
@@ -25,6 +27,8 @@ const MainModalPlayGround = () => {
             drag
             ref={ref}
             isOpen={showModal}
+            closeDisabled={closeDisabled}
+            disabledFocus={disabledFocus}
             classContainer="max-h-[480px] max-w-[400px]"
             setIsOpen={setShowModal}
           >
@@ -43,6 +47,8 @@ const MainModalPlayGround = () => {
             drag
             ref={ref}
             isOpen={showModal2}
+            closeDisabled={closeDisabled}
+            disabledFocus={disabledFocus}
             classContainer="max-h-[440px] max-w-[390px]"
             setIsOpen={setShowModal2}
           >
@@ -106,17 +112,36 @@ const MainModalPlayGround = () => {
             </p>
           </div>
         </div>
-        <Code className="flex flex-col w-full overflow-x-hidden mx-auto">
-          <p>{"drag?: boolean;"}</p>
-          <p>{"isOpen: boolean;"}</p>
-          <p>{"closeButton?: boolean;"}</p>
-          <p>{"classContainer?: string;"}</p>
-          <p>{"closeDisabled?: boolean;"}</p>
-          <p>{"disabledFocus?: boolean;"}</p>
-          <p>{"children?: React.ReactNode;"}</p>
-          <p>{"ref?: MutableRefObject<null>;"}</p>
-          <p>{"setIsOpen: (value: SetStateAction<boolean>) => void;"}</p>
-        </Code>
+        <div className="flex flex-col gap-4 bg-background w-full md:w-[85%] max-w-[800px] rounded-large p-4">
+          <Title text="Propiedades" size="medium" />
+          <Code className="flex flex-col w-full overflow-x-hidden mx-auto">
+            <p>{"drag?: boolean;"}</p>
+            <p>{"isOpen: boolean;"}</p>
+            <p>{"closeButton?: boolean;"}</p>
+            <p>{"classContainer?: string;"}</p>
+            <p>{"closeDisabled?: boolean;"}</p>
+            <p>{"disabledFocus?: boolean;"}</p>
+            <p>{"children?: React.ReactNode;"}</p>
+            <p>{"ref?: MutableRefObject<null>;"}</p>
+            <p>{"setIsOpen: (value: SetStateAction<boolean>) => void;"}</p>
+          </Code>
+          <Divider className="w-[95%] bg-divider mx-auto" />
+          <Title text="Test" size="medium" primary />
+          <Switch
+            isSelected={closeDisabled}
+            onValueChange={setCloseDisabled}
+            classNames={{ thumb: "bg-default-white", wrapper: "bg-default" }}
+          >
+            close disabled
+          </Switch>
+          <Switch
+            isSelected={disabledFocus}
+            onValueChange={setDisabledFocus}
+            classNames={{ thumb: "bg-default-white", wrapper: "bg-default" }}
+          >
+            disabledFocus
+          </Switch>
+        </div>
       </MainTemplate>
     </>
   );

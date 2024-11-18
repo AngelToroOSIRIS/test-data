@@ -8,6 +8,7 @@ import Icon from "@/components/ui/Icon";
 
 interface Props {
   drag?: boolean;
+  infinity?: boolean;
   clickeable?: boolean;
   showImages?: { show: boolean; position?: "left" | "right" };
   height?: "large" | "standard" | "auto";
@@ -26,6 +27,7 @@ const Carrousel = ({
   buttons,
   showImages,
   height = "auto",
+  infinity = true,
   drag = true,
   defaultItem,
   clickeable = true,
@@ -39,7 +41,6 @@ const Carrousel = ({
   const [imageErrors, setImageErrors] = useState<boolean[]>(
     new Array(images.length).fill(false),
   );
-
   const [imageLoading, setImageLoading] = useState<boolean[]>(
     new Array(images.length).fill(true),
   );
@@ -227,13 +228,20 @@ const Carrousel = ({
                           setIsInteracting(false);
 
                           if (info.offset.x > 100) {
-                            if (selectedItem == 0) {
+                            if (infinity && selectedItem == 0) {
                               return prevStepFn(images.length - 1);
+                            } else if (!infinity && selectedItem < 1) {
+                              return;
                             }
                             prevStepFn(i - 1);
                           } else if (info.offset.x < -100) {
-                            if (selectedItem == images.length - 1) {
+                            if (infinity && selectedItem == images.length - 1) {
                               return nextStepFn(0);
+                            } else if (
+                              !infinity &&
+                              selectedItem == images.length - 1
+                            ) {
+                              return;
                             }
                             nextStepFn(i + 1);
                           }
@@ -250,25 +258,33 @@ const Carrousel = ({
                         className="absolute inset-0 flex flex-col select-none items-center w-full h-full bg-default justify-center bg-gray-200 text-center text-lg text-default-500 rounded-md"
                       >
                         <Icon icon="ban" className="text-lg" />
-                        <span>Imagen nos disponible</span>
+                        <span>Imagen no disponible</span>
                       </motion.div>
                     ) : (
                       <motion.img
                         drag={drag ? "x" : false}
+                        onError={() => handleImageError(i)}
+                        onLoad={() => handleImageLoad(i)}
                         dragConstraints={{ right: 0, left: 0 }}
                         onDragStart={() => setIsInteracting(true)}
-                        onLoad={() => handleImageLoad(i)}
                         onDragEnd={(event, info) => {
                           setIsInteracting(false);
 
                           if (info.offset.x > 100) {
-                            if (selectedItem == 0) {
+                            if (infinity && selectedItem == 0) {
                               return prevStepFn(images.length - 1);
+                            } else if (!infinity && selectedItem < 1) {
+                              return;
                             }
                             prevStepFn(i - 1);
                           } else if (info.offset.x < -100) {
-                            if (selectedItem == images.length - 1) {
+                            if (infinity && selectedItem == images.length - 1) {
                               return nextStepFn(0);
+                            } else if (
+                              !infinity &&
+                              selectedItem == images.length - 1
+                            ) {
+                              return;
                             }
                             nextStepFn(i + 1);
                           }
@@ -312,11 +328,17 @@ const Carrousel = ({
                 className={cn("rounded-full w-auto", {
                   "absolute top-[50%] bottom-[50%] self-center items-center justify-center opacity-40 left-3 rounded-full":
                     buttons.position == "side",
-                  hidden: selectedItem == 0 && buttons.position === "side",
+                  hidden:
+                    !infinity &&
+                    selectedItem == 0 &&
+                    buttons.position === "side",
                 })}
                 isIconOnly
-                isDisabled={selectedItem < 1}
+                isDisabled={!infinity && selectedItem < 1}
                 onClick={() => {
+                  if (infinity && selectedItem == 0) {
+                    return prevStepFn(images.length - 1);
+                  }
                   prevStepFn(selectedItem - 1);
                 }}
                 startContent={
@@ -330,12 +352,16 @@ const Carrousel = ({
                   "absolute top-[50%] bottom-[50%] self-center items-center justify-center opacity-40 right-3 rounded-full":
                     buttons.position === "side",
                   hidden:
+                    !infinity &&
                     selectedItem == images.length - 1 &&
                     buttons.position === "side",
                 })}
                 isIconOnly
                 isDisabled={images.length <= selectedItem}
                 onClick={() => {
+                  if (infinity && selectedItem == images.length - 1) {
+                    return nextStepFn(0);
+                  }
                   nextStepFn(selectedItem + 1);
                 }}
                 startContent={

@@ -11,6 +11,7 @@ const MainCarrousel = () => {
   const [animate, setAnimate] = useState(true);
   const [clickeable, setClickeable] = useState(true);
   const [showButton, setShowButton] = useState<boolean>(true);
+  const [infinity, setInfinity] = useState(true);
   const [buttons, setButtons] = useState<"side" | "bottom">("side");
   const [time, setTime] = useState(4);
   const [showImages, setShowImages] = useState(false);
@@ -36,6 +37,7 @@ const MainCarrousel = () => {
     >
       <Carrousel
         height="standard"
+        infinity={infinity}
         // @ts-ignore
         showImages={{ show: showImages, position: positionImage }}
         clickeable={clickeable}
@@ -90,13 +92,22 @@ const MainCarrousel = () => {
           </Switch>
         </div>
         <Divider className="w-[95%] bg-divider mx-auto" />
-        <Switch
-          isSelected={showImages}
-          onValueChange={setShowImages}
-          classNames={{ thumb: "bg-default-white", wrapper: "bg-default" }}
-        >
-          Show images
-        </Switch>
+        <div className="flex justify-between items-center mx-auto w-[300px]">
+          <Switch
+            isSelected={showImages}
+            onValueChange={setShowImages}
+            classNames={{ thumb: "bg-default-white", wrapper: "bg-default" }}
+          >
+            Show images
+          </Switch>
+          <Switch
+            isSelected={infinity}
+            onValueChange={setInfinity}
+            classNames={{ thumb: "bg-default-white", wrapper: "bg-default" }}
+          >
+            Infinity
+          </Switch>
+        </div>
         {showImages && (
           <SelectForm
             required

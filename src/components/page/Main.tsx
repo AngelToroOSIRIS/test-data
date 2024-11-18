@@ -20,6 +20,11 @@ import { Button, Kbd } from "@nextui-org/react";
 import InputForm from "@/components/forms/InputForm";
 import { AnimatePresence, motion } from "framer-motion";
 import ModalIndex from "@/components/page/ModalIndex";
+import MainInputForm from "@/components/page/MainInputForm";
+import MainSelectForm from "@/components/page/MainSelectForm";
+import MainTextareaForm from "@/components/page/MainTextareaForm";
+import MainAutoCompleteForm from "@/components/page/MainAutoCompleteForm";
+import MainSuggestInput from "@/components/page/MainSuggestInput";
 
 const Main = () => {
   const [select, setSelect] = useState<string>("all");
@@ -28,17 +33,16 @@ const Main = () => {
   const [searchComponent, setSearchComponent] = useState<string | null>(null);
 
   const components: { name: string; state: StatesComponents }[] = [
-    { name: "InputForm", state: "En proceso" },
-    { name: "SelectForm", state: "En proceso" },
-    { name: "TextareaForm", state: "En proceso" },
-    { name: "AutoCompleteForm", state: "En proceso" },
-    { name: "SelectTime", state: "En proceso" },
-    { name: "UbicationForm", state: "En proceso" },
+    { name: "AnimateText", state: "Terminado" },
+    { name: "SuggestInputForm", state: "Terminado" },
+    { name: "AutoCompleteForm", state: "Terminado" },
+    { name: "InputForm", state: "Terminado" },
+    { name: "SelectForm", state: "Terminado" },
+    { name: "TextareaForm", state: "Terminado" },
     { name: "Title", state: "Terminado" },
     { name: "Icon", state: "Terminado" },
     { name: "Password", state: "Terminado" },
     { name: "Tooltip", state: "Terminado" },
-    { name: "AnimateText", state: "Terminado" },
     { name: "SideMenu", state: "Terminado" },
     { name: "Modal", state: "Terminado" },
     { name: "Button", state: "Terminado" },
@@ -46,6 +50,8 @@ const Main = () => {
     { name: "Carrousel", state: "Terminado" },
     { name: "DragContainerModal", state: "Terminado" },
   ];
+
+  components.sort((a, b) => a.name.localeCompare(b.name));
 
   useEffect(() => {
     const handleKeyDown = (event: KeyboardEvent) => {
@@ -77,7 +83,7 @@ const Main = () => {
 
   return (
     <>
-      <main className="mb-[100px] mt-8 flex flex-col gap-4 w-[95%] max-w-[1000px] mx-auto">
+      <main className="mb-[100px] mt-8 flex flex-col gap-4 w-full max-w-[1000px] mx-auto">
         {select !== "all" && (
           <Button
             color="primary"
@@ -91,7 +97,7 @@ const Main = () => {
           </Button>
         )}
         {select == "all" && (
-          <div className=" mx-auto flex flex-col gap-4">
+          <div className="flex flex-col gap-4">
             <Title
               primary={false}
               text="Componentes"
@@ -103,12 +109,14 @@ const Main = () => {
                   initial={{ opacity: 0, height: 0 }}
                   animate={{ opacity: 1, height: 45 }}
                   exit={{ opacity: 0, height: 0 }}
-                  className="w-[95%] max-w-[500px] mx-auto"
+                  className="mx-auto w-full max-w-[400px]"
                 >
                   <InputForm
+                    onlyInput
+                    autoFocus
                     name="search"
                     type="search"
-                    onlyInput
+                    className="outline-none"
                     placeholder="Buscar componente"
                     onChange={({ value }) =>
                       value
@@ -154,6 +162,11 @@ const Main = () => {
         {select === "button" && <MainButton />}
         {select === "password" && <MainPassword />}
         {select === "dragcontainermodal" && <MainModalPlayGround />}
+        {select === "inputform" && <MainInputForm />}
+        {select === "selectform" && <MainSelectForm />}
+        {select === "textareaform" && <MainTextareaForm />}
+        {select === "autocompleteform" && <MainAutoCompleteForm />}
+        {select === "suggestinputform" && <MainSuggestInput />}
 
         {components.find((i) => i.name == select) && (
           <div className="flex flex-col my-8 gap-4 justify-center items-center">
@@ -167,13 +180,13 @@ const Main = () => {
           <motion.div
             initial={{ opacity: 0.5, width: 50 }}
             whileHover={{ opacity: 1, width: 150 }}
-            className="hidden fixed right-3 bottom-14 overflow-x-hidden text-sm md:flex flex-col gap-2 bg-default rounded-lg p-2"
+            className="hidden fixed right-3 bottom-14 select-none overflow-x-hidden text-sm md:flex flex-col gap-2 bg-default rounded-lg p-2"
           >
-            <div className="flex gap-4 items-center">
+            <div className="flex gap-3 items-center">
               <Kbd keys={["ctrl"]}>B</Kbd>
               Buscar
             </div>
-            <div className="flex gap-4 items-center">
+            <div className="flex gap-3 items-center">
               <Kbd keys={["ctrl"]}>M</Kbd>
               Librerias
             </div>
@@ -181,6 +194,7 @@ const Main = () => {
         )}
 
         <MenuMain
+          select={select}
           action={showInput}
           actionModal={isOpen}
           callbackModal={(action) => setIsOpen(action)}

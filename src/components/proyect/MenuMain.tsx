@@ -22,6 +22,7 @@ interface itemsType {
 interface Props {
   action: boolean;
   actionModal: boolean;
+  select: string;
   callbackClick: (action: boolean) => void;
   callbackModal: (action: boolean) => void;
 }
@@ -29,6 +30,7 @@ interface Props {
 const MenuMain = ({
   callbackClick,
   action,
+  select,
   callbackModal,
   actionModal,
 }: Props) => {
@@ -86,7 +88,9 @@ const MenuMain = ({
       width: 125,
       animate: [0, 360],
       className:
-        "rounded-full bg-default-500 overflow-hidden cursor-pointer text-default-white w-12 h-12 p-2",
+        select == "all"
+          ? "rounded-full bg-default-500 overflow-hidden cursor-pointer text-default-white w-12 h-12 p-2 "
+          : "hidden",
       title: "Buscar componentes",
     },
   ];

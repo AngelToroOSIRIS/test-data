@@ -10,10 +10,18 @@ import Icon from "@/components/ui/Icon";
 
 interface Props {
   name: string;
+  icon?: string;
+  children?: any;
+  required?: boolean;
+  className?: string;
+  onlySelect?: boolean;
   placeholder?: string;
   description?: string;
   isDisabled?: boolean;
-  icon?: string;
+  defaultValue?: string;
+  variant?: "flat" | "bordered" | "faded" | "underlined";
+  tooltip?: { icon: string; content: string | React.ReactNode };
+  validations?: (nameField: string) => Validations | undefined;
   label?: { value?: string; required?: boolean; className?: string };
   onChange?: ({
     name,
@@ -22,14 +30,6 @@ interface Props {
     name: string;
     value: string | number | null;
   }) => any;
-  children?: any;
-  tooltip?: { icon: string; content: string | React.ReactNode };
-  validations?: (nameField: string) => Validations | undefined;
-  required?: boolean;
-  defaultValue?: string;
-  variant?: "flat" | "bordered" | "faded" | "underlined";
-  onlySelect?: boolean;
-  className?: string;
 }
 
 const SelectForm = ({

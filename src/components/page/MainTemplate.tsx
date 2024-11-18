@@ -30,7 +30,7 @@ const MainTemplate = ({ name, children, properties }: Props) => {
         {properties && properties?.length > 0 && (
           <>
             <Title text="Propiedades" size="medium" />
-            <Code className="flex flex-col w-full mx-auto min-h-[100px] overflow-x-auto">
+            <Code className="flex flex-col w-full mx-auto min-h-[230px] overflow-x-auto">
               {properties.map((prop, i) => (
                 <p key={i}>{prop}</p>
               ))}

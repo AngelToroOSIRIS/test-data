@@ -5,7 +5,6 @@ import { cn } from "@/libs/utils";
 import { AnimatePresence, motion } from "framer-motion";
 import { Button, ScrollShadow } from "@nextui-org/react";
 import Icon from "@/components/ui/Icon";
-import { log } from "node:util";
 
 interface Props {
   drag?: boolean;
@@ -37,12 +36,10 @@ const Carrousel = ({
     defaultItem && defaultItem <= images.length ? defaultItem : 0,
   );
 
-  // Estado para imágenes que fallan
   const [imageErrors, setImageErrors] = useState<boolean[]>(
     new Array(images.length).fill(false),
   );
 
-  // Estado para saber si las imágenes están cargando
   const [imageLoading, setImageLoading] = useState<boolean[]>(
     new Array(images.length).fill(true),
   );
@@ -129,7 +126,17 @@ const Carrousel = ({
                   )}
                 />
                 {imageErrors[i] && (
-                  <div className="absolute inset-0 flex select-none flex-col items-center w-full h-full bg-default justify-center bg-gray-200 text-center text-sm text-default-500 rounded-md">
+                  <div
+                    onClick={() => {
+                      if (clickeable) {
+                        setSelectedItem(i);
+                      }
+                    }}
+                    className={cn(
+                      "absolute inset-0 flex select-none min-w-[150px] w-[150px] max-h-[100px] h-[100px] min-h-[100px] flex-col items-center bg-default justify-center text-center text-sm text-default-500 rounded-sm transition-all",
+                      { "cursor-pointer hover:brightness-95": clickeable },
+                    )}
+                  >
                     <Icon icon="ban" className="text-lg" />
                     <span>Imagen no disponible</span>
                   </div>
@@ -160,9 +167,10 @@ const Carrousel = ({
                 <div
                   key={i}
                   className={cn(
-                    "flex items-center font-semibold justify-center select-none transition-all rounded-full bg-divider w-1 h-1 p-2",
+                    "flex items-center font-semibold justify-center select-none transition-all rounded-full opacity-50 hover:opacity-100 bg-divider w-1 h-1 p-2",
                     {
-                      "bg-primary text-default-white": selectedItem === i,
+                      "bg-primary text-default-white cursor-pointer":
+                        selectedItem === i,
                     },
                     {
                       "text-default-400": i < selectedItem,
@@ -218,12 +226,15 @@ const Carrousel = ({
                         onDragEnd={(event, info) => {
                           setIsInteracting(false);
 
-                          if (info.offset.x > 100 && selectedItem > 0) {
+                          if (info.offset.x > 100) {
+                            if (selectedItem == 0) {
+                              return prevStepFn(images.length - 1);
+                            }
                             prevStepFn(i - 1);
-                          } else if (
-                            info.offset.x < -100 &&
-                            selectedItem < images.length - 1
-                          ) {
+                          } else if (info.offset.x < -100) {
+                            if (selectedItem == images.length - 1) {
+                              return nextStepFn(0);
+                            }
                             nextStepFn(i + 1);
                           }
                         }}
@@ -239,7 +250,7 @@ const Carrousel = ({
                         className="absolute inset-0 flex flex-col select-none items-center w-full h-full bg-default justify-center bg-gray-200 text-center text-lg text-default-500 rounded-md"
                       >
                         <Icon icon="ban" className="text-lg" />
-                        <span>Imagen no disponible</span>
+                        <span>Imagen nos disponible</span>
                       </motion.div>
                     ) : (
                       <motion.img
@@ -250,12 +261,15 @@ const Carrousel = ({
                         onDragEnd={(event, info) => {
                           setIsInteracting(false);
 
-                          if (info.offset.x > 100 && selectedItem > 0) {
+                          if (info.offset.x > 100) {
+                            if (selectedItem == 0) {
+                              return prevStepFn(images.length - 1);
+                            }
                             prevStepFn(i - 1);
-                          } else if (
-                            info.offset.x < -100 &&
-                            selectedItem < images.length - 1
-                          ) {
+                          } else if (info.offset.x < -100) {
+                            if (selectedItem == images.length - 1) {
+                              return nextStepFn(0);
+                            }
                             nextStepFn(i + 1);
                           }
                         }}
@@ -293,9 +307,10 @@ const Carrousel = ({
               })}
             >
               <Button
-                color="primary"
+                size="sm"
+                color="default"
                 className={cn("rounded-full w-auto", {
-                  "absolute top-[50%] bottom-[50%] self-center items-center justify-center left-4 rounded-full":
+                  "absolute top-[50%] bottom-[50%] self-center items-center justify-center opacity-40 left-3 rounded-full":
                     buttons.position == "side",
                   hidden: selectedItem == 0 && buttons.position === "side",
                 })}
@@ -309,9 +324,10 @@ const Carrousel = ({
                 }
               />
               <Button
-                color="primary"
+                size="sm"
+                color="default"
                 className={cn("rounded-full", {
-                  "absolute top-[50%] bottom-[50%] self-center items-center justify-center right-4 rounded-full":
+                  "absolute top-[50%] bottom-[50%] self-center items-center justify-center opacity-40 right-3 rounded-full":
                     buttons.position === "side",
                   hidden:
                     selectedItem == images.length - 1 &&

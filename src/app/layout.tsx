@@ -30,7 +30,6 @@ export default function RootLayout({
         />
         <meta name="theme-color" content="#990000" />
       </head>
-      {/* TODO: REVISAR SI FUNCIONA */}
       <body className={inter.className}>
         <Providers>
           <SwitchTheme />

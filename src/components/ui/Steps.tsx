@@ -26,14 +26,14 @@ interface Props {
 }
 
 const Steps = ({
-  children,
-  clickeable = false,
-  drag = true,
-  defaultItem,
   step,
-  actualValue,
   buttons,
   external,
+  children,
+  actualValue,
+  defaultItem,
+  drag = true,
+  clickeable = false,
 }: Props) => {
   const [stepsArray, setStepsArray] = useState<Step[]>([]);
   const [direction, setDirection] = useState<"right" | "left">("right");

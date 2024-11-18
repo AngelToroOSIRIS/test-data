@@ -43,7 +43,6 @@ const MainSteps = () => {
         {!changeSteps && (
           <Steps
             drag={drag}
-            step={count}
             defaultItem={defaultItem}
             clickeable={clickeable}
             buttons={{ show: showButton, position: buttons }}
@@ -53,18 +52,18 @@ const MainSteps = () => {
                 <p>Paso</p>
                 <div className="flex gap-4">
                   <div className="flex justify-between mx-auto text-xl gap-4">
-                    <Button
-                      color="success"
-                      onClick={() =>
-                        count > 0 ? setCount(count - 1) : undefined
-                      }
-                    >
-                      Anterior
-                    </Button>
+                    {/*<Button*/}
+                    {/*  color="success"*/}
+                    {/*  onClick={() =>*/}
+                    {/*    count > 0 ? setCount(count - 1) : undefined*/}
+                    {/*  }*/}
+                    {/*>*/}
+                    {/*  Anterior*/}
+                    {/*</Button>*/}
                     <p className="text-center text-4xl font-semibold">{item}</p>
-                    <Button color="primary" onClick={() => setCount(count + 1)}>
-                      Siguiente
-                    </Button>
+                    {/*<Button color="primary" onClick={() => setCount(count + 1)}>*/}
+                    {/*  Siguiente*/}
+                    {/*</Button>*/}
                   </div>
                 </div>
               </div>
@@ -131,7 +130,7 @@ const MainSteps = () => {
           label={{ value: "Default item" }}
           type="number"
           onChange={({ value }) => {
-            value && Number(value) <= data.length && Number(value) > 0
+            value && Number(value) <= lengthSteps && Number(value) > 0
               ? setDefaultItem(Number(value))
               : setDefaultItem(1);
             refreshComponent();

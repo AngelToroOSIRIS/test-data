@@ -6,6 +6,7 @@ import clsx from "clsx";
 interface Props {
   type?: string;
   name?: string;
+  autoFocus?: boolean;
   icon?: string;
   clearable?: boolean;
   placeholder?: string;
@@ -23,6 +24,7 @@ const Input = ({
   type = "text",
   name,
   icon,
+  autoFocus = false,
   clearable = false,
   placeholder,
   variant = "faded",
@@ -37,6 +39,7 @@ const Input = ({
       isClearable={clearable}
       radius="lg"
       size="md"
+      autoFocus={autoFocus}
       variant={variant}
       classNames={{
         inputWrapper: "py-0 h-[48px] bg-default border-divider",

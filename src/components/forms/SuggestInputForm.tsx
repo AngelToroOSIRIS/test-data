@@ -1,27 +1,30 @@
 "use client";
 
 import { useState } from "react";
-import Input from "./Input";
-import Subtitle from "./Subtitle";
-import { Validations, validateValue } from "@/hooks/useValidateForm";
-
-import Icon from "@/components/ui/Icon";
+import { validateValue, Validations } from "@/hooks/useValidateForm";
 import { cn } from "@/libs/utils";
+import Subtitle from "@/components/forms/Subtitle";
 import Tooltip from "@/components/ui/Tooltip";
+import Icon from "@/components/ui/Icon";
+import SuggestInput from "@/components/forms/SuggestInput";
 
 interface Props {
   name: string;
-  icon?: string;
-  type?: string;
-  className?: string;
-  onlyInput?: boolean;
-  autoFocus?: boolean;
   placeholder?: string;
-  description?: string;
-  defaultValue?: string;
-  tooltip?: { icon: string; content: string | React.ReactNode };
-  label?: { value?: string; required?: boolean; className?: string };
+  icon?: string;
+  items: string[];
   validations?: (nameField: string) => Validations | undefined;
+  tooltip?: { icon: string; content: string | React.ReactNode };
+  required?: boolean;
+  onlyInput?: boolean;
+  className?: string;
+  description?: string;
+  defaultValue?: string | number;
+  label?: {
+    value?: string;
+    required?: boolean;
+    className?: string;
+  };
   onChange?: ({
     name,
     value,
@@ -29,36 +32,32 @@ interface Props {
     name: string;
     value: string | number | null;
   }) => any;
+  children?: any;
 }
 
-const InputForm = ({
-  type = "text",
+const SuggestInputForm = ({
   name,
-  defaultValue,
-  icon,
-  description,
-  autoFocus = false,
-  tooltip,
-  className,
-  placeholder,
   onlyInput,
   label,
   validations: getValidators,
   onChange,
+  tooltip,
+  className,
+  placeholder,
+  description,
+  icon,
+  required,
+  items,
+  children,
+  defaultValue,
 }: Props) => {
   const [error, setError] = useState<string | undefined>(undefined);
 
   const validations =
     typeof getValidators === "function" ? getValidators(name) : undefined;
 
-  const handleChange = ({
-    name,
-    value,
-  }: {
-    name: string;
-    value: string | null;
-  }) => {
-    const result = validateValue(value, validations);
+  const handleChange = (value: any) => {
+    const result = validateValue(value ? value : null, validations);
 
     if (result.error) {
       setError(result.error);
@@ -73,24 +72,21 @@ const InputForm = ({
       });
     return { name, value: result.value };
   };
-
   if (onlyInput) {
     return (
-      <Input
-        type={validations?.validateEmail ? "email" : type}
+      <SuggestInput
         name={name}
-        icon={icon}
-        autoFocus={autoFocus}
+        error={error}
+        items={items}
         className={className}
+        onChange={handleChange}
         description={description}
         defaultValue={defaultValue}
-        placeholder={placeholder ?? "Ingresar " + name}
-        error={error}
-        onChange={handleChange}
+        required={!!(required ?? validations?.required)}
+        placeholder={placeholder ?? "Seleccionar " + name}
       />
     );
   }
-
   return (
     <div className="text-start w-full">
       <div className={cn("", { "flex gap-2": tooltip })}>
@@ -113,20 +109,19 @@ const InputForm = ({
           </Tooltip>
         )}
       </div>
-      <Input
+      <SuggestInput
         name={name}
-        icon={icon}
         error={error}
+        items={items}
         className={className}
-        autoFocus={autoFocus}
         onChange={handleChange}
         description={description}
         defaultValue={defaultValue}
-        placeholder={placeholder ?? "Ingresar " + name}
-        type={validations?.validateEmail ? "email" : type}
+        required={!!(required ?? validations?.required)}
+        placeholder={placeholder ?? "Seleccionar " + name}
       />
     </div>
   );
 };
 
-export default InputForm;
+export default SuggestInputForm;

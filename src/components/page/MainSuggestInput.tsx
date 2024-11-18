@@ -35,6 +35,13 @@ const MainSuggestInput = () => {
   ];
 
   useEffect(() => {
+    if (!showTooltip) {
+      setIconTooltip("info-circle");
+      setContentTooltip("Este campo es solo de prueba");
+    }
+  }, [showTooltip]);
+
+  useEffect(() => {
     setChangingSelect(true);
     setTimeout(() => {
       setChangingSelect(false);
@@ -88,7 +95,7 @@ const MainSuggestInput = () => {
           </Switch>
         </div>
         <InputForm
-          name="placeholcer"
+          name="placeholder"
           onChange={({ value }) =>
             value ? setPlaceholder(String(value)) : setPlaceholder(null)
           }

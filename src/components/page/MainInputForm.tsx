@@ -24,6 +24,13 @@ const MainInputForm = () => {
   );
 
   useEffect(() => {
+    if (!showTooltip) {
+      setIconTooltip("info-circle");
+      setContentTooltip("Este campo es solo de prueba");
+    }
+  }, [showTooltip]);
+
+  useEffect(() => {
     setChangingInput(true);
     setTimeout(() => {
       setChangingInput(false);
@@ -106,7 +113,7 @@ const MainInputForm = () => {
           }
         />
         <InputForm
-          name="placeholcer"
+          name="placeholder"
           onChange={({ value }) =>
             value ? setPlaceholder(String(value)) : setPlaceholder(null)
           }

@@ -103,7 +103,7 @@ const MainTextareaForm = () => {
           </Switch>
         </div>
         <InputForm
-          name="placeholcer"
+          name="placeholder"
           onChange={({ value }) =>
             value ? setPlaceholder(String(value)) : setPlaceholder(null)
           }

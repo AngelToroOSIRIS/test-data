@@ -97,8 +97,6 @@ const Main = () => {
     filterComponentsFn();
   }, [searchComponent]);
 
-  console.log(searchComponent);
-
   return (
     <>
       <main className="mb-[100px] mt-8 flex flex-col gap-4 w-full max-w-[1000px] mx-auto">

@@ -118,7 +118,7 @@ const Steps = ({
               <Fragment key={i}>
                 <div
                   className={cn(
-                    "flex items-center font-semibold justify-center select-none transition-all rounded-full p-4 w-8 h-8 bg-default",
+                    "flex items-center  font-semibold justify-center select-none transition-all rounded-full p-4 w-8 h-8 bg-default",
                     {
                       "bg-primary text-default-white":
                         selectedStep === step.index,
@@ -219,70 +219,70 @@ const Steps = ({
               )}
             </AnimatePresence>
           ))}
-      </div>
-
-      {/* BUTTONS */}
-      {buttons?.show && (
-        <div>
-          <div
-            className={cn("", {
-              "flex gap-4 mx-auto items-center justify-center":
-                buttons.position == "bottom",
-              "flex justify-center": buttons.position == "side",
-            })}
-          >
-            <Button
-              color="primary"
-              className={cn("rounded-full", {
-                "absolute top-[50%] bottom-[50%] self-center mt-[80px] items-center justify-center left-8 rounded-full":
-                  buttons.position == "side",
-                hidden: selectedStep == 1 && buttons.position == "side",
+        {/* BUTTONS */}
+        {buttons?.show && (
+          <div>
+            <div
+              className={cn("", {
+                "flex gap-4 mx-auto items-center justify-center":
+                  buttons.position == "bottom",
+                "flex justify-center": buttons.position == "side",
               })}
-              isIconOnly={!external}
-              isDisabled={!external && selectedStep < 2}
-              onClick={() => {
-                if (selectedStep < 2 && external) {
-                  external.back();
-                  return;
+            >
+              <Button
+                color="primary"
+                className={cn("rounded-full", {
+                  "absolute top-[50%] bottom-[50%] self-center items-center justify-center left-3 rounded-full":
+                    buttons.position == "side",
+                  hidden: selectedStep == 1 && buttons.position == "side",
+                })}
+                isIconOnly={!external}
+                isDisabled={!external && selectedStep < 2}
+                onClick={() => {
+                  if (selectedStep < 2 && external) {
+                    external.back();
+                    return;
+                  }
+                  prevStepFn(selectedStep);
+                }}
+                startContent={
+                  selectedStep < 2 && external ? (
+                    <p>Volver</p>
+                  ) : (
+                    <Icon icon="caret-left-fill" className="text-lg" />
+                  )
                 }
-                prevStepFn(selectedStep);
-              }}
-              startContent={
-                selectedStep < 2 && external ? (
-                  <p>Volver</p>
-                ) : (
-                  <Icon icon="caret-left-fill" className="text-lg" />
-                )
-              }
-            />
-            <Button
-              color="primary"
-              className={cn("rounded-full", {
-                "absolute top-[50%] bottom-[50%] self-center mt-[80px] items-center justify-center right-8 rounded-full":
-                  buttons.position === "side",
-                hidden:
-                  selectedStep == children.length && buttons.position == "side",
-              })}
-              isIconOnly={!external}
-              isDisabled={!external && children.length <= selectedStep}
-              onClick={() => {
-                if (children.length <= selectedStep && external) {
-                  external.next();
-                  return;
+              />
+              <Button
+                color="primary"
+                className={cn("rounded-full", {
+                  "absolute top-[50%] bottom-[50%] self-center items-center justify-center right-3 rounded-full":
+                    buttons.position === "side",
+                  hidden:
+                    selectedStep == children.length &&
+                    buttons.position == "side",
+                })}
+                isIconOnly={!external}
+                isDisabled={!external && children.length <= selectedStep}
+                onClick={() => {
+                  if (children.length <= selectedStep && external) {
+                    external.next();
+                    return;
+                  }
+                  nextStepFn(selectedStep);
+                }}
+                startContent={
+                  children.length <= selectedStep && external ? (
+                    <p>Continuar</p>
+                  ) : (
+                    <Icon icon="caret-right-fill" className="text-lg" />
+                  )
                 }
-                nextStepFn(selectedStep);
-              }}
-              startContent={
-                children.length <= selectedStep && external ? (
-                  <p>Continuar</p>
-                ) : (
-                  <Icon icon="caret-right-fill" className="text-lg" />
-                )
-              }
-            />
+              />
+            </div>
           </div>
-        </div>
-      )}
+        )}
+      </div>
     </>
   );
 };

@@ -11,7 +11,7 @@ import { validateValue, Validations } from "@/hooks/useValidateForm";
 interface Props {
   items: string[];
   name: string;
-  defaultValue?: string | number;
+  defaultValue?: string | undefined;
   className?: ClassValue;
   required?: boolean;
   description?: string;
@@ -61,6 +61,7 @@ const SuggestInput = ({
         icon && <Icon icon={icon} className={error && "text-red"} />
       }
       defaultSelectedKey={defaultValue}
+      defaultInputValue={defaultValue}
       variant="bordered"
       size="lg"
       allowsCustomValue={true}

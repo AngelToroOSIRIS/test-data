@@ -19,7 +19,7 @@ interface Props {
   onlyInput?: boolean;
   className?: string;
   description?: string;
-  defaultValue?: string | number;
+  defaultValue?: string | undefined;
   label?: {
     value?: string;
     required?: boolean;

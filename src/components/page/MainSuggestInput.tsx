@@ -48,12 +48,12 @@ const MainSuggestInput = () => {
           <SuggestInputForm
             name="demo"
             items={itemsString}
-            icon={icon ?? undefined}
+            required={required}
             onlyInput={onlyInput}
+            icon={icon ?? undefined}
             description={description ?? ""}
             placeholder={placeholder ?? undefined}
             defaultValue={defaultValue ?? undefined}
-            required={required}
             label={{ value: label, required: requiredLabel }}
             onChange={({ value }) => (value ? setValue(value) : setValue(null))}
             tooltip={

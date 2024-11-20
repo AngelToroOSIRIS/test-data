@@ -40,8 +40,8 @@ const components: { name: string; state: StatesComponents }[] = [
   { name: "SideMenu", state: "Terminado" },
   { name: "Modal", state: "Terminado" },
   { name: "Button", state: "Terminado" },
-  { name: "Steps", state: "Terminado" },
-  { name: "Carrousel", state: "Terminado" },
+  { name: "Steps", state: "En proceso" },
+  { name: "Carrousel", state: "En proceso" },
   { name: "DragContainerModal", state: "Terminado" },
 ];
 

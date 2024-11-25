@@ -18,6 +18,11 @@ const config: Config = {
       animation: {
         "spin-slow": "spin 3s linear infinite",
       },
+      boxShadow: {
+        soft: "0 0 6px rgba(33, 13, 5, 0.22)",
+        standard: "0 0 15px -2px rgba(0, 0, 0, 0.5)",
+        strong: "0 0 23px -2px rgba(184, 184, 184, 1)",
+      },
     },
     colors: {
       transparent: "#00000000",

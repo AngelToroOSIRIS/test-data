@@ -9,15 +9,15 @@ import { Divider, Switch } from "@nextui-org/react";
 const MainTextareaForm = () => {
   const [label, setLabel] = useState<string>("Demo");
   const [minRows, setMinRows] = useState<number>(6);
-  const [value, setValue] = useState<string | number | null>(null);
-  const [defaultValue, setDefaultValue] = useState<string | null>(null);
-  const [requiredLabel, setRequiredLabel] = useState<boolean>(false);
+  const [showTooltip, setShowTooltip] = useState<boolean>(false);
   const [changingTextarea, setChangingTextarea] = useState(false);
   const [onlyTextarea, setOnlyTextarea] = useState<boolean>(false);
-  const [iconTooltip, setIconTooltip] = useState<string>("info-circle");
-  const [showTooltip, setShowTooltip] = useState<boolean>(false);
+  const [value, setValue] = useState<string | number | null>(null);
+  const [requiredLabel, setRequiredLabel] = useState<boolean>(false);
   const [placeholder, setPlaceholder] = useState<string | null>(null);
   const [description, setDescription] = useState<string | null>(null);
+  const [defaultValue, setDefaultValue] = useState<string | null>(null);
+  const [iconTooltip, setIconTooltip] = useState<string>("info-circle");
   const [contentTooltip, setContentTooltip] = useState<string>(
     "Este campo es solo de prueba",
   );

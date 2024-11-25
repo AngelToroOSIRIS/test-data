@@ -8,18 +8,18 @@ import InputForm from "@/components/forms/InputForm";
 import SelectForm from "@/components/forms/SelectForm";
 
 const MainCarrousel = () => {
-  const [animate, setAnimate] = useState(true);
-  const [clickeable, setClickeable] = useState(true);
-  const [showButton, setShowButton] = useState<boolean>(true);
-  const [infinity, setInfinity] = useState(true);
-  const [height, setHeight] = useState<string>("standard");
-  const [buttons, setButtons] = useState<"side" | "bottom">("side");
   const [time, setTime] = useState(4);
-  const [showImages, setShowImages] = useState(false);
+  const [animate, setAnimate] = useState(true);
+  const [infinity, setInfinity] = useState(true);
+  const [defaultItem, setDefaultItem] = useState(0);
+  const [clickeable, setClickeable] = useState(true);
   const [numberImgs, setNumberImgs] = useState(true);
   const [fullscreen, setFullscreen] = useState(true);
+  const [showImages, setShowImages] = useState(false);
+  const [height, setHeight] = useState<string>("standard");
+  const [showButton, setShowButton] = useState<boolean>(true);
+  const [buttons, setButtons] = useState<"side" | "bottom">("side");
   const [positionImage, setPositionImage] = useState<string>("right");
-  const [defaultItem, setDefaultItem] = useState(0);
 
   return (
     <MainTemplate

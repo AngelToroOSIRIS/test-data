@@ -7,21 +7,21 @@ import InputForm from "@/components/forms/InputForm";
 import { Divider, Switch } from "@nextui-org/react";
 
 const MainAutoCompleteForm = () => {
-  const [value, setValue] = useState<string | number | null>(null);
-  const [placeholder, setPlaceholder] = useState<string | null>(null);
-  const [description, setDescription] = useState<string | null>(null);
-  const [iconTooltip, setIconTooltip] = useState<string>("info-circle");
-  const [showTooltip, setShowTooltip] = useState<boolean>(false);
+  const [label, setLabel] = useState<string>("Demo");
+  const [icon, setIcon] = useState<string | null>(null);
   const [required, setRequired] = useState<boolean>(false);
   const [onlyInput, setOnlyInput] = useState<boolean>(false);
+  const [showTooltip, setShowTooltip] = useState<boolean>(false);
+  const [value, setValue] = useState<string | number | null>(null);
   const [requiredLabel, setRequiredLabel] = useState<boolean>(false);
-  const [label, setLabel] = useState<string>("Demo");
+  const [placeholder, setPlaceholder] = useState<string | null>(null);
+  const [description, setDescription] = useState<string | null>(null);
   const [changingSelect, setChangingSelect] = useState<boolean>(false);
+  const [iconTooltip, setIconTooltip] = useState<string>("info-circle");
+  const [defaultValue, setDefaultValue] = useState<string | null>(null);
   const [contentTooltip, setContentTooltip] = useState<string>(
     "Este campo es solo de prueba",
   );
-  const [defaultValue, setDefaultValue] = useState<string | null>(null);
-  const [icon, setIcon] = useState<string | null>(null);
 
   const itemsObject = [
     { id: 1, label: "item 1" },
@@ -87,13 +87,15 @@ const MainAutoCompleteForm = () => {
         {!changingSelect && (
           <AutocompleteForm
             name="Demo"
+            keyObj={"id"}
+            field={"label"}
             items={itemsObject}
+            required={required}
             onlyInput={onlyInput}
             icon={icon ?? undefined}
             description={description ?? ""}
             placeholder={placeholder ?? undefined}
             defaultValue={defaultValue ?? undefined}
-            required={required}
             label={{ value: label, required: requiredLabel }}
             onChange={({ value }) => (value ? setValue(value) : setValue(null))}
             tooltip={
@@ -101,8 +103,6 @@ const MainAutoCompleteForm = () => {
                 ? { icon: iconTooltip, content: contentTooltip }
                 : { icon: "", content: "" }
             }
-            keyObj={"id"}
-            field={"label"}
           />
         )}
         <p className="bg-default w-auto rounded-large p-2">

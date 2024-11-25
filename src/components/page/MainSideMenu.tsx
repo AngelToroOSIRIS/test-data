@@ -7,10 +7,10 @@ import { AnimatePresence } from "framer-motion";
 import { motion } from "framer-motion";
 
 const MainSideMenu = () => {
-  const [showMenu, setShowMenu] = useState(false);
   const [isRight, setIsRight] = useState(false);
-  const [closeDisabled, setCloseDisabled] = useState(false);
+  const [showMenu, setShowMenu] = useState(false);
   const [backdrop, setBackdrop] = useState(false);
+  const [closeDisabled, setCloseDisabled] = useState(false);
 
   return (
     <motion.div

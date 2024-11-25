@@ -6,18 +6,18 @@ import { useEffect, useState } from "react";
 import { Divider, Switch } from "@nextui-org/react";
 
 const MainInputForm = () => {
-  const [value, setValue] = useState<string | number | null>(null);
+  const [label, setLabel] = useState<string>("Demo");
   const [type, setType] = useState<string | null>(null);
-  const [placeholder, setPlaceholder] = useState<string | null>(null);
-  const [description, setDescription] = useState<string | null>(null);
-  const [onlyInput, setOnlyInput] = useState<boolean>(false);
-  const [defaultValue, setDefaultValue] = useState<string | null>(null);
   const [icon, setIcon] = useState<string | null>(null);
   const [changingInput, setChangingInput] = useState(false);
+  const [onlyInput, setOnlyInput] = useState<boolean>(false);
   const [autoFocus, setAutoFocus] = useState<boolean>(false);
   const [showTooltip, setShowTooltip] = useState<boolean>(false);
+  const [value, setValue] = useState<string | number | null>(null);
   const [requiredLabel, setRequiredLabel] = useState<boolean>(false);
-  const [label, setLabel] = useState<string>("Demo");
+  const [placeholder, setPlaceholder] = useState<string | null>(null);
+  const [description, setDescription] = useState<string | null>(null);
+  const [defaultValue, setDefaultValue] = useState<string | null>(null);
   const [iconTooltip, setIconTooltip] = useState<string>("info-circle");
   const [contentTooltip, setContentTooltip] = useState<string>(
     "Este campo es solo de prueba",

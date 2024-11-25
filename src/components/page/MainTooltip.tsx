@@ -9,9 +9,9 @@ import { Radio, RadioGroup } from "@nextui-org/radio";
 import { motion } from "framer-motion";
 
 const MainTooltip = () => {
-  const [content, setContent] = useState<string>("Tooltip content");
-  const [text, setText] = useState<String>("Tooltip text");
   const [icon, setIcon] = useState<string>("info-circle");
+  const [text, setText] = useState<String>("Tooltip text");
+  const [content, setContent] = useState<string>("Tooltip content");
   const [showContent, setShowContent] = useState<"icon" | "text" | "node">(
     "node",
   );

@@ -18,7 +18,7 @@ interface Props {
   required?: boolean;
   className?: string;
   onlyInput?: boolean;
-  description: string;
+  description?: string;
   placeholder?: string;
   defaultValue?: string | number;
   variant?: "flat" | "bordered" | "faded" | "underlined";

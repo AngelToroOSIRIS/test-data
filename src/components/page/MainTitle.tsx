@@ -9,11 +9,11 @@ import { Code } from "@nextui-org/code";
 import { motion } from "framer-motion";
 
 const MainTitle = () => {
-  const [text, setText] = useState<string>("Title component");
   const [center, setCenter] = useState(false);
   const [primary, setPrimary] = useState(false);
-  const [background, setBackground] = useState(false);
   const [value, setValue] = useState<SliderValue>(0);
+  const [background, setBackground] = useState(false);
+  const [text, setText] = useState<string>("Title component");
 
   return (
     <motion.div

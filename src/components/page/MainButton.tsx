@@ -8,13 +8,13 @@ import InputForm from "@/components/forms/InputForm";
 import SelectForm from "@/components/forms/SelectForm";
 
 const MainButton = () => {
-  const [text, setText] = useState<string>("Buttom");
   const [icon, setIcon] = useState<string>("");
-  const [iconR, setIconR] = useState<string>("");
-  const [title, setTitle] = useState<string>("");
   const [animate, setAnimate] = useState(false);
   const [loading, setLoading] = useState(false);
+  const [iconR, setIconR] = useState<string>("");
+  const [title, setTitle] = useState<string>("");
   const [disabled, setDisabled] = useState(false);
+  const [text, setText] = useState<string>("Buttom");
   const [onDoubleClick, setOnDoubleClick] = useState(false);
   const [color, setColor] = useState<
     | "primary"

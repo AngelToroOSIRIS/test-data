@@ -7,9 +7,9 @@ import InputForm from "@/components/forms/InputForm";
 import { motion } from "framer-motion";
 
 const MainAnimateText = () => {
-  const [text, setText] = useState<string>("Frase de prueba");
-  const [secondText, setSecondText] = useState<string>();
   const [duration, setDuration] = useState<number>(0.5);
+  const [secondText, setSecondText] = useState<string>();
+  const [text, setText] = useState<string>("Frase de prueba");
 
   return (
     <motion.div

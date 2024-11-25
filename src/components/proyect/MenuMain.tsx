@@ -50,7 +50,7 @@ const MenuMain = ({
       download: "components",
       width: 170,
       // TODO: Actualizar fechas
-      title: "Descargar componentes 20/11/2024",
+      title: "Descargar componentes 25/11/2024",
     },
     {
       name: "GitHub",
@@ -100,6 +100,7 @@ const MenuMain = ({
       {items.map((item, i) => (
         <motion.a
           key={i}
+          target="_blank"
           href={item.href}
           whileTap={{ scale: 0.9 }}
           className={item.className}

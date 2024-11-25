@@ -7,8 +7,8 @@ import InputForm from "@/components/forms/InputForm";
 import { motion } from "framer-motion";
 
 const MainIcon = () => {
-  const [icon, setIcon] = useState<string>("emoji-laughing");
   const [title, setTitle] = useState<string>("Icon");
+  const [icon, setIcon] = useState<string>("emoji-laughing");
 
   return (
     <motion.div

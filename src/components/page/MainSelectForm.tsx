@@ -20,18 +20,18 @@ const items: { key: number; label: string }[] = [
 ];
 
 const MainSelectForm = () => {
+  const [label, setLabel] = useState<string>("Demo");
+  const [icon, setIcon] = useState<string | null>(null);
+  const [required, setRequired] = useState<boolean>(false);
+  const [onlySelect, setOnlySelect] = useState<boolean>(false);
   const [isDisabled, setIsDisabled] = useState<boolean>(false);
+  const [showTooltip, setShowTooltip] = useState<boolean>(false);
   const [value, setValue] = useState<string | number | null>(null);
+  const [requiredLabel, setRequiredLabel] = useState<boolean>(false);
   const [placeholder, setPlaceholder] = useState<string | null>(null);
   const [description, setDescription] = useState<string | null>(null);
-  const [defaultValue, setDefaultValue] = useState<string | null>(null);
-  const [icon, setIcon] = useState<string | null>(null);
-  const [onlySelect, setOnlySelect] = useState<boolean>(false);
   const [changingSelect, setChangingSelect] = useState<boolean>(false);
-  const [required, setRequired] = useState<boolean>(false);
-  const [showTooltip, setShowTooltip] = useState<boolean>(false);
-  const [requiredLabel, setRequiredLabel] = useState<boolean>(false);
-  const [label, setLabel] = useState<string>("Demo");
+  const [defaultValue, setDefaultValue] = useState<string | null>(null);
   const [iconTooltip, setIconTooltip] = useState<string>("info-circle");
   const [contentTooltip, setContentTooltip] = useState<string>(
     "Este campo es solo de prueba",

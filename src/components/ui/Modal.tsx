@@ -36,7 +36,7 @@ const Modal = ({
   children,
 }: Props) => {
   const [isMediumScreen, setIsMediumScreen] = useState(
-    window.innerWidth < 1024,
+    typeof window !== "undefined" ? window.innerWidth < 1024 : true,
   );
   const [isFocused, setIsFocused] = useState(false);
 
@@ -121,7 +121,10 @@ const Modal = ({
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
-            className="fixed top-0 left-0 w-full h-full bg-custom-black overflow-y-auto bg-opacity-50 z-40"
+            transition={{
+              duration: 0.2,
+            }}
+            className="fixed top-0 left-0 w-full h-full bg-custom-black overflow-y-auto bg-opacity-70 z-40"
           >
             <motion.div
               drag="y"
@@ -130,7 +133,7 @@ const Modal = ({
               dragListener={false}
               dragMomentum={false}
               dragControls={dragControls}
-              transition={{ duration: 0.3 }}
+              transition={{ duration: 0.2 }}
               dragConstraints={{ top: 0, bottom: 0 }}
               animate={isMediumScreen ? { y: 0 } : { opacity: 1 }}
               exit={isMediumScreen ? { y: 1000 } : { opacity: 0 }}
@@ -142,7 +145,7 @@ const Modal = ({
                 }
               }}
               className={cn(
-                "md:my-8 mx-auto transform bottom-0 md:bottom-auto p-4 fixed md:relative rounded-t-2xl md:rounded-2xl bg-background text-left align-middle text-default-foreground shadow-standard transition-all w-full md:w-[98%] max-h-full overflow-y-auto md:overflow-hidden",
+                "md:my-8 mx-auto transform bottom-0 md:bottom-auto p-4 fixed md:relative rounded-t-2xl md:rounded-2xl bg-background text-left align-middle text-default-foreground shadow-standard transition-all w-full md:w-[98%] max-h-full md:max-h-min overflow-y-auto md:overflow-hidden",
                 classContainer,
               )}
             >
@@ -156,9 +159,9 @@ const Modal = ({
                   />
                   {/*MOBILE*/}
                   <div
-                    className="flex fixed left-0 md:hidden items-start justify-center w-full h-8"
-                    onPointerDownCapture={startDrag}
                     style={{ touchAction: "none" }}
+                    onPointerDownCapture={startDrag}
+                    className="flex fixed left-0 md:hidden items-start justify-center w-full h-8"
                   >
                     <Divider className="w-[40%] h-[8px] rounded-lg" />
 
@@ -172,7 +175,13 @@ const Modal = ({
                   </div>
                 </>
               )}
-              <div className="pt-4 md:pt-0">{children}</div>
+              <div
+                className={cn("pt-4 md:pt-0", {
+                  "pt-0": closeDisabled,
+                })}
+              >
+                {children}
+              </div>
             </motion.div>
           </motion.section>
         )}

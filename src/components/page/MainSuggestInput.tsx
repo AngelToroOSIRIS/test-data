@@ -5,21 +5,21 @@ import { Divider, Switch } from "@nextui-org/react";
 import SuggestInputForm from "@/components/forms/SuggestInputForm";
 
 const MainSuggestInput = () => {
-  const [value, setValue] = useState<string | number | null>(null);
-  const [placeholder, setPlaceholder] = useState<string | null>(null);
-  const [description, setDescription] = useState<string | null>(null);
-  const [iconTooltip, setIconTooltip] = useState<string>("info-circle");
-  const [showTooltip, setShowTooltip] = useState<boolean>(false);
+  const [label, setLabel] = useState<string>("Demo");
+  const [icon, setIcon] = useState<string | null>(null);
   const [required, setRequired] = useState<boolean>(false);
   const [onlyInput, setOnlyInput] = useState<boolean>(false);
+  const [showTooltip, setShowTooltip] = useState<boolean>(false);
+  const [value, setValue] = useState<string | number | null>(null);
   const [requiredLabel, setRequiredLabel] = useState<boolean>(false);
-  const [label, setLabel] = useState<string>("Demo");
+  const [placeholder, setPlaceholder] = useState<string | null>(null);
+  const [description, setDescription] = useState<string | null>(null);
   const [changingSelect, setChangingSelect] = useState<boolean>(false);
+  const [iconTooltip, setIconTooltip] = useState<string>("info-circle");
+  const [defaultValue, setDefaultValue] = useState<string | null>(null);
   const [contentTooltip, setContentTooltip] = useState<string>(
     "Este campo es solo de prueba",
   );
-  const [defaultValue, setDefaultValue] = useState<string | null>(null);
-  const [icon, setIcon] = useState<string | null>(null);
 
   const itemsString = [
     "item 1",

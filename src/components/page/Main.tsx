@@ -25,6 +25,7 @@ import MainSelectForm from "@/components/page/MainSelectForm";
 import MainTextareaForm from "@/components/page/MainTextareaForm";
 import MainAutoCompleteForm from "@/components/page/MainAutoCompleteForm";
 import MainSuggestInput from "@/components/page/MainSuggestInput";
+import MainAccordion from "@/components/page/MainAccordion";
 
 const components: { name: string; state: StatesComponents }[] = [
   { name: "AnimateText", state: "Terminado" },
@@ -43,12 +44,13 @@ const components: { name: string; state: StatesComponents }[] = [
   { name: "Steps", state: "En proceso" },
   { name: "Carrousel", state: "En proceso" },
   { name: "DragContainerModal", state: "Terminado" },
+  { name: "Accordion", state: "Terminado" },
 ];
 
 const Main = () => {
-  const [select, setSelect] = useState<string>("all");
   const [isOpen, setIsOpen] = useState(false);
   const [showInput, setShowInput] = useState(false);
+  const [select, setSelect] = useState<string>("all");
   const [searchComponent, setSearchComponent] = useState<string | null>(null);
   const [filterComponents, setFilterComponents] =
     useState<{ name: string; state: StatesComponents }[]>(components);
@@ -181,6 +183,7 @@ const Main = () => {
         {select === "textareaform" && <MainTextareaForm />}
         {select === "autocompleteform" && <MainAutoCompleteForm />}
         {select === "suggestinputform" && <MainSuggestInput />}
+        {select === "accordion" && <MainAccordion />}
 
         {components.find((i) => i.name == select) && (
           <div className="flex flex-col my-8 gap-4 justify-center items-center">

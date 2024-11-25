@@ -16,12 +16,12 @@ import Button from "@/components/ui/Button";
 import Icon from "@/components/ui/Icon";
 
 const MainPassword = () => {
-  const [mode, setMode] = useState<"create" | "update">("create");
   const [text, setText] = useState<string>();
-  const [texts, setTexts] = useState<string[]>([]);
-  const [length, setLength] = useState<number>(8);
   const [selected, setSelected] = useState([""]);
+  const [length, setLength] = useState<number>(8);
+  const [texts, setTexts] = useState<string[]>([]);
   const [changeText, setChangeText] = useState(false);
+  const [mode, setMode] = useState<"create" | "update">("create");
 
   const filterTexts = (text: string) => {
     const newText = texts.filter((t) => t != text);

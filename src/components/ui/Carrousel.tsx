@@ -103,12 +103,26 @@ const Carrousel = ({
       if (event.key === "Escape") {
         setShowModal(false);
       }
+      if (event.key === "ArrowLeft") {
+        if (selectedImage !== 0) {
+          setSelectedImage(selectedImage - 1);
+        } else {
+          setSelectedImage(images.length);
+        }
+      }
+      if (event.key === "ArrowRight") {
+        if (selectedImage == images.length) {
+          setSelectedImage(0);
+        } else {
+          setSelectedImage(selectedImage + 1);
+        }
+      }
     };
     window.addEventListener("keydown", handleKeyDown);
     return () => {
       window.removeEventListener("keydown", handleKeyDown);
     };
-  }, [showModal]);
+  }, [showModal, selectedImage]);
 
   useEffect(() => {
     if (showModal) {

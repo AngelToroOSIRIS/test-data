@@ -12,11 +12,11 @@ const MainSteps = () => {
   const [count, setCount] = useState(0);
   const [drag, setDrag] = useState<boolean>(true);
   const [defaultItem, setDefaultItem] = useState(1);
+  const [changeSteps, setChangeSteps] = useState(false);
+  const [lengthSteps, setLengthSteps] = useState<number>(5);
   const [showButton, setShowButton] = useState<boolean>(true);
   const [clickeable, setClickeable] = useState<boolean>(true);
   const [buttons, setButtons] = useState<"side" | "bottom">("side");
-  const [lengthSteps, setLengthSteps] = useState<number>(5);
-  const [changeSteps, setChangeSteps] = useState(false);
 
   const data = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
 
@@ -43,8 +43,8 @@ const MainSteps = () => {
         {!changeSteps && (
           <Steps
             drag={drag}
-            defaultItem={defaultItem}
             clickeable={clickeable}
+            defaultItem={defaultItem}
             buttons={{ show: showButton, position: buttons }}
           >
             {data.slice(0, lengthSteps).map((item, i) => (

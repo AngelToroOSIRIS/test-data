@@ -7,6 +7,7 @@ import Modal from "@/components/ui/Modal";
 import { useState } from "react";
 import { motion } from "framer-motion";
 import { log } from "node:util";
+import { Card } from "@nextui-org/card";
 
 const MainModal = () => {
   const [isOpen, setIsOpen] = useState(false);
@@ -22,32 +23,40 @@ const MainModal = () => {
       <div className="flex flex-col gap-3 bg-background rounded-large p-4 w-full max-w-[900px] ">
         <Title text="Demo Modal.tsx" size="title" className="text-3xl" center />
         <Divider className="w-[95%] bg-divider mx-auto" />
-        <Modal
-          isOpen={isOpen}
-          setIsOpen={setIsOpen}
-          closeDisabled={closeDisabled}
-          closeButton={closeButton}
-          classContainer="max-w-[500px]"
-        >
-          <div className="flex flex-col h-[2000px] items-center gap-4">
-            <Title text="Modal" size="title" className="text-3xl" center />
-            <Divider className="w-[95%] bg-divider mx-auto" />
-            <Switch
-              isSelected={closeDisabled}
-              onValueChange={setCloseDisabled}
-              classNames={{ thumb: "bg-default-white", wrapper: "bg-default" }}
-            >
-              close disabled
-            </Switch>
-            <Switch
-              isSelected={closeButton}
-              onValueChange={setCloseButton}
-              classNames={{ thumb: "bg-default-white", wrapper: "bg-default" }}
-            >
-              enable close button responsive
-            </Switch>
-          </div>
-        </Modal>
+        <Card className="z-10">
+          <Modal
+            isOpen={isOpen}
+            setIsOpen={setIsOpen}
+            closeDisabled={closeDisabled}
+            closeButton={closeButton}
+            classContainer="max-w-[500px]"
+          >
+            <div className="flex flex-col h-[400px] items-center gap-4">
+              <Title text="Modal" size="title" className="text-3xl" center />
+              <Divider className="w-[95%] bg-divider mx-auto" />
+              <Switch
+                isSelected={closeDisabled}
+                onValueChange={setCloseDisabled}
+                classNames={{
+                  thumb: "bg-default-white",
+                  wrapper: "bg-default",
+                }}
+              >
+                close disabled
+              </Switch>
+              <Switch
+                isSelected={closeButton}
+                onValueChange={setCloseButton}
+                classNames={{
+                  thumb: "bg-default-white",
+                  wrapper: "bg-default",
+                }}
+              >
+                enable close button responsive
+              </Switch>
+            </div>
+          </Modal>
+        </Card>
         <Button className="w-auto mx-auto my-8" onClick={() => setIsOpen(true)}>
           Abrir modal
         </Button>

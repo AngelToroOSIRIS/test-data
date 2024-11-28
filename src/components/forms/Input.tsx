@@ -8,6 +8,7 @@ interface Props {
   name?: string;
   autoFocus?: boolean;
   icon?: string;
+  value?: string | null;
   clearable?: boolean;
   placeholder?: string;
   className?: string;
@@ -23,6 +24,7 @@ const Input = ({
   className,
   type = "text",
   name,
+  value,
   icon,
   autoFocus = false,
   clearable = false,
@@ -39,6 +41,7 @@ const Input = ({
       isClearable={clearable}
       radius="lg"
       size="md"
+      value={value ?? undefined}
       autoFocus={autoFocus}
       variant={variant}
       classNames={{

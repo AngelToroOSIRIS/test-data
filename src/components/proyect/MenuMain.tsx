@@ -50,7 +50,7 @@ const MenuMain = ({
       download: "components",
       width: 170,
       // TODO: Actualizar fechas
-      title: "Descargar componentes 25/11/2024",
+      title: "Descargar componentes 28/11/2024",
     },
     {
       name: "GitHub",
@@ -105,6 +105,9 @@ const MenuMain = ({
           whileTap={{ scale: 0.9 }}
           className={item.className}
           transition={{ duration: 0.3 }}
+          animate={{ opacity: 1, scale: 1, rotate: 0 }}
+          initial={{ opacity: 0, scale: 0, rotate: -360 }}
+          whileHover={{ scale: 1.1, width: item.width, opacity: 1 }}
           onClick={() => {
             if (item.name == "GitHub") {
               router.push("https://github.com/AngelToroOSIRIS/test-ui.git");
@@ -115,9 +118,6 @@ const MenuMain = ({
               callbackModal(!actionModal);
             }
           }}
-          animate={{ opacity: 1, scale: 1, rotate: 0 }}
-          initial={{ opacity: 0, scale: 0, rotate: -360 }}
-          whileHover={{ scale: 1.1, width: item.width, opacity: 1 }}
         >
           <motion.div
             initial="hidden"

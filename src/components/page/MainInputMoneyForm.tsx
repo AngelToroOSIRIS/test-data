@@ -2,22 +2,24 @@
 
 import MainTemplate from "@/components/page/MainTemplate";
 import InputForm from "@/components/forms/InputForm";
-import { useEffect, useState } from "react";
 import { Divider, Switch } from "@nextui-org/react";
+import { useEffect, useState } from "react";
+import InputMoneyForm from "@/components/forms/InputMoneyForm";
 
-const MainInputForm = () => {
+const MainInputMoneyForm = () => {
   const [label, setLabel] = useState<string>("Demo");
-  const [type, setType] = useState<string | null>(null);
   const [icon, setIcon] = useState<string | null>(null);
   const [changingInput, setChangingInput] = useState(false);
   const [onlyInput, setOnlyInput] = useState<boolean>(false);
+  const [defaultValue, setDefaultValue] = useState<string | null>(null);
   const [autoFocus, setAutoFocus] = useState<boolean>(false);
   const [showTooltip, setShowTooltip] = useState<boolean>(false);
-  const [value, setValue] = useState<string | number | null>(null);
+  const [value, setValue] = useState<{ text: string; value: number } | null>(
+    null,
+  );
   const [requiredLabel, setRequiredLabel] = useState<boolean>(false);
   const [placeholder, setPlaceholder] = useState<string | null>(null);
   const [description, setDescription] = useState<string | null>(null);
-  const [defaultValue, setDefaultValue] = useState<string | null>(null);
   const [iconTooltip, setIconTooltip] = useState<string>("info-circle");
   const [contentTooltip, setContentTooltip] = useState<string>(
     "Este campo es solo de prueba",
@@ -32,6 +34,7 @@ const MainInputForm = () => {
 
   useEffect(() => {
     setChangingInput(true);
+    setValue(null);
     setTimeout(() => {
       setChangingInput(false);
     }, 1);
@@ -39,10 +42,9 @@ const MainInputForm = () => {
 
   return (
     <MainTemplate
-      name="InputForm"
+      name="InputMoneyForm"
       properties={[
         "name: string;",
-        "type?: string;",
         "icon?: string;",
         "className?: string;",
         "onlyInput?: boolean;",
@@ -58,23 +60,22 @@ const MainInputForm = () => {
           "    value,\n" +
           "  }: {\n" +
           "    name: string;\n" +
-          "    value: string | number | null;\n" +
+          "    value: { text: string; value: number } | null;\n" +
           "  }) => any;",
       ]}
     >
       <div className="flex flex-col gap-4">
         {!changingInput && (
-          <InputForm
+          <InputMoneyForm
             name="demo"
             autoFocus={autoFocus}
             onlyInput={onlyInput}
             icon={icon ?? undefined}
-            type={type ?? undefined}
             description={description ?? undefined}
             placeholder={placeholder ?? undefined}
             defaultValue={defaultValue ?? undefined}
-            onChange={({ value }) => setValue(value)}
             label={{ value: label, required: requiredLabel }}
+            onChange={({ value }) => setValue(value)}
             tooltip={
               showTooltip
                 ? { icon: iconTooltip, content: contentTooltip }
@@ -82,9 +83,18 @@ const MainInputForm = () => {
             }
           />
         )}
-        <p className="bg-default w-auto rounded-large p-2">
-          <b>Value:</b> {value}
-        </p>
+        <div className="flex flex-col gap-2 bg-default w-auto rounded-large p-2">
+          <p>
+            <b>Value text:</b>{" "}
+            <span className="text-[#f38d35]">
+              {value?.text ? '"' + value.text + '"' : ""}
+            </span>
+          </p>
+          <p>
+            <b>Value number:</b>
+            <span className="text-blue"> {value?.value}</span>
+          </p>
+        </div>
       </div>
       <div className="flex flex-col gap-4">
         <div className="flex justify-between items-end gap-4">
@@ -106,12 +116,6 @@ const MainInputForm = () => {
             required
           </Switch>
         </div>
-        <InputForm
-          name="type"
-          onChange={({ value }) =>
-            value ? setType(String(value)) : setType("text")
-          }
-        />
         <InputForm
           name="placeholder"
           onChange={({ value }) =>
@@ -185,4 +189,4 @@ const MainInputForm = () => {
   );
 };
 
-export default MainInputForm;
+export default MainInputMoneyForm;

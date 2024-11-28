@@ -26,6 +26,7 @@ import MainTextareaForm from "@/components/page/MainTextareaForm";
 import MainAutoCompleteForm from "@/components/page/MainAutoCompleteForm";
 import MainSuggestInput from "@/components/page/MainSuggestInput";
 import MainAccordion from "@/components/page/MainAccordion";
+import MainInputMoneyForm from "@/components/page/MainInputMoneyForm";
 
 const components: { name: string; state: StatesComponents }[] = [
   { name: "AnimateText", state: "Terminado" },
@@ -45,6 +46,7 @@ const components: { name: string; state: StatesComponents }[] = [
   { name: "Carrousel", state: "En proceso" },
   { name: "DragContainerModal", state: "Terminado" },
   { name: "Accordion", state: "Terminado" },
+  { name: "InputMoneyForm", state: "En proceso" },
 ];
 
 const Main = () => {
@@ -184,6 +186,7 @@ const Main = () => {
         {select === "autocompleteform" && <MainAutoCompleteForm />}
         {select === "suggestinputform" && <MainSuggestInput />}
         {select === "accordion" && <MainAccordion />}
+        {select === "inputmoneyform" && <MainInputMoneyForm />}
 
         {components.find((i) => i.name == select) && (
           <div className="flex flex-col my-8 gap-4 justify-center items-center">
@@ -218,7 +221,7 @@ const Main = () => {
           callbackClick={(action) => setShowInput(action)}
         />
       </main>
-      {isOpen && <ModalIndex />}
+      {isOpen && <ModalIndex setIsOpen={setIsOpen} isOpen={isOpen} />}
     </>
   );
 };

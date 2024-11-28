@@ -3,11 +3,14 @@
 import Modal from "@/components/ui/Modal";
 import Title from "@/components/ui/Title";
 import { Code } from "@nextui-org/code";
-import { useState } from "react";
+import { SetStateAction } from "react";
 
-const ModalIndex = () => {
-  const [isOpen, setIsOpen] = useState(true);
+interface Props {
+  isOpen: boolean;
+  setIsOpen: (value: SetStateAction<boolean>) => void;
+}
 
+const ModalIndex = ({ isOpen, setIsOpen }: Props) => {
   return (
     <Modal isOpen={isOpen} setIsOpen={setIsOpen} classContainer="max-w-[500px]">
       <div className="flex flex-col gap-3">

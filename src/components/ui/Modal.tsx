@@ -7,6 +7,7 @@ import React, {
   useRef,
   useState,
 } from "react";
+import { createPortal } from "react-dom";
 import { AnimatePresence, motion, useDragControls } from "framer-motion";
 import { cn } from "@/libs/utils";
 import { Divider } from "@nextui-org/react";
@@ -107,7 +108,7 @@ const Modal = ({
     };
   }, [closeDisabled, setIsOpen]);
 
-  return (
+  return createPortal(
     <>
       <AnimatePresence mode="wait">
         {isOpen && !drag && (
@@ -230,7 +231,8 @@ const Modal = ({
           </motion.section>
         )}
       </AnimatePresence>
-    </>
+    </>,
+    document.body,
   );
 };
 export default Modal;

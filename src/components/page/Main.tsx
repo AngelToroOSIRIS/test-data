@@ -58,28 +58,7 @@ const Main = () => {
   const [filterComponents, setFilterComponents] =
     useState<{ name: string; state: StatesComponents }[]>(components);
 
-  const router = useRouter();
-  const searchParams = useSearchParams();
-  const pathname = usePathname();
-
   components.sort((a, b) => a.name.localeCompare(b.name));
-
-  const createQueryString = useCallback(
-    (name: string, value: string) => {
-      const params = new URLSearchParams(searchParams.toString());
-      params.set(name, value);
-
-      return params.toString();
-    },
-    [searchParams],
-  );
-
-  const urlParamsPage = (comp: string | null) => {
-    if (comp) {
-      return `${pathname}?${createQueryString("comp", comp)}`;
-    }
-    return "/";
-  };
 
   const filterComponentsFn = () => {
     const newArray = components.filter((i) =>
@@ -87,9 +66,6 @@ const Main = () => {
         ? i.name.toLowerCase().includes(searchComponent.toLowerCase())
         : i,
     );
-    if (searchComponent) {
-      router.push(urlParamsPage(searchComponent));
-    }
     setFilterComponents(newArray);
   };
 

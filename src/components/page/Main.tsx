@@ -50,13 +50,11 @@ const components: { name: string; state: StatesComponents }[] = [
   { name: "InputMoneyForm", state: "Terminado" },
 ];
 
-const Main = ({ params }: { params: string }) => {
+const Main = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [showInput, setShowInput] = useState(false);
   const [select, setSelect] = useState<string>("all");
-  const [searchComponent, setSearchComponent] = useState<string | null>(
-    params ?? null,
-  );
+  const [searchComponent, setSearchComponent] = useState<string | null>(null);
   const [filterComponents, setFilterComponents] =
     useState<{ name: string; state: StatesComponents }[]>(components);
 
@@ -83,9 +81,11 @@ const Main = ({ params }: { params: string }) => {
     return "/";
   };
 
-  const filterComponentsFn = (value: string | null) => {
+  const filterComponentsFn = () => {
     const newArray = components.filter((i) =>
-      value ? i.name.toLowerCase().includes(value.toLowerCase()) : i,
+      searchComponent
+        ? i.name.toLowerCase().includes(searchComponent.toLowerCase())
+        : i,
     );
     if (searchComponent) {
       router.push(urlParamsPage(searchComponent));
@@ -122,7 +122,7 @@ const Main = ({ params }: { params: string }) => {
   }, [showInput, isOpen]);
 
   useEffect(() => {
-    filterComponentsFn(params && params.length > 1 ? params : searchComponent);
+    filterComponentsFn();
   }, [searchComponent]);
 
   return (
@@ -158,7 +158,6 @@ const Main = ({ params }: { params: string }) => {
                   <InputForm
                     onlyInput
                     autoFocus
-                    defaultValue={params ?? undefined}
                     name="search"
                     type="search"
                     className="outline-none"

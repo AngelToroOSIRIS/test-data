@@ -35,12 +35,12 @@ const Steps = ({
   drag = true,
   clickeable = false,
 }: Props) => {
+  const [valueStep, setValueStep] = useState(0);
   const [stepsArray, setStepsArray] = useState<Step[]>([]);
   const [direction, setDirection] = useState<"right" | "left">("right");
   const [selectedStep, setSelectedStep] = useState(
     defaultItem && defaultItem <= children.length ? defaultItem : 1,
   );
-  const [valueStep, setValueStep] = useState(0);
 
   const createSteps = (steps: number) => {
     const newStepsArray = Array.from({ length: steps }, (_, i) => ({

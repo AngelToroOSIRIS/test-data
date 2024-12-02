@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import CardComponent from "@/components/proyect/CardComponent";
 import { StatesComponents } from "@/types/d";
 import Title from "@/components/ui/Title";
@@ -27,6 +27,7 @@ import MainAutoCompleteForm from "@/components/page/MainAutoCompleteForm";
 import MainSuggestInput from "@/components/page/MainSuggestInput";
 import MainAccordion from "@/components/page/MainAccordion";
 import MainInputMoneyForm from "@/components/page/MainInputMoneyForm";
+import { usePathname, useRouter, useSearchParams } from "next/navigation";
 
 const components: { name: string; state: StatesComponents }[] = [
   { name: "AnimateText", state: "Terminado" },
@@ -43,29 +44,52 @@ const components: { name: string; state: StatesComponents }[] = [
   { name: "Modal", state: "Terminado" },
   { name: "Button", state: "Terminado" },
   { name: "Steps", state: "En proceso" },
-  { name: "Carrousel", state: "En proceso" },
+  { name: "Carrousel", state: "Terminado" },
   { name: "DragContainerModal", state: "Terminado" },
   { name: "Accordion", state: "Terminado" },
-  { name: "InputMoneyForm", state: "En proceso" },
+  { name: "InputMoneyForm", state: "Terminado" },
 ];
 
-const Main = () => {
+const Main = ({ params }: { params: string }) => {
   const [isOpen, setIsOpen] = useState(false);
   const [showInput, setShowInput] = useState(false);
   const [select, setSelect] = useState<string>("all");
-  const [searchComponent, setSearchComponent] = useState<string | null>(null);
+  const [searchComponent, setSearchComponent] = useState<string | null>(
+    params ?? null,
+  );
   const [filterComponents, setFilterComponents] =
     useState<{ name: string; state: StatesComponents }[]>(components);
 
+  const router = useRouter();
+  const searchParams = useSearchParams();
+  const pathname = usePathname();
+
   components.sort((a, b) => a.name.localeCompare(b.name));
 
-  const filterComponentsFn = () => {
-    const newArray = components.filter((i) =>
-      searchComponent
-        ? i.name.toLowerCase().includes(searchComponent.toLowerCase())
-        : i,
-    );
+  const createQueryString = useCallback(
+    (name: string, value: string) => {
+      const params = new URLSearchParams(searchParams.toString());
+      params.set(name, value);
 
+      return params.toString();
+    },
+    [searchParams],
+  );
+
+  const urlParamsPage = (comp: string | null) => {
+    if (comp) {
+      return `${pathname}?${createQueryString("comp", comp)}`;
+    }
+    return "/";
+  };
+
+  const filterComponentsFn = (value: string | null) => {
+    const newArray = components.filter((i) =>
+      value ? i.name.toLowerCase().includes(value.toLowerCase()) : i,
+    );
+    if (searchComponent) {
+      router.push(urlParamsPage(searchComponent));
+    }
     setFilterComponents(newArray);
   };
 
@@ -98,7 +122,7 @@ const Main = () => {
   }, [showInput, isOpen]);
 
   useEffect(() => {
-    filterComponentsFn();
+    filterComponentsFn(params && params.length > 1 ? params : searchComponent);
   }, [searchComponent]);
 
   return (
@@ -134,6 +158,7 @@ const Main = () => {
                   <InputForm
                     onlyInput
                     autoFocus
+                    defaultValue={params ?? undefined}
                     name="search"
                     type="search"
                     className="outline-none"

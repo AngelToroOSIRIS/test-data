@@ -43,6 +43,7 @@ const MainSteps = () => {
         {!changeSteps && (
           <Steps
             drag={drag}
+            step={count}
             clickeable={clickeable}
             defaultItem={defaultItem}
             buttons={{ show: showButton, position: buttons }}
@@ -52,18 +53,18 @@ const MainSteps = () => {
                 <p>Paso</p>
                 <div className="flex gap-4">
                   <div className="flex justify-between mx-auto text-xl gap-4">
-                    {/*<Button*/}
-                    {/*  color="success"*/}
-                    {/*  onClick={() =>*/}
-                    {/*    count > 0 ? setCount(count - 1) : undefined*/}
-                    {/*  }*/}
-                    {/*>*/}
-                    {/*  Anterior*/}
-                    {/*</Button>*/}
+                    <Button
+                      color="success"
+                      onClick={() =>
+                        count > 0 ? setCount(count - 1) : undefined
+                      }
+                    >
+                      Anterior
+                    </Button>
                     <p className="text-center text-4xl font-semibold">{item}</p>
-                    {/*<Button color="primary" onClick={() => setCount(count + 1)}>*/}
-                    {/*  Siguiente*/}
-                    {/*</Button>*/}
+                    <Button color="primary" onClick={() => setCount(count + 1)}>
+                      Siguiente
+                    </Button>
                   </div>
                 </div>
               </div>

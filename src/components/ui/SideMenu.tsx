@@ -81,7 +81,7 @@ const SideMenu = ({
               duration: 0.4,
             }}
             className={cn(
-              "w-full bg-background shadow-soft text-default-foreground fixed top-0 p-4 h-screen z-50",
+              "w-full bg-background shadow-soft text-default-foreground fixed top-0 p-4 h-screen z-40",
               className,
               {
                 "left-0": position == "left",

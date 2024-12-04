@@ -2,7 +2,7 @@
 
 import { Fragment, useEffect, useState } from "react";
 import { cn } from "@/libs/utils";
-import { AnimatePresence, motion, steps } from "framer-motion";
+import { AnimatePresence, motion } from "framer-motion";
 import { Button, Progress } from "@nextui-org/react";
 import Icon from "@/components/ui/Icon";
 
@@ -17,7 +17,7 @@ interface Props {
   clickeable?: boolean;
   defaultItem?: number;
   children: React.ReactNode[];
-  actualValue?: (value: number) => void;
+  onChangeStep?: (value: number) => void;
   external?: { back: () => void; next: () => void };
   buttons?: {
     show: boolean;
@@ -25,30 +25,33 @@ interface Props {
   };
 }
 
+const createSteps = (steps: number, defaultItem?: number) => {
+  const newStepsArray = Array.from({ length: steps }, (_, i) => ({
+    index: i + 1,
+    value: defaultItem && defaultItem > i + 1 ? 100 : 0,
+  }));
+
+  return newStepsArray;
+};
+
 const Steps = ({
   step,
   buttons,
   external,
   children,
-  actualValue,
+  onChangeStep,
   defaultItem,
-  drag = true,
+  drag = false,
   clickeable = false,
 }: Props) => {
-  const [valueStep, setValueStep] = useState(0);
-  const [stepsArray, setStepsArray] = useState<Step[]>([]);
+  const [stepsArray, setStepsArray] = useState<Step[]>(
+    createSteps(children.length, defaultItem),
+  );
   const [direction, setDirection] = useState<"right" | "left">("right");
   const [selectedStep, setSelectedStep] = useState(
     defaultItem && defaultItem <= children.length ? defaultItem : 1,
   );
-
-  const createSteps = (steps: number) => {
-    const newStepsArray = Array.from({ length: steps }, (_, i) => ({
-      index: i + 1,
-      value: defaultItem && defaultItem > i + 1 ? 100 : 0,
-    }));
-    setStepsArray(newStepsArray);
-  };
+  const [valueStep, setValueStep] = useState(0);
 
   const prevStepFn = (currentSelected: number) => {
     setDirection("left");
@@ -79,7 +82,7 @@ const Steps = ({
   };
 
   useEffect(() => {
-    createSteps(children.length);
+    setStepsArray(createSteps(children.length, defaultItem));
   }, [children.length]);
 
   useEffect(() => {
@@ -93,8 +96,8 @@ const Steps = ({
   }, [step]);
 
   useEffect(() => {
-    if (actualValue) {
-      actualValue(selectedStep);
+    if (onChangeStep) {
+      onChangeStep(selectedStep);
     }
     setValueStep((100 / (children.length - 1)) * (selectedStep - 1));
   }, [selectedStep]);
@@ -109,7 +112,7 @@ const Steps = ({
         {/* HEAD */}
         <div
           className={cn(
-            "flex justify-between w-auto mx-auto items-center z-50 gap-2",
+            "flex justify-between w-auto mx-auto items-center gap-2",
             { "w-full": children.length > 5 },
           )}
         >

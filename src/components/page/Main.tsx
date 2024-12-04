@@ -1,6 +1,6 @@
 "use client";
 
-import { useCallback, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import CardComponent from "@/components/proyect/CardComponent";
 import { StatesComponents } from "@/types/d";
 import Title from "@/components/ui/Title";
@@ -27,7 +27,7 @@ import MainAutoCompleteForm from "@/components/page/MainAutoCompleteForm";
 import MainSuggestInput from "@/components/page/MainSuggestInput";
 import MainAccordion from "@/components/page/MainAccordion";
 import MainInputMoneyForm from "@/components/page/MainInputMoneyForm";
-import { usePathname, useRouter, useSearchParams } from "next/navigation";
+import CornerButtons from "@/components/ui/CornerButtons";
 
 const components: { name: string; state: StatesComponents }[] = [
   { name: "AnimateText", state: "Terminado" },
@@ -43,7 +43,7 @@ const components: { name: string; state: StatesComponents }[] = [
   { name: "SideMenu", state: "Terminado" },
   { name: "Modal", state: "Terminado" },
   { name: "Button", state: "Terminado" },
-  { name: "Steps", state: "En proceso" },
+  { name: "Steps", state: "Terminado" },
   { name: "Carrousel", state: "Terminado" },
   { name: "DragContainerModal", state: "Terminado" },
   { name: "Accordion", state: "Terminado" },
@@ -109,8 +109,8 @@ const Main = () => {
             color="primary"
             className="w-auto mx-auto"
             onClick={() => {
-              setSelect("all");
               setSearchComponent(null);
+              setSelect("all");
             }}
           >
             Volver
@@ -126,9 +126,9 @@ const Main = () => {
             <AnimatePresence mode="wait">
               {showInput && (
                 <motion.div
+                  exit={{ opacity: 0, height: 0 }}
                   initial={{ opacity: 0, height: 0 }}
                   animate={{ opacity: 1, height: 45 }}
-                  exit={{ opacity: 0, height: 0 }}
                   className="mx-auto w-full max-w-[400px]"
                 >
                   <InputForm
@@ -164,7 +164,7 @@ const Main = () => {
         )}
 
         {filterComponents.length < 1 && (
-          <p className="text-default-foreground text-center select-none text-xl md:text-2xl font-semibold">
+          <p className="text-default-500 text-center select-none text-xl md:text-2xl font-semibold">
             Aquí no hay nada.
           </p>
         )}
@@ -213,13 +213,25 @@ const Main = () => {
           </motion.div>
         )}
 
-        <MenuMain
-          select={select}
-          action={showInput}
-          actionModal={isOpen}
-          callbackModal={(action) => setIsOpen(action)}
-          callbackClick={(action) => setShowInput(action)}
+        <CornerButtons
+          position="left"
+          btns={[
+            {
+              width: "120px",
+              icon: "search",
+              text: "Buscar todo",
+              onClick: () => {},
+            },
+          ]}
         />
+
+        {/*<MenuMain*/}
+        {/*  select={select}*/}
+        {/*  action={showInput}*/}
+        {/*  actionModal={isOpen}*/}
+        {/*  callbackModal={(action) => setIsOpen(action)}*/}
+        {/*  callbackClick={(action) => setShowInput(action)}*/}
+        {/*/>*/}
       </main>
       {isOpen && <ModalIndex setIsOpen={setIsOpen} isOpen={isOpen} />}
     </>

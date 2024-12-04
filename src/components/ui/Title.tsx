@@ -4,12 +4,12 @@ import { cn } from "@/libs/utils";
 
 interface Props {
   text: string;
-  onClick?: () => void;
   center?: boolean;
   primary?: boolean;
-  background?: boolean;
-  size?: "title" | "medium" | "subtitle";
   className?: string;
+  background?: boolean;
+  onClick?: () => void;
+  size?: "title" | "medium" | "subtitle";
 }
 
 const Title = ({

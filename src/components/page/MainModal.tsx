@@ -18,7 +18,7 @@ const MainModal = () => {
     <motion.div
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
-      className="flex flex-col md:flex-row md:justify-between w-full mx-auto gap-2"
+      className="flex flex-col md:flex-row md:justify-between w-[95%] mx-auto gap-2"
     >
       <div className="flex flex-col gap-3 bg-background rounded-large p-4 w-full max-w-[900px] ">
         <Title text="Demo Modal.tsx" size="title" className="text-3xl" center />

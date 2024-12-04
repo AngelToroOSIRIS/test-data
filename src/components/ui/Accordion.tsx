@@ -1,7 +1,7 @@
 "use client";
 
 import { cn } from "@/libs/utils";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Icon from "./Icon";
 import { AnimatePresence, motion } from "framer-motion";
 import { ClassValue } from "clsx";
@@ -33,6 +33,10 @@ const Accordion = ({
       ? defaultOpenedItem - 1
       : null,
   );
+
+  useEffect(() => {
+    setOpenedItem(null);
+  }, [items]);
 
   return (
     <section

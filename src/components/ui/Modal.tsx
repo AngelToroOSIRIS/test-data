@@ -1,12 +1,6 @@
 "use client";
 
-import React, {
-  MutableRefObject,
-  SetStateAction,
-  useEffect,
-  useRef,
-  useState,
-} from "react";
+import React, { MutableRefObject, useEffect, useRef, useState } from "react";
 import { createPortal } from "react-dom";
 import { AnimatePresence, motion, useDragControls } from "framer-motion";
 import { cn } from "@/libs/utils";
@@ -15,14 +9,14 @@ import Icon from "@/components/ui/Icon";
 
 interface Props {
   isOpen: boolean;
-  disabledFocus?: boolean;
   drag?: boolean;
-  ref?: MutableRefObject<null>;
-  setIsOpen: (value: SetStateAction<boolean>) => void;
-  classContainer?: string;
-  children?: React.ReactNode;
-  closeDisabled?: boolean;
   closeButton?: boolean;
+  classContainer?: string;
+  closeDisabled?: boolean;
+  disabledFocus?: boolean;
+  children?: React.ReactNode;
+  ref?: MutableRefObject<null>;
+  setIsOpen: (value: boolean) => void;
 }
 
 const Modal = ({

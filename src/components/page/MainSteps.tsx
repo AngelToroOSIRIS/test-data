@@ -34,7 +34,7 @@ const MainSteps = () => {
     <motion.div
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
-      className="flex flex-col md:flex-row md:justify-between w-full mx-auto gap-2"
+      className="flex flex-col md:flex-row md:justify-between w-[95%] mx-auto gap-2"
     >
       <div className="flex flex-col gap-3 bg-background rounded-large relative p-4 w-full max-w-[900px]">
         <Title text="Demo Steps.tsx" size="title" className="text-3xl" center />
@@ -80,7 +80,7 @@ const MainSteps = () => {
           <p>{"clickeable?: boolean;"}</p>
           <p>{"defaultItem?: number;"}</p>
           <p>{"children: React.ReactNode[];"}</p>
-          <p>{"actualValue?: (value: number) => void;"}</p>
+          <p>{"onChangeStep?: (value: number) => void;"}</p>
           <p>{"external?: { back: () => void; next: () => void };"}</p>
           <p>
             {"buttons?: {\n" +

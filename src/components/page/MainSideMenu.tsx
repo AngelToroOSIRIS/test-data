@@ -43,6 +43,7 @@ const MainSideMenu = () => {
           {showMenu && (
             <SideMenu
               backdrop={backdrop}
+              showAside={showMenu}
               setShowAside={setShowMenu}
               disabledClosed={closeDisabled}
               position={isRight ? "right" : "left"}

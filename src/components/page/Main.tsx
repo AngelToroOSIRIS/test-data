@@ -213,25 +213,25 @@ const Main = () => {
           </motion.div>
         )}
 
-        <CornerButtons
-          position="left"
-          btns={[
-            {
-              width: "120px",
-              icon: "search",
-              text: "Buscar todo",
-              onClick: () => {},
-            },
-          ]}
-        />
-
-        {/*<MenuMain*/}
-        {/*  select={select}*/}
-        {/*  action={showInput}*/}
-        {/*  actionModal={isOpen}*/}
-        {/*  callbackModal={(action) => setIsOpen(action)}*/}
-        {/*  callbackClick={(action) => setShowInput(action)}*/}
+        {/*<CornerButtons*/}
+        {/*  position="left"*/}
+        {/*  btns={[*/}
+        {/*    {*/}
+        {/*      width: "120px",*/}
+        {/*      icon: "search",*/}
+        {/*      text: "Buscar todo",*/}
+        {/*      onClick: () => {},*/}
+        {/*    },*/}
+        {/*  ]}*/}
         {/*/>*/}
+
+        <MenuMain
+          select={select}
+          action={showInput}
+          actionModal={isOpen}
+          callbackModal={(action) => setIsOpen(action)}
+          callbackClick={(action) => setShowInput(action)}
+        />
       </main>
       {isOpen && <ModalIndex setIsOpen={setIsOpen} isOpen={isOpen} />}
     </>

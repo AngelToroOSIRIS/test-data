@@ -17,11 +17,11 @@ const ModalIndex = ({ isOpen, setIsOpen }: Props) => {
         <Title text="Librerias" size="medium" />
         <div className="flex flex-col font-semibold gap-3">
           <div className="flex justify-between items-center gap-2">
-            <p>- Next UI V2.4.8</p>
+            <p>- Next UI V2.6.11</p>
             <Code color="success">npm install @nextui-org/react</Code>
           </div>
           <div className="flex justify-between items-center gap-2">
-            <p>- Framer Motion V11.11.11</p>
+            <p>- Framer Motion V11.16.1</p>
             <Code color="success">npm install framer-motion</Code>
           </div>
           <div className="flex justify-between items-center gap-2">

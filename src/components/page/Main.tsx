@@ -27,7 +27,8 @@ import MainAutoCompleteForm from "@/components/page/MainAutoCompleteForm";
 import MainSuggestInput from "@/components/page/MainSuggestInput";
 import MainAccordion from "@/components/page/MainAccordion";
 import MainInputMoneyForm from "@/components/page/MainInputMoneyForm";
-import CornerButtons from "@/components/ui/CornerButtons";
+import MainPlayground from "./MainPlayground";
+import MainInfiniteScroll from "./MainInfiniteScroll";
 
 const components: { name: string; state: StatesComponents }[] = [
   { name: "AnimateText", state: "Terminado" },
@@ -48,6 +49,8 @@ const components: { name: string; state: StatesComponents }[] = [
   { name: "DragContainerModal", state: "Terminado" },
   { name: "Accordion", state: "Terminado" },
   { name: "InputMoneyForm", state: "Terminado" },
+  { name: "InfiniteScroll", state: "Terminado" },
+  { name: "PlayGround", state: "Oculto" },
 ];
 
 const Main = () => {
@@ -63,8 +66,9 @@ const Main = () => {
   const filterComponentsFn = () => {
     const newArray = components.filter((i) =>
       searchComponent
-        ? i.name.toLowerCase().includes(searchComponent.toLowerCase())
-        : i,
+        ? i.state !== "Oculto" &&
+          i.name.toLowerCase().includes(searchComponent.toLowerCase())
+        : i.state != "Oculto"
     );
     setFilterComponents(newArray);
   };
@@ -108,7 +112,7 @@ const Main = () => {
           <Button
             color="primary"
             className="w-auto mx-auto"
-            onClick={() => {
+            onPress={() => {
               setSearchComponent(null);
               setSelect("all");
             }}
@@ -169,7 +173,10 @@ const Main = () => {
           </p>
         )}
 
+        {select === "playground" && <MainPlayground />}
+
         {select === "title" && <MainTitle />}
+        {select === "infinitescroll" && <MainInfiniteScroll />}
         {select === "icon" && <MainIcon />}
         {select === "tooltip" && <MainTooltip />}
         {select === "modal" && <MainModal />}

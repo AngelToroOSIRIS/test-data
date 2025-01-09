@@ -1,1 +1,1 @@
-export type StatesComponents = "Sin iniciar" | "En proceso" | "Terminado";
+export type StatesComponents = "Sin iniciar" | "En proceso" | "Terminado" | "Oculto";

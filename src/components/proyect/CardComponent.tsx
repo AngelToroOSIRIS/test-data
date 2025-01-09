@@ -4,6 +4,7 @@ import { Chip } from "@nextui-org/chip";
 import { StatesComponents } from "@/types/d";
 import { motion } from "framer-motion";
 import { SetStateAction } from "react";
+import { cn } from "@/libs/utils";
 
 interface Props {
   name: string;
@@ -27,12 +28,18 @@ const CardComponent = ({ name, state, setSelected }: Props) => {
       <p className="text-center font-semibold">{name}.tsx</p>
       <Chip
         variant="flat"
+        // @ts-ignore
         color={
-          state !== "Sin iniciar"
-            ? state === "En proceso"
-              ? "warning"
-              : "success"
-            : "danger"
+          cn("", {
+            warning: state == "En proceso",
+            success: state == "Terminado",
+            danger: state == "Sin iniciar" || state == "Oculto",
+          })
+          //   state !== "Sin iniciar"
+          //     ? state !== "En proceso"
+          //       ? "success"
+          //       : "warning"
+          //     : "danger"
         }
         className="absolute bottom-2 right-2"
       >

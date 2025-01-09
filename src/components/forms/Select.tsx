@@ -64,7 +64,7 @@ const Select = ({
       classNames={{
         trigger: "h-[48px] px-3 bg-default border-divider",
         errorMessage: "text-sm font-medium",
-        value: "text-base text-default-foreground",
+        value: "text-base",
         selectorIcon: "text-default-foreground",
         popoverContent: "dark:bg-divider ",
       }}

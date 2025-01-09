@@ -50,7 +50,7 @@ const MenuMain = ({
       download: "components",
       width: 170,
       // TODO: Actualizar fechas
-      title: "Descargar componentes 04/12/2024",
+      title: "Descargar componentes 09/01/2025",
     },
     {
       name: "GitHub",
